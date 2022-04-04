@@ -117,29 +117,29 @@ jobs:
           path: frontend
           docker-context: frontend
           extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "frontend")
-      - docker/build:
-          registry: $DOCKER_REGISTRY
-          image: orida-frontend
-          tag: << pipeline.git.branch >>-sentry
-          path: frontend
-          docker-context: frontend
-          extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "frontend") --target sentry
+    #   - docker/build:
+    #       registry: $DOCKER_REGISTRY
+    #       image: orida-frontend
+    #       tag: << pipeline.git.branch >>-sentry
+    #       path: frontend
+    #       docker-context: frontend
+    #       extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "frontend") --target sentry
       - docker/check:
           registry: $DOCKER_REGISTRY
       - docker/push:
           registry: $DOCKER_REGISTRY
           image: orida-frontend
           tag: << pipeline.git.branch >>
-      - run:
-          name: Publish source maps to sentry
-          command: |
-            IMAGE="$DOCKER_REGISTRY/orida-frontend:<< pipeline.git.branch >>-sentry"
-            ENV="--env SENTRY_AUTH_TOKEN --env SENTRY_ORG --env SENTRY_PROJECT=orida-frontend"
-            VERSION=orida-frontend@$(git log --max-count 1 --pretty=format:%H "frontend")
+    #   - run:
+    #       name: Publish source maps to sentry
+    #       command: |
+    #         IMAGE="$DOCKER_REGISTRY/orida-frontend:<< pipeline.git.branch >>-sentry"
+    #         ENV="--env SENTRY_AUTH_TOKEN --env SENTRY_ORG --env SENTRY_PROJECT=orida-frontend"
+    #         VERSION=orida-frontend@$(git log --max-count 1 --pretty=format:%H "frontend")
 
-            docker run --rm $ENV $IMAGE releases new $VERSION
-            docker run --rm $ENV $IMAGE releases files $VERSION upload-sourcemaps .
-            docker run --rm $ENV $IMAGE releases finalize $VERSION
+    #         docker run --rm $ENV $IMAGE releases new $VERSION
+    #         docker run --rm $ENV $IMAGE releases files $VERSION upload-sourcemaps .
+    #         docker run --rm $ENV $IMAGE releases finalize $VERSION
   admin-yarn-install:
     executor: node
     steps:
@@ -187,29 +187,29 @@ jobs:
           path: admin
           docker-context: admin
           extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "admin")
-      - docker/build:
-          registry: $DOCKER_REGISTRY
-          image: orida-admin
-          tag: << pipeline.git.branch >>-sentry
-          path: admin
-          docker-context: admin
-          extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "admin") --target sentry
+    #   - docker/build:
+    #       registry: $DOCKER_REGISTRY
+    #       image: orida-admin
+    #       tag: << pipeline.git.branch >>-sentry
+    #       path: admin
+    #       docker-context: admin
+    #       extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "admin") --target sentry
       - docker/check:
           registry: $DOCKER_REGISTRY
       - docker/push:
           registry: $DOCKER_REGISTRY
           image: orida-admin
           tag: << pipeline.git.branch >>
-      - run:
-          name: Publish source maps to sentry
-          command: |
-            IMAGE="$DOCKER_REGISTRY/orida-admin:<< pipeline.git.branch >>-sentry"
-            ENV="--env SENTRY_AUTH_TOKEN --env SENTRY_ORG --env SENTRY_PROJECT=orida-admin"
-            VERSION=orida-admin@$(git log --max-count 1 --pretty=format:%H "admin")
+    #   - run:
+    #       name: Publish source maps to sentry
+    #       command: |
+    #         IMAGE="$DOCKER_REGISTRY/orida-admin:<< pipeline.git.branch >>-sentry"
+    #         ENV="--env SENTRY_AUTH_TOKEN --env SENTRY_ORG --env SENTRY_PROJECT=orida-admin"
+    #         VERSION=orida-admin@$(git log --max-count 1 --pretty=format:%H "admin")
 
-            docker run --rm $ENV $IMAGE releases new $VERSION
-            docker run --rm $ENV $IMAGE releases files $VERSION upload-sourcemaps .
-            docker run --rm $ENV $IMAGE releases finalize $VERSION
+    #         docker run --rm $ENV $IMAGE releases new $VERSION
+    #         docker run --rm $ENV $IMAGE releases files $VERSION upload-sourcemaps .
+    #         docker run --rm $ENV $IMAGE releases finalize $VERSION
 workflows:
   version: "2"
   build:
