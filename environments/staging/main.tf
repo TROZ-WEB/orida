@@ -15,7 +15,7 @@ terraform {
     }
 
     backend "s3" {
-        bucket                      = "" # TODO: add bucket
+        bucket                      = "orida-staging"
         key                         = "orida-staging.tfstate"
         region                      = "fr-par"
         endpoint                    = "https://s3.fr-par.scw.cloud"
@@ -29,7 +29,7 @@ provider "scaleway" {
     region     = "fr-par"
     access_key = var.scw_access_key
     secret_key = var.scw_secret_key
-    project_id = "00000000-0000-0000-0000-000000000000" # TODO add project id
+    project_id = "240c159d-951c-48db-b8d1-1471d755e33a"
 }
 
 data "scaleway_k8s_cluster" "staging" {
