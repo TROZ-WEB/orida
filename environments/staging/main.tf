@@ -74,10 +74,10 @@ module "deployment" {
 
     rdb_name = "staging"
     registry = "rg.fr-par.scw.cloud/thetribe-staging"
-    backend_sentry_dsn = " https://31f30852172f467191c0a45651199f19@sentry.thetribe.io/126"
+    backend_sentry_dsn = "https://3ac8857ec75d442f8708dffa80f5f875@o132732.ingest.sentry.io/6308941"
     backend_image_tag = "develop"
-    frontend_sentry_dsn = "https://b848433d1a7342dbb9713b906783c8a1@sentry.thetribe.io/125"
+    frontend_sentry_dsn = "https://20453e06f46c4c14bfdc09ca863ca183@o132732.ingest.sentry.io/6308943"
     frontend_image_tag = "develop"
-    admin_sentry_dsn = "https://33bc2a9272ba494d841b6297cba1b51e@sentry.thetribe.io/127"
+    admin_sentry_dsn = "https://587442fa645846698f3d9a92fffa60ee@o132732.ingest.sentry.io/6308946"
     admin_image_tag = "develop"
 }
