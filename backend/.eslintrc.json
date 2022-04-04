@@ -1,0 +1,18 @@
+{
+    "root": true,
+    "extends": "@thetribe/eslint-config-typescript",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "env": {
+        "node": true
+    },
+    "overrides": [
+        {
+            "files": ["*.test.ts"],
+            "env": {
+                "jest": true
+            }
+        }
+    ]
+}

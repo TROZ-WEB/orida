@@ -1,0 +1,13 @@
+{{ if not .Values.certificate }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "orida.fullname" . }}
+spec:
+  secretName: {{ include "orida.fullname" . }}-cert
+  dnsNames:
+    - {{ .Values.host }}
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+{{ end }}

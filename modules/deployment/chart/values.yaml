@@ -1,0 +1,29 @@
+
+backend:
+  image:
+    tag: latest
+    digest: ~
+  sentry:
+    dsn: ~
+  database:
+    host: ~
+    port: ~
+    user: ~
+    password: ~
+    name: ~
+  cookie:
+    secret: ~
+
+frontend:
+  image:
+    tag: latest
+    digest: ~
+  sentry:
+    dsn: ~
+
+admin:
+  image:
+    tag: latest
+    digest: ~
+  sentry:
+    dsn: ~

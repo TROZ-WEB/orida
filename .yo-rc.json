@@ -1,0 +1,12 @@
+{
+  "@thetribe/generator-project": {
+    "backend": "express",
+    "frontend": "create-react-app",
+    "admin": true,
+    "mobile": "none",
+    "projectName": "orida",
+    "repositoryName": "thetribeio/orida",
+    "domain": "orida.thestaging.io",
+    "deployment": "kubernetes"
+  }
+}

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "orida.fullname" . }}-backend
+  labels:
+    app.kubernetes.io/component: backend
+    {{- include "orida.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: backend
+      {{- include "orida.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/database-secret: {{ include (print $.Template.BasePath "/backend-database-secret.yaml") . | sha256sum }}
+      labels:
+        app.kubernetes.io/component: backend
+        {{- include "orida.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: node
+          image: {{ include "orida.backend.image" . }}
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "orida.fullname" . }}-backend-database
+                  key: url
+            - name: ENVIRONMENT_NAME
+              value: {{ .Values.environment_name }}
+            - name: COOKIE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "orida.fullname" . }}-backend-cookie
+                  key: secret
+            - name: SENTRY_DSN
+              value: {{ .Values.backend.sentry.dsn }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+      imagePullSecrets:
+        - name: registry-secret

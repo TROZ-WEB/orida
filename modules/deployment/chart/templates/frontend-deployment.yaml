@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "orida.fullname" . }}-frontend
+  labels:
+    app.kubernetes.io/component: frontend
+    {{- include "orida.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: frontend
+      {{- include "orida.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: frontend
+        {{- include "orida.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: node
+          image: {{ include "orida.frontend.image" . }}
+          env:
+            - name: ENVIRONMENT_NAME
+              value: {{ .Values.environment_name }}
+            - name: SENTRY_DSN
+              value: {{ .Values.frontend.sentry.dsn }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+      imagePullSecrets:
+        - name: registry-secret

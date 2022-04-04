@@ -1,0 +1,43 @@
+version: "2.4"
+services:
+    nginx:
+        build: ./nginx/docker
+        ports:
+            - ${PORT:-80}:80
+    postgres:
+        build: ./postgres/docker
+        environment:
+            PGUSER: user
+            PGPASSWORD: password
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: password
+    backend:
+        build:
+            context: backend/docker
+            args:
+                UID: ${uid:-1000}
+        volumes:
+            - ./backend:/usr/src/project/backend
+        environment:
+            COOKIE_SECRET: development-secret
+            DATABASE_URL: postgresql://user:password@postgres/backend
+    frontend:
+        build:
+            context: frontend/docker
+            args:
+                UID: ${uid:-1000}
+        environment:
+            DISABLE_ESLINT_PLUGIN: "true"
+            WDS_SOCKET_PATH: /sockjs-node
+        volumes:
+            - ./frontend:/usr/src/project/frontend
+    admin:
+        build:
+            context: admin/docker
+            args:
+                UID: ${uid:-1000}
+        environment:
+            DISABLE_ESLINT_PLUGIN: "true"
+            WDS_SOCKET_PATH: /admin/sockjs-node
+        volumes:
+            - ./admin:/usr/src/project/admin

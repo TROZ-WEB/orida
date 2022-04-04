@@ -1,0 +1,15 @@
+#!/bin/sh
+# Update application to run for its current checkout.
+
+set -e
+
+cd $(dirname $(dirname $0))
+
+script/bootstrap
+
+. script/lib/docker
+
+docker-compose build
+
+docker-compose up --detach postgres
+docker-compose run --rm --no-deps backend wait-for-it postgres:5432 -- typeorm migration:run

@@ -1,0 +1,287 @@
+version: "2.1"
+orbs:
+  docker: circleci/docker@2.0.1
+  node: circleci/node@4.5.1
+executors:
+  node:
+    docker:
+      - image: node:16.14.0
+jobs:
+  backend-yarn-install:
+    executor: node
+    steps:
+      - checkout
+      - node/install-packages:
+          app-dir: backend
+          include-branch-in-cache-key: false
+          pkg-manager: yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - backend/node_modules
+  backend-lint:
+    executor: node
+    working_directory: ~/project/backend
+    steps:
+      - checkout:
+          path: ~/project
+      - attach_workspace:
+          at: ~/project
+      - run:
+          command: yarn lint
+  backend-test:
+    executor: node
+    working_directory: ~/project/backend
+    steps:
+      - checkout:
+          path: ~/project
+      - attach_workspace:
+          at: ~/project
+      - run:
+          command: yarn test
+  backend-build:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker:
+          version: 20.10.11
+      - checkout
+      - docker/build:
+          image: orida-backend
+          tag: << pipeline.git.branch >>
+          path: backend
+          docker-context: backend
+          extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "backend")
+  backend-build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker:
+          version: 20.10.11
+      - checkout
+      - docker/build:
+          registry: $DOCKER_REGISTRY
+          image: orida-backend
+          tag: << pipeline.git.branch >>
+          path: backend
+          docker-context: backend
+          extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "backend")
+      - docker/check:
+          registry: $DOCKER_REGISTRY
+      - docker/push:
+          registry: $DOCKER_REGISTRY
+          image: orida-backend
+          tag: << pipeline.git.branch >>
+  frontend-yarn-install:
+    executor: node
+    steps:
+      - checkout
+      - node/install-packages:
+          app-dir: frontend
+          include-branch-in-cache-key: false
+          pkg-manager: yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - frontend/node_modules
+  frontend-lint:
+    executor: node
+    working_directory: ~/project/frontend
+    steps:
+      - checkout:
+          path: ~/project
+      - attach_workspace:
+          at: ~/project
+      - run:
+          command: yarn lint
+  frontend-build:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker:
+          version: 20.10.11
+      - checkout
+      - docker/build:
+          image: orida-frontend
+          tag: << pipeline.git.branch >>
+          path: frontend
+          docker-context: frontend
+          extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "frontend")
+  frontend-build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker:
+          version: 20.10.11
+      - checkout
+      - docker/build:
+          registry: $DOCKER_REGISTRY
+          image: orida-frontend
+          tag: << pipeline.git.branch >>
+          path: frontend
+          docker-context: frontend
+          extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "frontend")
+      - docker/build:
+          registry: $DOCKER_REGISTRY
+          image: orida-frontend
+          tag: << pipeline.git.branch >>-sentry
+          path: frontend
+          docker-context: frontend
+          extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "frontend") --target sentry
+      - docker/check:
+          registry: $DOCKER_REGISTRY
+      - docker/push:
+          registry: $DOCKER_REGISTRY
+          image: orida-frontend
+          tag: << pipeline.git.branch >>
+      - run:
+          name: Publish source maps to sentry
+          command: |
+            IMAGE="$DOCKER_REGISTRY/orida-frontend:<< pipeline.git.branch >>-sentry"
+            ENV="--env SENTRY_AUTH_TOKEN --env SENTRY_ORG --env SENTRY_PROJECT=orida-frontend"
+            VERSION=orida-frontend@$(git log --max-count 1 --pretty=format:%H "frontend")
+
+            docker run --rm $ENV $IMAGE releases new $VERSION
+            docker run --rm $ENV $IMAGE releases files $VERSION upload-sourcemaps .
+            docker run --rm $ENV $IMAGE releases finalize $VERSION
+  admin-yarn-install:
+    executor: node
+    steps:
+      - checkout
+      - node/install-packages:
+          app-dir: admin
+          include-branch-in-cache-key: false
+          pkg-manager: yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - admin/node_modules
+  admin-lint:
+    executor: node
+    working_directory: ~/project/admin
+    steps:
+      - checkout:
+          path: ~/project
+      - attach_workspace:
+          at: ~/project
+      - run:
+          command: yarn lint
+  admin-build:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker:
+          version: 20.10.11
+      - checkout
+      - docker/build:
+          image: orida-admin
+          tag: << pipeline.git.branch >>
+          path: admin
+          docker-context: admin
+          extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "admin")
+  admin-build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker:
+          version: 20.10.11
+      - checkout
+      - docker/build:
+          registry: $DOCKER_REGISTRY
+          image: orida-admin
+          tag: << pipeline.git.branch >>
+          path: admin
+          docker-context: admin
+          extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "admin")
+      - docker/build:
+          registry: $DOCKER_REGISTRY
+          image: orida-admin
+          tag: << pipeline.git.branch >>-sentry
+          path: admin
+          docker-context: admin
+          extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "admin") --target sentry
+      - docker/check:
+          registry: $DOCKER_REGISTRY
+      - docker/push:
+          registry: $DOCKER_REGISTRY
+          image: orida-admin
+          tag: << pipeline.git.branch >>
+      - run:
+          name: Publish source maps to sentry
+          command: |
+            IMAGE="$DOCKER_REGISTRY/orida-admin:<< pipeline.git.branch >>-sentry"
+            ENV="--env SENTRY_AUTH_TOKEN --env SENTRY_ORG --env SENTRY_PROJECT=orida-admin"
+            VERSION=orida-admin@$(git log --max-count 1 --pretty=format:%H "admin")
+
+            docker run --rm $ENV $IMAGE releases new $VERSION
+            docker run --rm $ENV $IMAGE releases files $VERSION upload-sourcemaps .
+            docker run --rm $ENV $IMAGE releases finalize $VERSION
+workflows:
+  version: "2"
+  build:
+    jobs:
+      - backend-yarn-install
+      - backend-lint:
+          requires:
+            - backend-yarn-install
+      - backend-test:
+          requires:
+            - backend-lint
+      - backend-build-and-push:
+          context:
+            - docker-registry
+          requires:
+            - backend-test
+          filters:
+            branches:
+              only:
+                - develop
+                - main
+      - backend-build:
+          requires:
+            - backend-test
+          filters:
+            branches:
+              ignore:
+                - develop
+                - main
+      - frontend-yarn-install
+      - frontend-lint:
+          requires:
+            - frontend-yarn-install
+      - frontend-build-and-push:
+          context:
+            - docker-registry
+            - sentry.io
+          requires:
+            - frontend-lint
+          filters:
+            branches:
+              only:
+                - develop
+                - main
+      - frontend-build:
+          requires:
+            - frontend-lint
+          filters:
+            branches:
+              ignore:
+                - develop
+                - main
+      - admin-yarn-install
+      - admin-lint:
+          requires:
+            - admin-yarn-install
+      - admin-build-and-push:
+          context:
+            - docker-registry
+            - sentry.io
+          requires:
+            - admin-lint
+          filters:
+            branches:
+              only:
+                - develop
+                - main
+      - admin-build:
+          requires:
+            - admin-lint
+          filters:
+            branches:
+              ignore:
+                - develop
+                - main

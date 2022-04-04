@@ -1,0 +1,1 @@
+CREATE DATABASE backend WITH OWNER 'user';
