@@ -1,20 +1,14 @@
 import Layout from "@components/Layout";
+import LoginForm from "@components/LoginForm";
+import Space from "@design/Space";
 import React from "react";
 
 function Home() {
     return (
         <Layout>
-            <p>
-                Edit <code>src/App.tsx</code> and save to reload.
-            </p>
-            <a
-                className="App-link"
-                href="https://reactjs.org"
-                rel="noopener noreferrer"
-                target="_blank"
-            >
-                Learn React
-            </a>
+            <h1>Connexion</h1>
+            <Space px={8} />
+            <LoginForm />
         </Layout>
     );
 }
