@@ -8,6 +8,7 @@ import SubmitButton from "@design/buttons/SubmitButton";
 import Layout from "@components/Layout";
 import Auth from "@services/auth";
 import "./style.scss";
+import { useTranslation } from "react-i18next";
 
 type Inputs = {
     email: string;
@@ -17,6 +18,7 @@ type Inputs = {
 function LoginPage() {
     const { register, handleSubmit } = useForm<Inputs>();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const onLogin: SubmitHandler<Inputs> = async data => {
         try {
@@ -31,19 +33,19 @@ function LoginPage() {
         <Layout>
             <form className="login-form__form" onSubmit={handleSubmit(onLogin)}>
                 <TextInput
-                    label="Email"
+                    label={t("login_email_label")}
                     name="email"
                     register={register}
                 />
                 <Space px={8} />
                 <TextInput
-                    label="Mot de passe"
+                    label={t("login_password_label")}
                     name="password"
                     register={register}
                     type="password"
                 />
                 <Space px={12} />
-                <SubmitButton value="Connexion" />
+                <SubmitButton value={t("login_submit") as string} />
             </form>
         </Layout>
     )

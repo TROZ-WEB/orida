@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import version from './version';
 import '@styles/base.scss';
+import "@translations/i18n"; // initialize language settings
 
 const root = document.getElementById('root');
 
