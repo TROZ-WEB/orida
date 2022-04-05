@@ -6,9 +6,10 @@ import AppRoutes from "@router/AppRoutes";
 import Space from "@design/Space";
 import SubmitButton from "@design/buttons/SubmitButton";
 import Layout from "@components/Layout";
-import Auth from "@services/auth";
 import "./style.scss";
 import { useTranslation } from "react-i18next";
+import { login } from "@store/auth/actions";
+import useThunkDispatch from "@hooks/useThunkDispatch";
 
 type Inputs = {
     email: string;
@@ -19,10 +20,11 @@ function LoginPage() {
     const { register, handleSubmit } = useForm<Inputs>();
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const dispatch = useThunkDispatch();
 
     const onLogin: SubmitHandler<Inputs> = async data => {
         try {
-            await Auth.login(data);
+            dispatch(await login(data));
             navigate(AppRoutes.Home);
         } catch (e) {
             window.alert(e);

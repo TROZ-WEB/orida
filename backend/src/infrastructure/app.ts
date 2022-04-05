@@ -30,7 +30,7 @@ app.use(session({
 app.use(auth.initialize() as RequestHandler);
 app.use(auth.session());
 
-app.use('/', authRouter);
+app.use('/auth/', authRouter);
 app.use('/users/', usersRouter);
 
 app.use(Sentry.Handlers.errorHandler());

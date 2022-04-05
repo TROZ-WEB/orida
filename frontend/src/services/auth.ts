@@ -6,7 +6,8 @@ export interface LoginProps {
 }
 export async function login({ email, password }: LoginProps) {
     try {
-        const response = await POST("/users/login", { email, password });
+        const response = await POST("api/auth/login", { email, password });
+        console.log({ response });
     } catch (error) {
         console.error(error);
     }
