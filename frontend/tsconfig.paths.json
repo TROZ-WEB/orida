@@ -36,6 +36,9 @@
                 "./services/*"
             ],
             "@store": [
+                "./store/index"
+            ],
+            "@store/*": [
                 "./store/*"
             ],
             "@styles/*": [

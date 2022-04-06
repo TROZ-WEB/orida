@@ -1,15 +1,18 @@
-import { AuthActionTypes, AuthState, SIGN_IN } from './types';
+import { AuthActionTypes, AuthState, LOGIN } from './types';
 
 const initialState: AuthState = {
     token: '',
+    email: '',
+    id: '',
 };
 
 const authReducer = (state = initialState, action: AuthActionTypes): AuthState => {
     switch (action.type) {
-        case SIGN_IN: {
+        case LOGIN: {
             return {
                 ...state,
-                token: action.token,
+                id: action.id,
+                email: action.email,
             };
         }
         default:

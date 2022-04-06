@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import AppRoutes from "@router/AppRoutes";
 import Space from "@design/Space";
 import SubmitButton from "@design/buttons/SubmitButton";
-import Layout from "@components/Layout";
 import "./style.scss";
 import { useTranslation } from "react-i18next";
 import { login } from "@store/auth/actions";
@@ -16,7 +15,7 @@ type Inputs = {
     password: string;
 };
 
-function LoginPage() {
+function LoginForm() {
     const { register, handleSubmit } = useForm<Inputs>();
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -32,25 +31,23 @@ function LoginPage() {
     };
 
     return (
-        <Layout>
-            <form className="login-form__form" onSubmit={handleSubmit(onLogin)}>
-                <TextInput
-                    label={t("login_email_label")}
-                    name="email"
-                    register={register}
-                />
-                <Space px={8} />
-                <TextInput
-                    label={t("login_password_label")}
-                    name="password"
-                    register={register}
-                    type="password"
-                />
-                <Space px={12} />
-                <SubmitButton value={t("login_submit") as string} />
-            </form>
-        </Layout>
+        <form className="login-form__form" onSubmit={handleSubmit(onLogin)}>
+            <TextInput
+                label={t("login_email_label")}
+                name="email"
+                register={register}
+            />
+            <Space px={8} />
+            <TextInput
+                label={t("login_password_label")}
+                name="password"
+                register={register}
+                type="password"
+            />
+            <Space px={12} />
+            <SubmitButton value={t("login_submit") as string} />
+        </form>
     )
 }
 
-export default LoginPage;
+export default LoginForm;

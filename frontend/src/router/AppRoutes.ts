@@ -1,5 +1,6 @@
 enum AppRoutes {
-    Home = "/",
+    Login = "/",
+    Home = "/home",
 }
 
 export default AppRoutes;

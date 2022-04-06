@@ -2,7 +2,7 @@ import { callbackify } from 'util';
 import { Authenticator } from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { User } from '../domain/User';
-import loginUser from '../useCases/loginUser';
+import loginUser from '../useCases/auth/loginUser';
 import UserError from '../useCases/UserError';
 import { userRepository } from './database';
 
@@ -18,10 +18,15 @@ auth.deserializeUser(callbackify(async (id: string): Promise<User|null> => {
 }));
 
 // Strategies
-auth.use(new LocalStrategy(async (username, password, done): Promise<void> => {
+auth.use(new LocalStrategy({
+    usernameField: "email",
+    passwordField: "password",
+}, async (username, password, done): Promise<void> => {
+    console.log("local strategy");
     try {
         done(null, await loginUser({ username, password })({ userRepository }));
     } catch (error) {
+        console.log({error})
         if (error instanceof UserError) {
             done(null, false, { message: error.message });
         } else {

@@ -1,6 +1,7 @@
 {
-    "home_login": "Connexion",
     "login_email_label": "Email",
     "login_password_label": "Mot de passe",
-    "login_submit": "Connexion"
+    "login_submit": "Connexion",
+    "login_title": "Connexion",
+    "register_title": "S'inscrire"
 }

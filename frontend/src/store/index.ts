@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage'
 
 import { SIGN_OUT } from './auth/types';
 import authReducer from './auth/reducer';
+import { useSelector } from 'react-redux';
 
 // import logger from 'redux-logger';
 

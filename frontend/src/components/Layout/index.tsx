@@ -1,11 +1,14 @@
+import classnames from "classnames";
 import React, { PropsWithChildren } from "react";
 import "./style.scss";
 
-interface LayoutProps {}
+interface LayoutProps {
+    className?: string;
+}
 
-function Layout({ children }: PropsWithChildren<LayoutProps>) {
+function Layout({ className, children }: PropsWithChildren<LayoutProps>) {
     return (
-        <div className="layout">
+        <div className={classnames("layout", className)}>
             {children}
         </div>
     )

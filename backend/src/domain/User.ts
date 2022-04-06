@@ -29,6 +29,8 @@ class User {
 interface UserRepository {
     findOne(id: string): Promise<User | undefined>;
     findOne(condition: Partial<User>): Promise<User | undefined>;
+    create(details: Partial<User>): User;
+    save(user: User): Promise<User>;
 }
 
 export { User, UserRepository };

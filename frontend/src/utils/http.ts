@@ -15,7 +15,7 @@ export class HttpError extends Error {
     }
 }
 
-const factory = (method: string) => async < T > (url: string, data?: HttpBody): Promise<T | Blob > => {
+const factory = (method: string) => async < T > (url: string, data?: HttpBody): Promise<T> => {
     const options: {
         headers: { [key: string]: string },
         body: string | FormData | undefined,
@@ -49,10 +49,6 @@ const factory = (method: string) => async < T > (url: string, data?: HttpBody): 
         }
 
         throw new HttpError(status, body);
-    }
-
-    if ('application/pdf' === response.headers.get('Content-Type')) {
-        return response.blob();
     }
 
     return response.json();
