@@ -1,4 +1,4 @@
-import { POST } from '@utils/http';
+import { GET, HttpError, POST } from '@utils/http';
 
 import { LoginProps, LoginResponse, RegisterProps } from './types';
 
@@ -38,9 +38,25 @@ async function logout() {
     }
 }
 
+async function me() {
+    try {
+        const result = await GET('api/auth/me');
+
+        return result;
+    } catch (error: any) {
+        if (error.status == 404) {
+            return null;
+        }
+        // TODO::error handling
+        console.error(error);
+        throw Error('AuthService::me  Unhandled error');
+    }
+}
+
 const AuthService = {
     login,
     logout,
+    me,
     register,
 };
 
