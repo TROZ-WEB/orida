@@ -1,8 +1,7 @@
-import './style.scss';
-
 import Layout from '@components/Layout';
 import { ButtonLink } from '@design/buttons';
 import Space from '@design/Space';
+import PageTitle from '@design/titles/PageTitle';
 import AppRoutes from '@router/AppRoutes';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,8 +10,8 @@ function NotFoundPage() {
     const { t } = useTranslation();
 
     return (
-        <Layout className="not-found__layout">
-            <h1>404</h1>
+        <Layout className="justify-center items-center">
+                <PageTitle>404</PageTitle>
             <Space px={8} />
             <p>
                 {t('notFound_text')}

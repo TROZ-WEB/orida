@@ -1,5 +1,3 @@
-import './style.scss';
-
 import Label from '@design/Label';
 import React from 'react';
 
@@ -11,9 +9,9 @@ interface CheckboxInputProps {
 
 function CheckboxInput({ label, name, register }: CheckboxInputProps) {
     return (
-        <div className="checkbox-input">
+        <div className="flex">
             <Label htmlFor={name}>{label}</Label>
-            <input id={name} type="checkbox" {...register(name)} />
+            <input className="ml-2" id={name} type="checkbox" {...register(name)} />
         </div>
     );
 }

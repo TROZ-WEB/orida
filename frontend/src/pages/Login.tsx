@@ -1,10 +1,9 @@
-import './style.scss';
-
 import Layout from '@components/Layout';
 import LoginForm from '@components/LoginForm';
 import RegisterForm from '@components/RegisterForm';
 import { Button } from '@design/buttons';
 import Space from '@design/Space';
+import PageTitle from '@design/titles/PageTitle';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -22,16 +21,16 @@ function LoginPage() {
     };
 
     return (
-        <Layout className="login__layout">
-            <div className="login__wrapper">
+        <Layout className="items-center">
+            <div className="flex">
                 {
                     mode === Mode.Login && (
                         <div>
-                            <h1>{t('login_title')}</h1>
+                            <PageTitle>{t('login_title')}</PageTitle>
                             <Space px={8} />
                             <LoginForm />
                             <Space px={8} />
-                            <Button className="login__switch-mode" onClick={() => switchToMode(Mode.Register)}>
+                            <Button className="w-full" onClick={() => switchToMode(Mode.Register)}>
                                 {t('register_title')}
                             </Button>
                         </div>
@@ -40,11 +39,11 @@ function LoginPage() {
                 {
                     mode === Mode.Register && (
                         <div>
-                            <h1>{t('register_title')}</h1>
+                            <PageTitle>{t('register_title')}</PageTitle>
                             <Space px={8} />
                             <RegisterForm />
                             <Space px={8} />
-                            <Button className="login__switch-mode" onClick={() => switchToMode(Mode.Login)}>
+                            <Button className="w-full" onClick={() => switchToMode(Mode.Login)}>
                                 {t('register_toLogin')}
                             </Button>
                         </div>

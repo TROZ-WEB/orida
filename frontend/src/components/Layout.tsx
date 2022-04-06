@@ -1,5 +1,3 @@
-import './style.scss';
-
 import NavBar from '@components/NavBar';
 import classnames from 'classnames';
 import React, { PropsWithChildren } from 'react';
@@ -12,7 +10,10 @@ function Layout({ className, children }: PropsWithChildren<LayoutProps>) {
     return (
         <>
             <NavBar />
-            <div className={classnames('layout', className)}>
+            <div className={classnames(
+                'flex flex-col items-start justify-start w-full min-h-full',
+                className,
+            )}>
                 {children}
             </div>
         </>

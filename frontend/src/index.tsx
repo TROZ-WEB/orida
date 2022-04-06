@@ -1,4 +1,5 @@
-import '@styles/base.scss';
+import '@styles/base.css';
+import '@styles/tailwind.css';
 import '@translations/i18n'; // initialize language settings
 
 import * as Sentry from '@sentry/browser';

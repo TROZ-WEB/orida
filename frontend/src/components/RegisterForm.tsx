@@ -1,11 +1,9 @@
-import './style.scss';
-
 import { SubmitButton } from '@design/buttons';
 import { TextInput } from '@design/inputs';
 import Space from '@design/Space';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
-import { login } from '@store/auth/actions';
+import { register as authRegister } from '@store/auth/actions';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -16,15 +14,15 @@ type Inputs = {
     password: string;
 };
 
-function LoginForm() {
+function RegisterForm() {
     const { register, handleSubmit } = useForm<Inputs>();
     const navigate = useNavigate();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
 
-    const onLogin: SubmitHandler<Inputs> = async (data: Inputs) => {
+    const onRegister: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
-            await dispatch(login(data));
+            await dispatch(authRegister(data));
             navigate(AppRoutes.Home);
         } catch (e) {
             // temporary error handling
@@ -34,7 +32,7 @@ function LoginForm() {
     };
 
     return (
-        <form className="login-form__form" onSubmit={handleSubmit(onLogin)}>
+        <form className="max-w-[500px]" onSubmit={handleSubmit(onRegister)}>
             <TextInput
                 label={t('login_email_label')}
                 name="email"
@@ -53,4 +51,4 @@ function LoginForm() {
     );
 }
 
-export default LoginForm;
+export default RegisterForm;

@@ -1,5 +1,3 @@
-import './style.scss';
-
 import Label from '@design/Label';
 import React, { InputHTMLAttributes } from 'react';
 
@@ -11,9 +9,9 @@ interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 function TextInput({ label, name, register, type = 'text', ...props }: TextInputProps) {
     return (
-        <div className="text-input">
+        <div className="w-full">
             {label && <Label htmlFor={name}>{label}</Label>}
-            <input id={name} type={type} {...register(name)} {...props} />
+            <input id={name} className="w-full" type={type} {...register(name)} {...props} />
         </div>
     );
 }
