@@ -3,5 +3,6 @@
     "login_password_label": "Mot de passe",
     "login_submit": "Connexion",
     "login_title": "Connexion",
+    "nav_logout": "Déconnexion",
     "register_title": "S'inscrire"
 }

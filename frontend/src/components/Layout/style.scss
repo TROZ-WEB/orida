@@ -1,8 +1,8 @@
 .layout {
-    align-items: center;
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100%;
     width: 100%;
 }

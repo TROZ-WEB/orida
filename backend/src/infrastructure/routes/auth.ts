@@ -25,8 +25,7 @@ router.post('/register', async (req: Request, res: Response) => {
 
 router.post('/logout', (req: Request, res: Response) => {
     req.logout();
-
-    res.sendStatus(200);
+    res.status(200).json({ success: true });
 });
 
 router.get('/me', (req: Request, res: Response) => {

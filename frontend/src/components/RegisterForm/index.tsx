@@ -21,9 +21,9 @@ function RegisterForm() {
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
 
-    const onRegister: SubmitHandler<Inputs> = async data => {
+    const onRegister: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
-            dispatch(await authRegister(data));
+            await dispatch(authRegister(data));
             navigate(AppRoutes.Home);
         } catch (e) {
             window.alert(e);

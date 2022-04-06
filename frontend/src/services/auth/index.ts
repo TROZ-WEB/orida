@@ -25,10 +25,11 @@ async function register({ email, password }: RegisterProps) {
 
 async function logout() {
     try {
-        throw Error("AuthService::logout Missing implementation")
+        await POST("api/auth/logout");
+        return true;
     } catch (error) {
         // TODO::error handling
-        console.log(error);
+        console.error(error);
         throw Error("AuthService::logout  Unhandled error");
     }
 }

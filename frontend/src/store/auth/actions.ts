@@ -1,7 +1,6 @@
 import { ReduxDispatch } from "@hooks/useThunkDispatch";
 import {
-    SIGN_IN,
-    SIGN_OUT,
+    LOGOUT,
     AuthActionTypes,
     Login,
     LOGIN,
@@ -14,13 +13,8 @@ export const loginAction = (payload: Omit<Login, "type"> ): AuthActionTypes => (
     ...payload,
 });
 
-export const signIn = (token: string): AuthActionTypes => ({
-    type: SIGN_IN,
-    token,
-});
-
-export const signOut = (): AuthActionTypes => ({
-    type: SIGN_OUT,
+export const logoutAction = (): AuthActionTypes => ({
+    type: LOGOUT,
 });
 
 export const login = (props: LoginProps) => async (
@@ -28,6 +22,13 @@ export const login = (props: LoginProps) => async (
 ): Promise<any> => {
     const result = await AuthService.login(props);
     dispatch(loginAction(result));
+};
+
+export const logout = () => async (
+    dispatch: ReduxDispatch,
+): Promise<any> => {
+    await AuthService.logout();
+    dispatch(logoutAction());
 };
 
 export const register = (props: LoginProps) => async (

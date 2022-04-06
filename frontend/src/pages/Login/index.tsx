@@ -11,16 +11,18 @@ function LoginPage() {
 
     return (
         <Layout className="login__layout">
-            <div>
-                <h1>{t("login_title")}</h1>
-                <Space px={8} />
-                <LoginForm />
-            </div>
-            <Space px={24} horizontal />
-            <div>
-                <h1>{t("register_title")}</h1>
-                <Space px={8} />
-                <RegisterForm />
+            <div className="login__wrapper">
+                <div>
+                    <h1>{t("login_title")}</h1>
+                    <Space px={8} />
+                    <LoginForm />
+                </div>
+                <Space px={24} horizontal />
+                <div>
+                    <h1>{t("register_title")}</h1>
+                    <Space px={8} />
+                    <RegisterForm />
+                </div>
             </div>
         </Layout>
     );

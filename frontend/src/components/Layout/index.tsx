@@ -1,3 +1,4 @@
+import NavBar from "@components/NavBar";
 import classnames from "classnames";
 import React, { PropsWithChildren } from "react";
 import "./style.scss";
@@ -8,9 +9,12 @@ interface LayoutProps {
 
 function Layout({ className, children }: PropsWithChildren<LayoutProps>) {
     return (
-        <div className={classnames("layout", className)}>
-            {children}
-        </div>
+        <>
+            <NavBar />
+            <div className={classnames("layout", className)}>
+                {children}
+            </div>
+        </>
     )
 }
 

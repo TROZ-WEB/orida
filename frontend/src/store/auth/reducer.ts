@@ -1,4 +1,4 @@
-import { AuthActionTypes, AuthState, LOGIN } from './types';
+import { AuthActionTypes, AuthState, LOGIN, LOGOUT } from './types';
 
 const initialState: AuthState = {
     token: '',
@@ -15,6 +15,8 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthState =
                 email: action.email,
             };
         }
+        case LOGOUT:
+            return initialState;
         default:
             return state;
     }

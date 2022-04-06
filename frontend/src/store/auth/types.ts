@@ -1,4 +1,4 @@
-export const SIGN_IN = 'SIGN_IN';
+export const LOGOUT = 'LOGOUT';
 export const SIGN_OUT = 'SIGN_OUT';
 export const LOGIN = 'LOGIN';
 
@@ -8,16 +8,11 @@ export interface Login {
     email: string;
 }
 
-interface SignIn {
-    type: typeof SIGN_IN;
-    token: string;
+interface Logout {
+    type: typeof LOGOUT;
 }
 
-interface SignOut {
-    type: typeof SIGN_OUT;
-}
-
-export type AuthActionTypes = SignIn | SignOut | Login;
+export type AuthActionTypes = Logout | Login;
 
 export interface AuthState {
     email: string;
