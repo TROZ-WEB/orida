@@ -4,6 +4,7 @@ export type HttpBody = AnyObject | FormData;
 
 export class HttpError extends Error {
     status: number;
+
     type?: string;
 
     constructor(status: number, body: { message: string; type: string } | null) {

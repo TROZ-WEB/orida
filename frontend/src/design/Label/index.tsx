@@ -1,12 +1,11 @@
-import React, { LabelHTMLAttributes, PropsWithChildren } from "react";
-
 import './style.scss';
 
-interface LabelProps extends PropsWithChildren<LabelHTMLAttributes<HTMLLabelElement>> {
-}
+import React, { LabelHTMLAttributes, PropsWithChildren } from 'react';
 
-function Label({ children, ...props }: LabelProps) {
-    return <label className="label" {...props}> {children}</label>
+type LabelProps = PropsWithChildren<LabelHTMLAttributes<HTMLLabelElement>>
+
+function Label({ children, htmlFor, ...props }: LabelProps) {
+    return <label className="label" htmlFor={htmlFor} {...props}> {children}</label>;
 }
 
 export default Label;

@@ -1,12 +1,19 @@
-import { AnyAction, applyMiddleware, combineReducers, compose, createStore as createReduxStore, Store } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
+/* eslint-disable no-underscore-dangle */
+import {
+    AnyAction,
+    applyMiddleware,
+    combineReducers,
+    compose,
+    createStore as createReduxStore,
+    Store,
+} from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
 import { Persistor } from 'redux-persist/es/types';
+import storage from 'redux-persist/lib/storage';
 import thunkMiddleware from 'redux-thunk';
-import storage from 'redux-persist/lib/storage'
 
-import { SIGN_OUT } from './auth/types';
 import authReducer from './auth/reducer';
-import { useSelector } from 'react-redux';
+import { SIGN_OUT } from './auth/types';
 
 // import logger from 'redux-logger';
 
@@ -23,7 +30,9 @@ const appReducer = combineReducers({
 export type AppState = ReturnType<typeof appReducer>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const rootReducer = (state: any, action: AnyAction): AppState => {
+const rootReducer = (originalState: any, action: AnyAction): AppState => {
+    let state = { ...originalState };
+
     if (action.type === SIGN_OUT) {
         storage.removeItem('persist:root');
         state = undefined;
@@ -43,7 +52,7 @@ interface ReturnTypeConfigStore {
     persistor: Persistor;
 }
 
-export const createStore = (): ReturnTypeConfigStore => {
+export const _createStore = (): ReturnTypeConfigStore => {
     const persistedReducer = persistReducer(persistConfig, rootReducer);
 
     const middlewares = [
@@ -63,8 +72,6 @@ export const createStore = (): ReturnTypeConfigStore => {
     return { store, persistor };
 };
 
-const preloadedState = (): Store => {
-    return createStore().store;
-};
+const createStore = (): Store => _createStore().store;
 
-export default preloadedState;
+export default createStore;

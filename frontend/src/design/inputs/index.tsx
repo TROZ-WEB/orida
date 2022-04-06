@@ -1,1 +1,2 @@
-export { default as TextInput } from "./Text";
+export { default as CheckboxInput } from './Checkbox';
+export { default as TextInput } from './Text';

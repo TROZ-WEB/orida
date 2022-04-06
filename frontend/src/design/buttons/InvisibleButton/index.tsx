@@ -1,12 +1,15 @@
-import React, { ButtonHTMLAttributes, PropsWithChildren } from "react";
-import classNames from "classnames";
+import './style.scss';
 
-import "./style.scss";
+import classNames from 'classnames';
+import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
-function InvisibleButton({ children, className, ...props }: PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>) {
+type InvisibleButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
+
+function InvisibleButton({ children, className, type = 'button', ...props }: InvisibleButtonProps) {
     return (
         <button
-            className={classNames("button-invisible", className)}
+            className={classNames('button-invisible', className)}
+            type={type}
             {...props}
         >
             {children}

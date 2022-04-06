@@ -1,8 +1,20 @@
 {
     "root": true,
-    "extends": "@thetribe/eslint-config-react-typescript",
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    },
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "@thetribe/eslint-config-react-typescript"
+    ],
+    "plugins": [
+        "simple-import-sort"
+    ],
     "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": "./tsconfig.json",
+        "tsconfigRootDir": "./"
     },
     "env": {
         "browser": true
@@ -14,5 +26,12 @@
                 "jest": true
             }
         }
-    ]
+    ],
+    "rules": {
+        "import/order": "off", // collision with simple-import-sort as specified here: https://github.com/lydell/eslint-plugin-simple-import-sort
+        "react/button-has-type": "off", // subject to bug, poorly handled
+        "simple-import-sort/exports": "error",
+        "simple-import-sort/imports": "error",
+        "sort-imports": "off" // collision with simple-import-sort as specified here: https://github.com/lydell/eslint-plugin-simple-import-sort
+    }
 }

@@ -1,11 +1,9 @@
-import Layout from "@components/Layout";
-import useSelector from "@hooks/useSelector";
-import React from "react";
+import Layout from '@components/Layout';
+import useSelector from '@hooks/useSelector';
+import React from 'react';
 
 function HomePage() {
-    const auth = useSelector(state => state.auth);
-
-    console.log({ auth });
+    const auth = useSelector((state) => state.auth);
 
     return (
         <Layout>

@@ -1,14 +1,14 @@
-import { ReduxDispatch } from "@hooks/useThunkDispatch";
-import {
-    LOGOUT,
-    AuthActionTypes,
-    Login,
-    LOGIN,
-} from "./types";
-import { AppState } from "..";
-import AuthService, { LoginProps } from "@services/auth";
+import { ReduxDispatch } from '@hooks/useThunkDispatch';
+import AuthService, { LoginProps } from '@services/auth';
 
-export const loginAction = (payload: Omit<Login, "type"> ): AuthActionTypes => ({
+import {
+    AuthActionTypes,
+    LOGIN,
+    Login,
+    LOGOUT,
+} from './types';
+
+export const loginAction = (payload: Omit<Login, 'type'>): AuthActionTypes => ({
     type: LOGIN,
     ...payload,
 });
@@ -32,10 +32,8 @@ export const logout = () => async (
 };
 
 export const register = (props: LoginProps) => async (
-    dispatch: ReduxDispatch,
-    getState: () => AppState
 ): Promise<any> => {
     const actionResult = await AuthService.register(props);
     console.error({ actionResult });
-    throw Error("Store::Auth::Register Missing implementation");
+    throw Error('Store::Auth::Register Missing implementation');
 };

@@ -1,8 +1,8 @@
-import React, { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
-import classnames from "classnames";
-
 import './style.scss';
+
+import classnames from 'classnames';
+import React, { PropsWithChildren } from 'react';
+import { Link } from 'react-router-dom';
 
 interface ButtonLinkProps {
     className?: string;
@@ -10,9 +10,14 @@ interface ButtonLinkProps {
     to: string;
 }
 
-function ButtonLink({ children, className = "", invisible = false, to }: PropsWithChildren<ButtonLinkProps>) {
+function ButtonLink({ children, className = '', invisible = false, to }: PropsWithChildren<ButtonLinkProps>) {
     return (
-        <Link className={classnames("button-link", { "button-link--invisible": invisible }, className)} to={to}>{children}</Link>
+        <Link
+            className={classnames('button-link', { 'button-link--invisible': invisible }, className)}
+            to={to}
+        >
+            {children}
+        </Link>
     );
 }
 
