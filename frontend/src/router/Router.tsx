@@ -1,4 +1,5 @@
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
+import NotFound from '@pages/404';
 import Home from '@pages/Home';
 import Login from '@pages/Login';
 import React from 'react';
@@ -13,7 +14,7 @@ function Router() {
             <Route element={<AuthenticatedRoute />}>
                 <Route element={<Home />} path={AppRoutes.Home} />
             </Route>
-            <Route path="*" element={<p>There's nothing here: 404!</p>} />
+            <Route element={<NotFound />} path="*" />
         </Routes>
     );
 }

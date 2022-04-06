@@ -4,6 +4,8 @@
     "login_submit": "Connexion",
     "login_title": "Connexion",
     "nav_logout": "Déconnexion",
+    "notFound_back": "Retour à l'accueil",
+    "notFound_text": "Il n'y a rien ici.",
     "register_toLogin": "Déjà un compte ?",
     "register_title": "S'inscrire"
 }

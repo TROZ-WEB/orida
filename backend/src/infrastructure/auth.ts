@@ -19,14 +19,12 @@ auth.deserializeUser(callbackify(async (id: string): Promise<User|null> => {
 
 // Strategies
 auth.use(new LocalStrategy({
-    usernameField: "email",
-    passwordField: "password",
+    usernameField: 'email',
+    passwordField: 'password',
 }, async (username, password, done): Promise<void> => {
-    console.log("local strategy");
     try {
         done(null, await loginUser({ username, password })({ userRepository }));
     } catch (error) {
-        console.log({error})
         if (error instanceof UserError) {
             done(null, false, { message: error.message });
         } else {

@@ -19,7 +19,7 @@ const registerUser = ({ email, password }: Arg) => async ({ userRepository }: Co
 
     const user = userRepository.create({ email });
     await user.updatePassword(password);
-    console.log({user});
+
     return userRepository.save(user);
 };
 

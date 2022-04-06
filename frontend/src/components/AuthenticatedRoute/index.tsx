@@ -1,11 +1,10 @@
-import React, { PropsWithChildren, useEffect, useState } from "react";
-import { IndexRouteProps, LayoutRouteProps, Navigate, Outlet, PathRouteProps } from "react-router-dom";
-import AppRoutes from "@router/AppRoutes";
-import Loader from "@design/Loader";
-import useSelector from "@hooks/useSelector";
-import AuthService from "@services/auth";
+import Loader from '@design/Loader';
+import AppRoutes from '@router/AppRoutes';
+import AuthService from '@services/auth';
+import React, { useEffect, useState } from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
-function AuthenticatedRoute({ children, ...rest }: PropsWithChildren<PathRouteProps | LayoutRouteProps | IndexRouteProps>) {
+function AuthenticatedRoute() {
     const [loading, setLoading] = useState<boolean>(true);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 

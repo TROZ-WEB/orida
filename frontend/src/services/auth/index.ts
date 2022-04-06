@@ -1,4 +1,4 @@
-import { GET, HttpError, POST } from '@utils/http';
+import { GET, POST } from '@utils/http';
 
 import { LoginProps, LoginResponse, RegisterProps } from './types';
 
@@ -44,7 +44,7 @@ async function me() {
 
         return result;
     } catch (error: any) {
-        if (error.status == 404) {
+        if (error.status === 404) {
             return null;
         }
         // TODO::error handling

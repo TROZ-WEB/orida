@@ -32,7 +32,7 @@ router.get('/me', (req: Request, res: Response) => {
     if (req.user) {
         res.json(mapUser(req.user));
     } else {
-        res.sendStatus(404);
+        res.status(404).json({});
     }
 });
 
