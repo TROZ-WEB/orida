@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import AppRoutes from "@router/AppRoutes";
 import Space from "@design/Space";
-import SubmitButton from "@design/buttons/SubmitButton";
+import { SubmitButton } from "@design/buttons";
 import { useTranslation } from "react-i18next";
 import { login } from "@store/auth/actions";
 import useThunkDispatch from "@hooks/useThunkDispatch";

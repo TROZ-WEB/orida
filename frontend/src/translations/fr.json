@@ -4,5 +4,6 @@
     "login_submit": "Connexion",
     "login_title": "Connexion",
     "nav_logout": "Déconnexion",
+    "register_toLogin": "Déjà un compte ?",
     "register_title": "S'inscrire"
 }
