@@ -1,24 +1,22 @@
-import classNames from 'classnames';
+import { classnames } from '@utils/classnames';
 import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+import Button from './Button';
 
 type InvisibleButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
 
-const BASE_CLASSES = `
-bg-none
-border-0
-rounded-lg
-py-2 px-3
-`;
-
 function InvisibleButton({ children, className, type = 'button', ...props }: InvisibleButtonProps) {
     return (
-        <button
-            className={classNames(BASE_CLASSES, className)}
+        <Button
+            className={classnames(`
+                bg-transparent
+                text-black
+            `, className,
+            )}
             type={type}
             {...props}
         >
             {children}
-        </button>
+        </Button>
     );
 }
 

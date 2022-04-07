@@ -1,5 +1,5 @@
 import NavBar from '@components/NavBar';
-import classnames from 'classnames';
+import { classnames } from '@utils/classnames';
 import React, { PropsWithChildren } from 'react';
 
 interface LayoutProps {

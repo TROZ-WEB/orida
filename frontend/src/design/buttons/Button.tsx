@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { classnames } from '@utils/classnames';
 import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
 type ButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
@@ -6,7 +6,7 @@ type ButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
 function Button({ children, className, type = 'button', ...props }: ButtonProps) {
     return (
         <button
-            className={classNames(`
+            className={classnames(`
                 bg-primary
                 block
                 border-0

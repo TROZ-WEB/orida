@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { classnames } from '@utils/classnames';
 import React, { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
