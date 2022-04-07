@@ -6,6 +6,7 @@ module.exports = {
                 'primary': "#38337c",
                 'primary-hover': "#6560af",
                 'secondary': "#fea733",
+                'secondary-hover': "#fbc173",
                 'transparent': "transparent",
             }
         },

@@ -35,18 +35,23 @@ function LoginForm() {
         <form className="max-w-[500px]" onSubmit={handleSubmit(onLogin)}>
             <TextInput
                 label={t('login_email_label')}
+                labelClassNames="text-white"
                 name="email"
                 register={register}
+                placeholder="bruce@wayneenterprise.com"
+                autoComplete='on'
             />
-            <Space px={8} />
+            <Space px={24} />
             <TextInput
                 label={t('login_password_label')}
+                labelClassNames="text-white"
                 name="password"
                 register={register}
                 type="password"
+                autoComplete='on'
             />
-            <Space px={12} />
-            <SubmitButton value={t('login_submit') as string} />
+            <Space px={62} />
+            <SubmitButton className="bg-secondary hover:bg-secondary-hover" value={t('login_submit') as string} />
         </form>
     );
 }

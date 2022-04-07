@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { classnames } from '@utils/classnames';
 import React, { ButtonHTMLAttributes } from 'react';
 
 function SubmitButton({ className, ...props }: ButtonHTMLAttributes<HTMLInputElement>) {
