@@ -15,6 +15,7 @@ router.post('/register', async (req: Request, res: Response) => {
         const user = {
             email: req.body.email,
             password: req.body.password,
+            type: req.body.type,
         };
         const newUser = await registerUser(user)({ userRepository });
         res.json(mapUser(newUser));

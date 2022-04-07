@@ -7,6 +7,7 @@ interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
     labelClassNames?: string;
     name: string;
     register: any;
+    required?: boolean;
 }
 
 const INPUT_BASE_CLASSES = `
@@ -18,6 +19,7 @@ rounded-none
 border-b-white
 outline-none
 text-white
+duration-300
 
 focus:border-b-secondary
 
@@ -25,12 +27,26 @@ hover:border-b-secondary
 hover:cursor-text
 `;
 
-function TextInput({ label, labelClassNames, name, register, type = 'text', ...props }: TextInputProps) {
+function TextInput({
+    label,
+    labelClassNames,
+    name,
+    register,
+    required = false,
+    type = 'text',
+    ...props
+}: TextInputProps) {
     return (
         <div className="w-full">
             {label && <Label className={labelClassNames} htmlFor={name}>{label}</Label>}
             <Space px={8} />
-            <input id={name} className={INPUT_BASE_CLASSES} type={type} {...register(name)} {...props} />
+            <input
+                id={name}
+                className={INPUT_BASE_CLASSES}
+                type={type}
+                {...register(name, { required })}
+                {...props}
+            />
         </div>
     );
 }

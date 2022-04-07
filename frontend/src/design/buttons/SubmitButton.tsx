@@ -13,6 +13,7 @@ function SubmitButton({ className, ...props }: ButtonHTMLAttributes<HTMLInputEle
         rounded
         text-white text-xs font-normal text center
         w-full
+        duration-300
 
         hover:bg-primary-hover
     `, className)} {...props} type="submit" />;

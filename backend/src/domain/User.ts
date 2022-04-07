@@ -1,6 +1,11 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 
+export enum UserType {
+    Citizen = "CITIZEN",
+    Community = "COMMUNITY",
+}
+
 class User {
     id: string;
 
@@ -8,9 +13,12 @@ class User {
 
     passwordHash: string | null = null;
 
-    constructor(email: string) {
+    type: UserType;
+
+    constructor(email: string, type: UserType) {
         this.id = uuidv4();
         this.email = email;
+        this.type = type;
     }
 
     async updatePassword(password: string): Promise<void> {

@@ -16,7 +16,7 @@ enum Mode {
 
 function LoginPage() {
     const { t } = useTranslation();
-    const [mode, setMode] = useState<Mode>(Mode.Login);
+    const [mode, setMode] = useState<Mode>(Mode.Register);
 
     const switchToMode = (newMode: Mode) => {
         setMode(newMode);

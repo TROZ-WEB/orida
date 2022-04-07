@@ -14,9 +14,9 @@ async function login({ email, password }: LoginProps): Promise<LoginResponse> {
     }
 }
 
-async function register({ email, password }: RegisterProps) {
+async function register(props: RegisterProps) {
     try {
-        const response = await POST('api/auth/register', { email, password });
+        const response = await POST('api/auth/register', { ...props });
 
         return response;
     } catch (error) {

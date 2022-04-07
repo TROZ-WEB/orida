@@ -6,6 +6,9 @@
     "nav_logout": "Déconnexion",
     "notFound_back": "Retour à l'accueil",
     "notFound_text": "Il n'y a rien ici.",
+    "register_title": "S'inscrire",
     "register_toLogin": "Déjà un compte ? Je me connecte",
-    "register_title": "S'inscrire"
+    "register_type_label": "Vous êtes...",
+    "type_userType_citizen": "Citoyen",
+    "type_userType_community": "Collectivité"
 }
