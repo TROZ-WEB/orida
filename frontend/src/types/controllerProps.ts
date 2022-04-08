@@ -1,4 +1,4 @@
-import { Control, FieldName, FieldValues, RegisterOptions } from "react-hook-form";
+import { Control, FieldName, FieldValues, RegisterOptions } from 'react-hook-form';
 
 interface ControllerProps<TFieldValues extends FieldValues = FieldValues> {
     name: FieldName<TFieldValues>;
@@ -6,6 +6,6 @@ interface ControllerProps<TFieldValues extends FieldValues = FieldValues> {
     onFocus?: () => void;
     defaultValue?: unknown;
     control?: Control<TFieldValues>;
-};
+}
 
 export default ControllerProps;

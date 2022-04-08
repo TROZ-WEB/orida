@@ -1,4 +1,4 @@
-import UserType from "@customTypes/userType";
+import UserType from '@customTypes/userType';
 
 export const LOGOUT = 'LOGOUT';
 export const SIGN_OUT = 'SIGN_OUT';

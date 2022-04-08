@@ -2,9 +2,9 @@ import Loader from '@design/Loader';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
 import AuthService from '@services/auth';
+import { logout } from '@store/auth/actions';
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { logout } from '@store/auth/actions';
 
 function AuthenticatedRoute() {
     const dispatch = useThunkDispatch();

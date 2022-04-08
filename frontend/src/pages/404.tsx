@@ -11,7 +11,7 @@ function NotFoundPage() {
 
     return (
         <Layout className="justify-center items-center">
-                <PageTitle>404</PageTitle>
+            <PageTitle>404</PageTitle>
             <Space px={8} />
             <p>
                 {t('notFound_text')}

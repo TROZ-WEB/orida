@@ -1,4 +1,4 @@
-import UserType from "@customTypes/userType";
+import UserType from '@customTypes/userType';
 
 export interface LoginResponse {
     id: string;
@@ -18,5 +18,5 @@ export interface RegisterProps {
 }
 
 export enum AuthError {
-    RegisterEmailAlreadyInUse = ""
+    RegisterEmailAlreadyInUse = ''
 }

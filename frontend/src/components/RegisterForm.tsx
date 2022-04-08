@@ -30,43 +30,43 @@ function RegisterForm() {
                 email: data.email,
                 password: data.password,
                 type: data.type ? UserType.Citizen : UserType.Community,
-            }
+            };
             await dispatch(authRegister(typedData));
             navigate(AppRoutes.Home);
         } catch (e) {
-            notify(NotificationType.Error, t("register_error_emailAlreadyInUse"));
+            notify(NotificationType.Error, t('register_error_emailAlreadyInUse'));
         }
     };
 
     return (
         <form className="max-w-[500px]" onSubmit={handleSubmit(onRegister)}>
             <ToggleText
-                name="type"
-                label={t("register_type_label")}
-                labelClassName='text-white'
-                trueText={t("type_userType_citizen")}
-                falseText={t("type_userType_community")}
                 control={control}
-                defaultValue={true}
+                falseText={t('type_userType_community')}
+                label={t('register_type_label')}
+                labelClassName='text-white'
+                name="type"
+                trueText={t('type_userType_citizen')}
+                defaultValue
             />
             <Space px={24} />
             <TextInput
+                autoComplete='off'
                 label={t('login_email_label')}
                 labelClassNames="text-white"
                 name="email"
-                register={register}
                 placeholder="bruce@wayneenterprise.com"
-                autoComplete='off'
+                register={register}
                 required
             />
             <Space px={24} />
             <TextInput
+                autoComplete='off'
                 label={t('login_password_label')}
                 labelClassNames="text-white"
                 name="password"
                 register={register}
                 type="password"
-                autoComplete='off'
                 required
             />
             <Space px={62} />

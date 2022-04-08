@@ -1,13 +1,12 @@
+import Logo from '@assets/logo.svg';
 import Layout from '@components/Layout';
 import LoginForm from '@components/LoginForm';
 import RegisterForm from '@components/RegisterForm';
 import { Button } from '@design/buttons';
 import InvisibleButton from '@design/buttons/InvisibleButton';
 import Space from '@design/Space';
-import PageTitle from '@design/titles/PageTitle';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Logo from "@assets/logo.svg";
 
 enum Mode {
     Login = 'LOGIN',
@@ -24,7 +23,7 @@ function LoginPage() {
 
     return (
         <Layout className="items-center justify-center bg-primary">
-            <img className='max-w-[120px]' src={Logo} />
+            <img alt="logo-orida" className='max-w-[120px]' src={Logo} />
             <Space px={150} />
             {
                 mode === Mode.Login && (

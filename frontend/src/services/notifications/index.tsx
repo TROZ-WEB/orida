@@ -1,6 +1,6 @@
-import React from "react";
+import './style.css';
+
 import { toast } from 'react-toastify';
-import "./style.css";
 
 export enum NotificationType {
     Success,
@@ -11,7 +11,7 @@ export enum NotificationType {
 }
 
 function notify(type: NotificationType, content: string) {
-    switch(type) {
+    switch (type) {
         case NotificationType.Success:
             return toast.success(content);
         case NotificationType.Error:

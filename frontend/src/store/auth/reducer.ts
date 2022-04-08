@@ -1,4 +1,5 @@
 import UserType from '@customTypes/userType';
+
 import { AuthActionTypes, AuthState, LOGIN, LOGOUT } from './types';
 
 const initialState: AuthState = {

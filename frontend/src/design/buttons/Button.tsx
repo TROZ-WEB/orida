@@ -1,4 +1,4 @@
-import { classnames } from '@utils/classnames';
+import classnames from '@utils/classnames';
 import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
 type ButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
@@ -21,8 +21,7 @@ function Button({ children, className, type = 'button', ...props }: ButtonProps)
 
                 hover:bg-primary-hover
                 `,
-                className,
-            )}
+            className)}
             type={type}
             {...props}
         >

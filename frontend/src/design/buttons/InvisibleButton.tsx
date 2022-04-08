@@ -1,5 +1,6 @@
-import { classnames } from '@utils/classnames';
+import classnames from '@utils/classnames';
 import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+
 import Button from './Button';
 
 type InvisibleButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
@@ -10,8 +11,7 @@ function InvisibleButton({ children, className, type = 'button', ...props }: Inv
             className={classnames(`
                 bg-transparent
                 text-black
-            `, className,
-            )}
+            `, className)}
             type={type}
             {...props}
         >

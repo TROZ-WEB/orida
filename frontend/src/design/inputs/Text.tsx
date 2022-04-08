@@ -41,8 +41,8 @@ function TextInput({
             {label && <Label className={labelClassNames} htmlFor={name}>{label}</Label>}
             <Space px={8} />
             <input
-                id={name}
                 className={INPUT_BASE_CLASSES}
+                id={name}
                 type={type}
                 {...register(name, { required })}
                 {...props}

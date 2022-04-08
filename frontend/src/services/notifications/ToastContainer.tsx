@@ -1,18 +1,19 @@
-import React from "react";
-import { ToastContainer as OriginalToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import React from 'react';
+import { ToastContainer as OriginalToastContainer } from 'react-toastify';
 
 function ToastContainer() {
     return (
         <OriginalToastContainer
-            position="top-right"
             autoClose={5000}
-            hideProgressBar={true}
             newestOnTop={false}
-            closeOnClick
+            position="top-right"
             rtl={false}
-            pauseOnFocusLoss
+            closeOnClick
             draggable
+            hideProgressBar
+            pauseOnFocusLoss
             pauseOnHover
         />
     );

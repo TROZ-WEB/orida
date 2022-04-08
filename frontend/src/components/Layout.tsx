@@ -1,5 +1,5 @@
 import NavBar from '@components/NavBar';
-import { classnames } from '@utils/classnames';
+import classnames from '@utils/classnames';
 import React, { PropsWithChildren } from 'react';
 
 interface LayoutProps {
@@ -13,7 +13,8 @@ function Layout({ className, children }: PropsWithChildren<LayoutProps>) {
             <div className={classnames(
                 'flex flex-col items-start justify-start w-full min-h-full',
                 className,
-            )}>
+            )}
+            >
                 {children}
             </div>
         </>
