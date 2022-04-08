@@ -19,6 +19,7 @@ const BASE_CLASSES: string = `
     rounded
     text-white text-xs font-normal text center
     w-full
+    text-center
 
     hover:bg-primary-hover
 `;

@@ -17,7 +17,7 @@ function NotFoundPage() {
                 {t('notFound_text')}
             </p>
             <Space px={8} />
-            <ButtonLink to={AppRoutes.Home}>{t('notFound_back')}</ButtonLink>
+            <ButtonLink className='w-[200px]' to={AppRoutes.Home}>{t('notFound_back')}</ButtonLink>
         </Layout>
     );
 }

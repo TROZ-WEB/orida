@@ -1,6 +1,9 @@
+import UserType from "@customTypes/userType";
+
 export interface LoginResponse {
     id: string;
     email: string;
+    type: UserType;
 }
 
 export interface LoginProps {
@@ -11,6 +14,7 @@ export interface LoginProps {
 export interface RegisterProps {
     email: string;
     password: string;
+    type: UserType;
 }
 
 export enum AuthError {

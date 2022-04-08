@@ -1,6 +1,8 @@
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import NotFound from '@pages/404';
-import Home from '@pages/Home';
+import HomeCitizenPage from '@pages/Home/HomeCitizen';
+import HomeCommunityPage from '@pages/Home/HomeCommunity';
+import HomeRedirect from '@pages/Home/HomeRedirect';
 import Login from '@pages/Login';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -12,7 +14,7 @@ function Router() {
         <Routes>
             <Route element={<Login />} path={AppRoutes.Login} />
             <Route element={<AuthenticatedRoute />}>
-                <Route element={<Home />} path={AppRoutes.Home} />
+                <Route path={AppRoutes.Home} element={<HomeRedirect />} />
             </Route>
             <Route element={<NotFound />} path="*" />
         </Routes>
