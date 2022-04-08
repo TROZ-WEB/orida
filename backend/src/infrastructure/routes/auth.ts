@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
-import { UserErrorType } from '../../useCases/UserError';
 import { castToUserType } from '../../domain/User';
 import registerUser from '../../useCases/auth/registerUser';
+import { UserErrorType } from '../../useCases/UserError';
 import auth from '../auth';
 import { userRepository } from '../database';
 import { mapUser } from '../mappers';

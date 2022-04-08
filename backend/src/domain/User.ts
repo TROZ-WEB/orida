@@ -2,15 +2,15 @@ import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 
 export enum UserType {
-    Citizen = "CITIZEN",
-    Community = "COMMUNITY",
+    Citizen = 'CITIZEN',
+    Community = 'COMMUNITY',
 }
 
 export function castToUserType(value: string): UserType {
     switch (value) {
-        case "COMMUNITY":
+        case 'COMMUNITY':
             return UserType.Community;
-        case "CITIZEN":
+        case 'CITIZEN':
         default:
             return UserType.Citizen;
     }
