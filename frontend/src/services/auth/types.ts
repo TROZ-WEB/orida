@@ -12,3 +12,7 @@ export interface RegisterProps {
     email: string;
     password: string;
 }
+
+export enum AuthError {
+    RegisterEmailAlreadyInUse = ""
+}

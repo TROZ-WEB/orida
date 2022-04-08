@@ -6,9 +6,12 @@
     "nav_logout": "Déconnexion",
     "notFound_back": "Retour à l'accueil",
     "notFound_text": "Il n'y a rien ici.",
+    "notifications_error_title": "Erreur",
+    "register_submit": "Créer mon compte",
     "register_title": "S'inscrire",
     "register_toLogin": "Déjà un compte ? Je me connecte",
     "register_type_label": "Vous êtes...",
+    "register_error_emailAlreadyInUse": "Ce compte existe déjà. Avez-vous essayé de vous connecter ?",
     "type_userType_citizen": "Citoyen",
     "type_userType_community": "Collectivité"
 }

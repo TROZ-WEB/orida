@@ -1,0 +1,12 @@
+.Toastify__toast.Toastify__toast-theme--light.Toastify__toast--success .Toastify__toast-body svg {
+    fill: #00cf6c;
+}
+.Toastify__toast.Toastify__toast-theme--light.Toastify__toast--error .Toastify__toast-body svg {
+    fill: #ff5959;
+}
+.Toastify__toast.Toastify__toast-theme--light.Toastify__toast--info .Toastify__toast-body svg {
+    fill: #27beb6;
+}
+.Toastify__toast.Toastify__toast-theme--light.Toastify__toast--warning .Toastify__toast-body svg {
+    fill: #ffa755;
+}

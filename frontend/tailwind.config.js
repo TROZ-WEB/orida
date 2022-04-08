@@ -8,6 +8,11 @@ module.exports = {
                 'secondary': "#fea733",
                 'secondary-hover': "#fbc173",
                 'transparent': "transparent",
+                'success': "#00cf6c",
+                'error': "#ff5959",
+                'warning': "#ffa755",
+                'info': "#27beb6",
+                'default': "#ffffff",
             }
         },
     },

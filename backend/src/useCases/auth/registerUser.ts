@@ -1,5 +1,5 @@
 import { User, UserRepository, UserType } from '../../domain/User';
-import UserError from '../UserError';
+import UserError, { UserErrorType } from '../UserError';
 
 interface Arg {
     email: string;
@@ -15,7 +15,7 @@ const registerUser = ({ email, password, type }: Arg) => async ({ userRepository
     const existingUser = await userRepository.findOne({ email });
 
     if (existingUser) {
-        throw new UserError('Email already in use');
+        throw new UserError(UserErrorType.RegisterEmailAlreadyInUse);
     }
 
     const user = userRepository.create({ email, type });

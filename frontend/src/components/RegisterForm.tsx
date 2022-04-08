@@ -5,6 +5,7 @@ import ToggleText from '@design/inputs/ToggleText';
 import Space from '@design/Space';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
+import notify, { NotificationType } from '@services/notifications';
 import { register as authRegister } from '@store/auth/actions';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -30,13 +31,10 @@ function RegisterForm() {
                 password: data.password,
                 type: data.type ? UserType.Citizen : UserType.Community,
             }
-            console.log(typedData);
-            await dispatch(authRegister(data));
+            await dispatch(authRegister(typedData));
             navigate(AppRoutes.Home);
         } catch (e) {
-            // temporary error handling
-            // eslint-disable-next-line
-            window.alert(e);
+            notify(NotificationType.Error, t("register_error_emailAlreadyInUse"));
         }
     };
 
@@ -72,7 +70,7 @@ function RegisterForm() {
                 required
             />
             <Space px={62} />
-            <SubmitButton className="bg-secondary hover:bg-secondary-hover" value={t('login_submit') as string} />
+            <SubmitButton className="bg-secondary hover:bg-secondary-hover" value={t('register_submit') as string} />
         </form>
     );
 }

@@ -1,4 +1,6 @@
 import { Request, Response, Router } from 'express';
+import { UserErrorType } from '../../useCases/UserError';
+import { castToUserType } from '../../domain/User';
 import registerUser from '../../useCases/auth/registerUser';
 import auth from '../auth';
 import { userRepository } from '../database';
@@ -15,12 +17,19 @@ router.post('/register', async (req: Request, res: Response) => {
         const user = {
             email: req.body.email,
             password: req.body.password,
-            type: req.body.type,
+            type: castToUserType(req.body.type),
         };
         const newUser = await registerUser(user)({ userRepository });
         res.json(mapUser(newUser));
-    } catch (e) {
-        res.status(500).json(e);
+    } catch (e: any) {
+        if (e.message === UserErrorType.RegisterEmailAlreadyInUse) {
+            res.status(409).json({
+                error: e.message,
+            });
+        }
+        res.status(500).json({
+            error: UserErrorType.RegisterUnknownError,
+        });
     }
 });
 

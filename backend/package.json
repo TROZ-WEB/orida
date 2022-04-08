@@ -39,6 +39,7 @@
     "lint:fix": "eslint src --ext ts,tsx --fix",
     "start": "nodemon --ext js,ts --watch src --exec ts-node src",
     "test": "jest",
-    "test:coverage": "yarn test --coverage"
+    "test:coverage": "yarn test --coverage",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js --config src/infrastructure/database/config.ts"
   }
 }

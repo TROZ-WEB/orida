@@ -1,6 +1,6 @@
 import { GET, POST } from '@utils/http';
 
-import { LoginProps, LoginResponse, RegisterProps } from './types';
+import { AuthError, LoginProps, LoginResponse, RegisterProps } from './types';
 
 async function login({ email, password }: LoginProps): Promise<LoginResponse> {
     try {
@@ -19,7 +19,10 @@ async function register(props: RegisterProps) {
         const response = await POST('api/auth/register', { ...props });
 
         return response;
-    } catch (error) {
+    } catch (error: any) {
+        if (error.status === 409) {
+            throw Error(AuthError.RegisterEmailAlreadyInUse);
+        }
         // TODO::error handling
         console.error(error);
         throw Error('AuthService::register  Unhandled error');

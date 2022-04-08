@@ -6,6 +6,16 @@ export enum UserType {
     Community = "COMMUNITY",
 }
 
+export function castToUserType(value: string): UserType {
+    switch (value) {
+        case "COMMUNITY":
+            return UserType.Community;
+        case "CITIZEN":
+        default:
+            return UserType.Citizen;
+    }
+}
+
 class User {
     id: string;
 
