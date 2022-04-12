@@ -22,6 +22,8 @@ FROM devDependencies as build
 COPY tsconfig.json .
 COPY public ./public
 COPY src ./src
+COPY craco.config.js ./craco.config.js
+COPY tsconfig.paths.json ./tsconfig.paths.json
 
 ARG VERSION
 RUN echo "export default '$VERSION';" > src/version.ts

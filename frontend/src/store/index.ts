@@ -29,7 +29,7 @@ const appReducer = combineReducers({
 
 export type AppState = ReturnType<typeof appReducer>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line
 const rootReducer = (originalState: any, action: AnyAction): AppState => {
     let state = { ...originalState };
 
