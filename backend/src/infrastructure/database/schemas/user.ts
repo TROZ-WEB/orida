@@ -15,8 +15,5 @@ export default new EntitySchema<User>({
         passwordHash: {
             type: 'character varying',
         },
-        type: {
-            type: 'character varying',
-        },
     },
 });

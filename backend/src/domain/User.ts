@@ -1,21 +1,6 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 
-export enum UserType {
-    Citizen = 'CITIZEN',
-    Community = 'COMMUNITY',
-}
-
-export function castToUserType(value: string): UserType {
-    switch (value) {
-        case 'COMMUNITY':
-            return UserType.Community;
-        case 'CITIZEN':
-        default:
-            return UserType.Citizen;
-    }
-}
-
 class User {
     id: string;
 
@@ -23,12 +8,12 @@ class User {
 
     passwordHash: string | null = null;
 
-    type: UserType;
+    isAdmin: boolean;
 
-    constructor(email: string, type: UserType) {
+    constructor(email: string, isAdmin: boolean = false) {
         this.id = uuidv4();
         this.email = email;
-        this.type = type;
+        this.isAdmin = isAdmin;
     }
 
     async updatePassword(password: string): Promise<void> {

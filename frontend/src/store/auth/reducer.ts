@@ -1,12 +1,10 @@
-import UserType from '@customTypes/userType';
-
 import { AuthActionTypes, AuthState, LOGIN, LOGOUT } from './types';
 
 const initialState: AuthState = {
     token: '',
     email: '',
     id: '',
-    type: UserType.None,
+    isAdmin: false,
 };
 
 const authReducer = (state = initialState, action: AuthActionTypes): AuthState => {
@@ -16,7 +14,7 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthState =
                 ...state,
                 id: action.id,
                 email: action.email,
-                type: action.authType,
+                isAdmin: action.isAdmin,
             };
         }
         case LOGOUT:

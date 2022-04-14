@@ -1,4 +1,3 @@
-import UserType from '@customTypes/userType';
 import { SubmitButton } from '@design/buttons';
 import { TextInput } from '@design/inputs';
 import ToggleText from '@design/inputs/ToggleText';
@@ -15,11 +14,10 @@ import { useNavigate } from 'react-router-dom';
 type Inputs = {
     email: string;
     password: string;
-    type: boolean;
 };
 
 function RegisterForm() {
-    const { control, register, handleSubmit } = useForm<Inputs>();
+    const { register, handleSubmit } = useForm<Inputs>();
     const navigate = useNavigate();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
@@ -29,7 +27,6 @@ function RegisterForm() {
             const typedData = {
                 email: data.email,
                 password: data.password,
-                type: data.type ? UserType.Citizen : UserType.Community,
             };
             await dispatch(authRegister(typedData));
             navigate(AppRoutes.Home);
@@ -40,16 +37,6 @@ function RegisterForm() {
 
     return (
         <form className="max-w-[500px]" onSubmit={handleSubmit(onRegister)}>
-            <ToggleText
-                control={control}
-                falseText={t('type_userType_community')}
-                label={t('register_type_label')}
-                labelClassName='text-white'
-                name="type"
-                trueText={t('type_userType_citizen')}
-                defaultValue
-            />
-            <Space px={24} />
             <TextInput
                 autoComplete='off'
                 label={t('login_email_label')}

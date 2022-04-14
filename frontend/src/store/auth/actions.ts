@@ -20,11 +20,8 @@ export const logoutAction = (): AuthActionTypes => ({
 export const login = (props: LoginProps) => async (
     dispatch: ReduxDispatch,
 ): Promise<any> => {
-    const { type, ...result } = await AuthService.login(props);
-    dispatch(loginAction({
-        ...result,
-        authType: type,
-    }));
+    const result = await AuthService.login(props);
+    dispatch(loginAction(result));
 };
 
 export const logout = () => async (
@@ -37,9 +34,6 @@ export const logout = () => async (
 export const register = (props: RegisterProps) => async (
     dispatch: ReduxDispatch,
 ): Promise<any> => {
-    const { type, ...result } = await AuthService.register(props);
-    dispatch(loginAction({
-        ...result,
-        authType: type,
-    }));
+    const result = await AuthService.register(props);
+    dispatch(loginAction(result));
 };

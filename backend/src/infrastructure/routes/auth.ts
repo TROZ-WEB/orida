@@ -1,5 +1,4 @@
 import { Request, Response, Router } from 'express';
-import { castToUserType } from '../../domain/User';
 import registerUser from '../../useCases/auth/registerUser';
 import { UserErrorType } from '../../useCases/UserError';
 import auth from '../auth';
@@ -17,7 +16,6 @@ router.post('/register', async (req: Request, res: Response) => {
         const user = {
             email: req.body.email,
             password: req.body.password,
-            type: castToUserType(req.body.type),
         };
         const newUser = await registerUser(user)({ userRepository });
         res.json(mapUser(newUser));
