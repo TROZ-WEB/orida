@@ -40,6 +40,9 @@
     "start": "nodemon --ext js,ts --watch src --exec ts-node src",
     "test": "jest",
     "test:coverage": "yarn test --coverage",
-    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js --config src/infrastructure/database/config.ts"
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js --config src/infrastructure/database/config.ts",
+    "migration:run": "docker-compose run --rm --no-deps backend wait-for-it postgres:5432 -- typeorm migration:run",
+    "migration:revert": "docker-compose run --rm --no-deps backend wait-for-it postgres:5432 -- typeorm migration:revert",
+    "database": "docker-compose exec postgres psql -d backend"
   }
 }

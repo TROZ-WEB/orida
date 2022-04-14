@@ -1,7 +1,7 @@
-import { User, UserType } from './User';
+import { User } from './User';
 
 test('checkPassword return true on valid password', async () => {
-    const user = new User('test@example.com', UserType.Citizen);
+    const user = new User('test@example.com');
 
     await user.updatePassword('Pas$w0rd');
 
@@ -9,7 +9,7 @@ test('checkPassword return true on valid password', async () => {
 });
 
 test('checkPassword return false on valid password', async () => {
-    const user = new User('test@example.com', UserType.Citizen);
+    const user = new User('test@example.com');
 
     await user.updatePassword('Pas$w0rd');
 

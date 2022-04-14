@@ -37,6 +37,7 @@ router.post('/logout', (req: Request, res: Response) => {
 });
 
 router.get('/me', (req: Request, res: Response) => {
+    console.log(req.user);
     if (req.user) {
         res.json(mapUser(req.user));
     } else {

@@ -15,5 +15,8 @@ export default new EntitySchema<User>({
         passwordHash: {
             type: 'character varying',
         },
+        isAdmin: {
+            type: 'boolean',
+        },
     },
 });
