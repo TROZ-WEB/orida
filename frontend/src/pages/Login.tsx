@@ -13,7 +13,7 @@ enum Mode {
     Register = 'REGISTER',
 }
 
-function LoginPage() {
+const LoginPage = () => {
     const { t } = useTranslation();
     const [mode, setMode] = useState<Mode>(Mode.Login);
 
@@ -51,6 +51,6 @@ function LoginPage() {
             }
         </Layout>
     );
-}
+};
 
 export default LoginPage;

@@ -7,16 +7,14 @@ import { Route, Routes } from 'react-router-dom';
 
 import AppRoutes from './AppRoutes';
 
-function Router() {
-    return (
-        <Routes>
-            <Route element={<Login />} path={AppRoutes.Login} />
-            <Route element={<AuthenticatedRoute />}>
-                <Route element={<HomeRedirect />} path={AppRoutes.Home} />
-            </Route>
-            <Route element={<NotFound />} path="*" />
-        </Routes>
-    );
-}
+const Router = () => (
+    <Routes>
+        <Route element={<Login />} path={AppRoutes.Login} />
+        <Route element={<AuthenticatedRoute />}>
+            <Route element={<HomeRedirect />} path={AppRoutes.Home} />
+        </Route>
+        <Route element={<NotFound />} path="*" />
+    </Routes>
+);
 
 export default Router;

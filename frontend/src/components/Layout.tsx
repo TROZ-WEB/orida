@@ -6,19 +6,17 @@ interface LayoutProps {
     className?: string;
 }
 
-function Layout({ className, children }: PropsWithChildren<LayoutProps>) {
-    return (
-        <>
-            <NavBar />
-            <div className={classnames(
-                'flex flex-col items-start justify-start w-full min-h-full',
-                className,
-            )}
-            >
-                {children}
-            </div>
-        </>
-    );
-}
+const Layout = ({ className, children }: PropsWithChildren<LayoutProps>) => (
+    <>
+        <NavBar />
+        <div className={classnames(
+            'flex flex-col items-start justify-start w-full min-h-full',
+            className,
+        )}
+        >
+            {children}
+        </div>
+    </>
+);
 
 export default Layout;

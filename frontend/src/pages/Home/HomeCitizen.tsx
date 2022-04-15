@@ -7,7 +7,7 @@ import useThunkDispatch from '@hooks/useThunkDispatch';
 import { getAll as getAllProjects } from '@store/projects/actions';
 import React, { useEffect } from 'react';
 
-function HomeCitizenPage() {
+const HomeCitizenPage = () => {
     const dispatch = useThunkDispatch();
     const auth = useSelector((state) => state.auth.data);
     const projects = useSelector((state) => state.projects.data);
@@ -28,6 +28,6 @@ function HomeCitizenPage() {
             <ProjectList projects={projects} />
         </Layout>
     );
-}
+};
 
 export default HomeCitizenPage;

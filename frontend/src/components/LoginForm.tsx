@@ -14,7 +14,7 @@ type Inputs = {
     password: string;
 };
 
-function LoginForm() {
+const LoginForm = () => {
     const { register, handleSubmit } = useForm<Inputs>();
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -54,6 +54,6 @@ function LoginForm() {
             <SubmitButton className="bg-secondary hover:bg-secondary-hover" value={t('login_submit') as string} />
         </form>
     );
-}
+};
 
 export default LoginForm;

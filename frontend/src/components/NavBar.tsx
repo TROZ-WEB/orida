@@ -7,7 +7,7 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-function NavBar() {
+const NavBar = () => {
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
     const navigate = useNavigate();
@@ -23,6 +23,6 @@ function NavBar() {
             {isLoggedIn && <Button onClick={onLogout}>{t('nav_logout')}</Button>}
         </nav>
     );
-}
+};
 
 export default NavBar;

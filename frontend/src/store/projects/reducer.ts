@@ -7,6 +7,7 @@ const initialState: ProjectState = {
     data: [],
 };
 
+/* eslint-disable-next-line default-param-last */
 const authReducer = (state = initialState, action: ProjectActionTypes): ProjectState => {
     switch (action.type) {
         case 'ADD':

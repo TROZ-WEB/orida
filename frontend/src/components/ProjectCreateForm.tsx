@@ -12,7 +12,7 @@ type Inputs = {
     title: string;
 };
 
-function CreateProjectForm() {
+const CreateProjectForm = () => {
     const { register, handleSubmit, reset } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
@@ -42,6 +42,6 @@ function CreateProjectForm() {
             />
         </form>
     );
-}
+};
 
 export default CreateProjectForm;

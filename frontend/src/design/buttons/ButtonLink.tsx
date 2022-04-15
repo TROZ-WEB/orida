@@ -29,21 +29,19 @@ const INVISIBLE_CLASSES: string = `
     p-0
 `;
 
-function ButtonLink({ children, className = '', invisible = false, to }: PropsWithChildren<ButtonLinkProps>) {
-    return (
-        <Link
-            className={classnames(
-                BASE_CLASSES,
-                {
-                    [INVISIBLE_CLASSES]: invisible,
-                },
-                className,
-            )}
-            to={to}
-        >
-            {children}
-        </Link>
-    );
-}
+const ButtonLink = ({ children, className = '', invisible = false, to }: PropsWithChildren<ButtonLinkProps>) => (
+    <Link
+        className={classnames(
+            BASE_CLASSES,
+            {
+                [INVISIBLE_CLASSES]: invisible,
+            },
+            className,
+        )}
+        to={to}
+    >
+        {children}
+    </Link>
+);
 
 export default ButtonLink;

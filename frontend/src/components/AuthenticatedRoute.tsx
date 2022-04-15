@@ -6,7 +6,7 @@ import { logout } from '@store/auth/actions';
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-function AuthenticatedRoute() {
+const AuthenticatedRoute = () => {
     const dispatch = useThunkDispatch();
 
     const [loading, setLoading] = useState<boolean>(true);
@@ -39,6 +39,6 @@ function AuthenticatedRoute() {
     }
 
     return isLoggedIn ? <Outlet /> : <Navigate to={AppRoutes.Login} />;
-}
+};
 
 export default AuthenticatedRoute;

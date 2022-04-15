@@ -35,7 +35,7 @@ text-white
 
 const LABEL_DARK_THEME = 'text-white';
 
-function TextInput({
+const TextInput = ({
     label,
     name,
     register,
@@ -43,20 +43,18 @@ function TextInput({
     type = 'text',
     theme = 'light',
     ...props
-}: TextInputProps) {
-    return (
-        <div className="w-full">
-            {label && <Label className={theme === 'dark' ? LABEL_DARK_THEME : undefined} htmlFor={name}>{label}</Label>}
-            <Space px={8} />
-            <input
-                className={classnames(INPUT_BASE_CLASSES, theme === 'dark' ? INPUT_DARK_THEME : undefined)}
-                id={name}
-                type={type}
-                {...register(name, { required })}
-                {...props}
-            />
-        </div>
-    );
-}
+}: TextInputProps) => (
+    <div className="w-full">
+        {label && <Label className={theme === 'dark' ? LABEL_DARK_THEME : undefined} htmlFor={name}>{label}</Label>}
+        <Space px={8} />
+        <input
+            className={classnames(INPUT_BASE_CLASSES, theme === 'dark' ? INPUT_DARK_THEME : undefined)}
+            id={name}
+            type={type}
+            {...register(name, { required })}
+            {...props}
+        />
+    </div>
+);
 
 export default TextInput;

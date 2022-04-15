@@ -7,12 +7,10 @@ interface ProjectListProps {
     projects: Project[];
 }
 
-function ProjectList({ projects }: ProjectListProps) {
-    return (
-        <ul>
-            {projects.map((project) => <li className="pb-2"><ProjectCard project={project} /></li>)}
-        </ul>
-    );
-}
+const ProjectList = ({ projects }: ProjectListProps) => (
+    <ul>
+        {projects.map((project) => <li className="pb-2"><ProjectCard project={project} /></li>)}
+    </ul>
+);
 
 export default ProjectList;

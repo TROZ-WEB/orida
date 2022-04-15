@@ -8,15 +8,13 @@ import { BrowserRouter } from 'react-router-dom';
 
 import Router from './router/Router';
 
-function App() {
-    return (
-        <StoreProvider store={createStore()}>
-            <BrowserRouter>
-                <Router />
-                <ToastContainer />
-            </BrowserRouter>
-        </StoreProvider>
-    );
-}
+const App = () => (
+    <StoreProvider store={createStore()}>
+        <BrowserRouter>
+            <Router />
+            <ToastContainer />
+        </BrowserRouter>
+    </StoreProvider>
+);
 
 export default App;

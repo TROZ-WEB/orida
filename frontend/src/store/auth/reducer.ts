@@ -8,6 +8,7 @@ const initialState: AuthState = {
     },
 };
 
+/* eslint-disable-next-line default-param-last */
 const authReducer = (state = initialState, action: AuthActionTypes): AuthState => {
     switch (action.type) {
         case LOGIN: {

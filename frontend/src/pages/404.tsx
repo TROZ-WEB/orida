@@ -6,7 +6,7 @@ import AppRoutes from '@router/AppRoutes';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-function NotFoundPage() {
+const NotFoundPage = () => {
     const { t } = useTranslation();
 
     return (
@@ -20,6 +20,6 @@ function NotFoundPage() {
             <ButtonLink className='w-[200px]' to={AppRoutes.Home}>{t('notFound_back')}</ButtonLink>
         </Layout>
     );
-}
+};
 
 export default NotFoundPage;

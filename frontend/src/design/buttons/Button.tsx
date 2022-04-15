@@ -3,10 +3,10 @@ import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
 type ButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
 
-function Button({ children, className, type = 'button', ...props }: ButtonProps) {
-    return (
-        <button
-            className={classnames(`
+const Button = ({ children, className, type = 'button', ...props }: ButtonProps) => (
+    <button
+        className={classnames(
+            `
                 bg-primary
                 block
                 border-0
@@ -21,13 +21,13 @@ function Button({ children, className, type = 'button', ...props }: ButtonProps)
 
                 hover:bg-primary-hover
                 `,
-            className)}
-            type={type}
-            {...props}
-        >
-            {children}
-        </button>
-    );
-}
+            className,
+        )}
+        type={type}
+        {...props}
+    >
+        {children}
+    </button>
+);
 
 export default Button;

@@ -2,7 +2,7 @@ import Layout from '@components/Layout';
 import useSelector from '@hooks/useSelector';
 import React from 'react';
 
-function HomeadminPage() {
+const HomeadminPage = () => {
     const auth = useSelector((state) => state.auth.data);
 
     return (
@@ -11,6 +11,6 @@ function HomeadminPage() {
             <p>Admin</p>
         </Layout>
     );
-}
+};
 
 export default HomeadminPage;

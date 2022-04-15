@@ -15,7 +15,7 @@ type Inputs = {
     password: string;
 };
 
-function RegisterForm() {
+const RegisterForm = () => {
     const { register, handleSubmit } = useForm<Inputs>();
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -57,6 +57,6 @@ function RegisterForm() {
             <SubmitButton className="bg-secondary hover:bg-secondary-hover" value={t('register_submit') as string} />
         </form>
     );
-}
+};
 
 export default RegisterForm;
