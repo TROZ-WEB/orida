@@ -11,7 +11,7 @@ function NavBar() {
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
     const navigate = useNavigate();
-    const isLoggedIn = !!useSelector((state) => state.auth.id);
+    const isLoggedIn = !!useSelector((state) => state.auth.data.id);
 
     const onLogout = useCallback(async () => {
         await dispatch(logout());

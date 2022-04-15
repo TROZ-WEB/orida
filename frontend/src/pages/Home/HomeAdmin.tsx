@@ -3,7 +3,7 @@ import useSelector from '@hooks/useSelector';
 import React from 'react';
 
 function HomeadminPage() {
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.data);
 
     return (
         <Layout>

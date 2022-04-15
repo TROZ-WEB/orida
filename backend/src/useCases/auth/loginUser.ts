@@ -1,5 +1,5 @@
 import { User, UserRepository } from '../../domain/User';
-import UserError from '../UserError';
+import UserError from './UserError';
 
 interface Arg {
     username: string,

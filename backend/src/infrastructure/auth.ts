@@ -3,7 +3,7 @@ import { Authenticator } from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { User } from '../domain/User';
 import loginUser from '../useCases/auth/loginUser';
-import UserError from '../useCases/UserError';
+import UserError from '../useCases/auth/UserError';
 import { userRepository } from './database';
 
 const auth = new Authenticator();

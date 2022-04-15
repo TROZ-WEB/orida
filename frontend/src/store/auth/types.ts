@@ -16,8 +16,9 @@ interface Logout {
 export type AuthActionTypes = Logout | Login;
 
 export interface AuthState {
-    email: string;
-    id: string;
-    token: string;
-    isAdmin: boolean;
+    data: {
+        email: string;
+        id: string;
+        isAdmin: boolean;
+    };
 }

@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class AddUser1626256402456 implements MigrationInterface {

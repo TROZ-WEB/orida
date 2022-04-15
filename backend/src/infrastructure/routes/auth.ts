@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import registerUser from '../../useCases/auth/registerUser';
-import { UserErrorType } from '../../useCases/UserError';
+import { UserErrorType } from '../../useCases/auth/UserError';
 import auth from '../auth';
 import { userRepository } from '../database';
 import { mapUser } from '../mappers';
@@ -37,7 +37,6 @@ router.post('/logout', (req: Request, res: Response) => {
 });
 
 router.get('/me', (req: Request, res: Response) => {
-    console.log(req.user);
     if (req.user) {
         res.json(mapUser(req.user));
     } else {

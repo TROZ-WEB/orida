@@ -1,6 +1,5 @@
 import { SubmitButton } from '@design/buttons';
 import { TextInput } from '@design/inputs';
-import ToggleText from '@design/inputs/ToggleText';
 import Space from '@design/Space';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
@@ -40,7 +39,6 @@ function RegisterForm() {
             <TextInput
                 autoComplete='off'
                 label={t('login_email_label')}
-                labelClassNames="text-white"
                 name="email"
                 placeholder="bruce@wayneenterprise.com"
                 register={register}
@@ -50,7 +48,6 @@ function RegisterForm() {
             <TextInput
                 autoComplete='off'
                 label={t('login_password_label')}
-                labelClassNames="text-white"
                 name="password"
                 register={register}
                 type="password"

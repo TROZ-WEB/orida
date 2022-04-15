@@ -14,6 +14,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import authReducer from './auth/reducer';
 import { SIGN_OUT } from './auth/types';
+import projectReducer from './projects/reducer';
 
 // import logger from 'redux-logger';
 
@@ -25,6 +26,7 @@ declare global {
 
 const appReducer = combineReducers({
     auth: authReducer,
+    projects: projectReducer,
 });
 
 export type AppState = ReturnType<typeof appReducer>;

@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class RemoveUserType1649936582888 implements MigrationInterface {

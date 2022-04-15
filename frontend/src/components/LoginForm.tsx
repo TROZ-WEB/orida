@@ -36,18 +36,18 @@ function LoginForm() {
             <TextInput
                 autoComplete='on'
                 label={t('login_email_label')}
-                labelClassNames="text-white"
                 name="email"
                 placeholder="bruce@wayneenterprise.com"
                 register={register}
+                theme="dark"
             />
             <Space px={24} />
             <TextInput
                 autoComplete='on'
                 label={t('login_password_label')}
-                labelClassNames="text-white"
                 name="password"
                 register={register}
+                theme="dark"
                 type="password"
             />
             <Space px={62} />

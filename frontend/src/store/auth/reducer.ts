@@ -1,10 +1,11 @@
 import { AuthActionTypes, AuthState, LOGIN, LOGOUT } from './types';
 
 const initialState: AuthState = {
-    token: '',
-    email: '',
-    id: '',
-    isAdmin: false,
+    data: {
+        email: '',
+        id: '',
+        isAdmin: false,
+    },
 };
 
 const authReducer = (state = initialState, action: AuthActionTypes): AuthState => {
@@ -12,9 +13,12 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthState =
         case LOGIN: {
             return {
                 ...state,
-                id: action.id,
-                email: action.email,
-                isAdmin: action.isAdmin,
+                data: {
+                    ...state.data,
+                    id: action.id,
+                    email: action.email,
+                    isAdmin: action.isAdmin,
+                },
             };
         }
         case LOGOUT:

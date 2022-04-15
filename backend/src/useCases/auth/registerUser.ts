@@ -1,5 +1,5 @@
 import { User, UserRepository } from '../../domain/User';
-import UserError, { UserErrorType } from '../UserError';
+import UserError, { UserErrorType } from './UserError';
 
 interface Arg {
     email: string;
