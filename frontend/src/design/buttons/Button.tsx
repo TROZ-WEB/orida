@@ -16,7 +16,12 @@ const Button = ({ children, className, type = 'button', ...props }: ButtonProps)
                 py-2 px-3
                 rounded
                 text-white text-xs font-normal text center
-                w-full
+                duration-300
+                box-border
+                flex
+                flex-col
+                justify-center
+                items-center
                 duration-300
 
                 hover:bg-primary-hover

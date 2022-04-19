@@ -9,7 +9,7 @@ interface ProjectListProps {
 
 const ProjectList = ({ projects }: ProjectListProps) => (
     <ul>
-        {projects.map((project) => <li className="pb-2"><ProjectCard project={project} /></li>)}
+        {projects.map((project) => <li key={project.id} className="pb-2"><ProjectCard project={project} /></li>)}
     </ul>
 );
 

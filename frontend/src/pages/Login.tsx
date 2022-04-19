@@ -1,9 +1,8 @@
-import Logo from '@assets/logo.svg';
-import Layout from '@components/Layout';
 import LoginForm from '@components/LoginForm';
 import RegisterForm from '@components/RegisterForm';
 import { Button } from '@design/buttons';
 import InvisibleButton from '@design/buttons/InvisibleButton';
+import { Logo } from '@design/icons';
 import Space from '@design/Space';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,8 +21,8 @@ const LoginPage = () => {
     };
 
     return (
-        <Layout className="items-center justify-center bg-primary">
-            <img alt="logo-orida" className='max-w-[120px]' src={Logo} />
+        <div className="items-center justify-center bg-primary flex flex-col h-full">
+            <Logo className='max-w-[120px] h-auto' />
             <Space px={150} />
             {
                 mode === Mode.Login && (
@@ -49,7 +48,7 @@ const LoginPage = () => {
                     </div>
                 )
             }
-        </Layout>
+        </div>
     );
 };
 

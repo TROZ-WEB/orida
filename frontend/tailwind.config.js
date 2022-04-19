@@ -4,6 +4,7 @@ module.exports = {
         extend: {
             colors: {
                 'primary': "#38337c",
+                'primary-dark': "#20124D",
                 'primary-hover': "#6560af",
                 'secondary': "#fea733",
                 'secondary-hover': "#fbc173",
@@ -13,7 +14,9 @@ module.exports = {
                 'warning': "#ffa755",
                 'info': "#27beb6",
                 'default': "#ffffff",
-            }
+                'backdrop': "#00000066",
+            },
+
         },
     },
     plugins: [],

@@ -10,6 +10,8 @@ const InvisibleButton = ({ children, className, type = 'button', ...props }: Inv
         className={classnames(`
                 bg-transparent
                 text-black
+
+                hover:bg-transparent
             `, className)}
         type={type}
         {...props}

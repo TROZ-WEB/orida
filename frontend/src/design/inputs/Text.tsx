@@ -1,10 +1,10 @@
 import Label from '@design/Label';
 import Space from '@design/Space';
 import classnames from '@utils/classnames';
-import React, { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, ReactNode } from 'react';
 
-interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
-    label?: string;
+export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+    label?: string | ReactNode;
     name: string;
     register: any;
     required?: boolean;
@@ -36,19 +36,24 @@ text-white
 const LABEL_DARK_THEME = 'text-white';
 
 const TextInput = ({
+    className,
     label,
     name,
     register,
     required = false,
-    type = 'text',
     theme = 'light',
+    type = 'text',
     ...props
 }: TextInputProps) => (
     <div className="w-full">
-        {label && <Label className={theme === 'dark' ? LABEL_DARK_THEME : undefined} htmlFor={name}>{label}</Label>}
-        <Space px={8} />
+        {label && (
+            <>
+                <Label className={theme === 'dark' ? LABEL_DARK_THEME : undefined} htmlFor={name}>{label}</Label>
+                <Space px={8} />
+            </>
+        )}
         <input
-            className={classnames(INPUT_BASE_CLASSES, theme === 'dark' ? INPUT_DARK_THEME : undefined)}
+            className={classnames(INPUT_BASE_CLASSES, theme === 'dark' ? INPUT_DARK_THEME : undefined, className)}
             id={name}
             type={type}
             {...register(name, { required })}

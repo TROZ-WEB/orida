@@ -20,6 +20,9 @@ const BASE_CLASSES: string = `
     text-white text-xs font-normal text center
     w-full
     text-center
+    flex
+    justify-center
+    duration-300
 
     hover:bg-primary-hover
 `;
