@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "dependencies": {
-    "@sentry/node": "^5.30.0",
+    "@sentry/node": "^6.19.6",
     "bcrypt": "^5.0.1",
     "express": "^5.0.0-beta.1",
     "express-session": "^1.17.2",
