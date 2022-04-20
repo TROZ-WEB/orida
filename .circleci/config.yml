@@ -47,7 +47,6 @@ jobs:
       - checkout
       - docker/build:
           image: orida-backend
-          tag: << pipeline.git.branch >>
           path: backend
           docker-context: backend
           extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "backend")
@@ -100,7 +99,6 @@ jobs:
       - checkout
       - docker/build:
           image: orida-frontend
-          tag: << pipeline.git.branch >>
           path: frontend
           docker-context: frontend
           extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "frontend")
@@ -170,7 +168,6 @@ jobs:
       - checkout
       - docker/build:
           image: orida-admin
-          tag: << pipeline.git.branch >>
           path: admin
           docker-context: admin
           extra_build_args: --build-arg VERSION=$(git log --max-count 1 --pretty=format:%H "admin")
