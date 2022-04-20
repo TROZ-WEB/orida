@@ -1,11 +1,7 @@
 import { Project } from '@services/projects';
 import uniq from '@utils/uniq';
 
-import { ProjectActionTypes, ProjectState } from './types';
-
-const initialState: ProjectState = {
-    data: [],
-};
+import { initialState, ProjectActionTypes, ProjectState } from './types';
 
 /* eslint-disable-next-line default-param-last */
 const authReducer = (state = initialState, action: ProjectActionTypes): ProjectState => {
@@ -14,6 +10,11 @@ const authReducer = (state = initialState, action: ProjectActionTypes): ProjectS
             return {
                 ...state,
                 data: uniq<Project>([...state.data, ...action.projects], ['id']),
+            };
+        case 'SEARCH':
+            return {
+                ...state,
+                search: action.projects,
             };
         default:
             return state;

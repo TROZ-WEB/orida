@@ -8,6 +8,8 @@ export type Project = {
     id: string;
     title: string;
     status: ProjectStatus;
+    theme: string;
+    budget: number;
 }
 
 export type CreateProps = {

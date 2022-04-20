@@ -11,4 +11,6 @@ export const mapProject = (project: Project) => ({
     id: project.id,
     title: project.title,
     status: project.status,
+    theme: 'Environnement', //! MOCK
+    budget: 10000, //! MOCK
 });

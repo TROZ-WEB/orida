@@ -26,9 +26,22 @@ async function create(props: CreateProps): Promise<Project> {
     }
 }
 
+async function search(value: string): Promise<Project[]> {
+    try {
+        const response = await POST<Project[]>('api/projects/search', { search: value });
+
+        return response;
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('ProjectService::create Unhandled error');
+    }
+}
+
 const ProjectService = {
     create,
     getAll,
+    search,
 };
 
 export default ProjectService;

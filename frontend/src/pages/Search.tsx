@@ -1,18 +1,42 @@
 import Layout from '@components/Layout';
+import ProjectList from '@components/ProjectList';
 import { SearchInput } from '@design/inputs';
 import Space from '@design/Space';
 import useDebounce from '@hooks/useDebounce';
-import React, { ChangeEvent } from 'react';
+import useSelector from '@hooks/useSelector';
+import useThunkDispatch from '@hooks/useThunkDispatch';
+import { resetSearch, search } from '@store/projects/actions';
+import React, { ChangeEvent, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 
 const Search = () => {
+    const projects = useSelector((state) => state.projects.search);
+    const dispatch = useThunkDispatch();
     const { register } = useForm();
-    const onInputChange = useDebounce((e: ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-        if (value.length > 3) {
-            console.info(value);
-        }
+    const [params] = useSearchParams();
+
+    const debouncedSearch = useDebounce((value: string) => {
+        dispatch(search(value));
     }, 300);
+
+    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        if (value.length === 0) {
+            dispatch(resetSearch());
+        }
+        if (value.length > 3) {
+            debouncedSearch(value);
+        }
+    };
+
+    useEffect(() => {
+        // retrieve serch from search param "search"
+        const urlSearch = params.get('search');
+        if (urlSearch) {
+            dispatch(search(urlSearch));
+        }
+    }, []);
 
     return (
         <Layout backgroundClassName="bg-primary">
@@ -28,6 +52,10 @@ const Search = () => {
                     type="search"
                 />
             </form>
+            <Space px={24} />
+            <div className='flex w-full'>
+                <ProjectList className="w-1/3" projects={projects} />
+            </div>
         </Layout>
     );
 };

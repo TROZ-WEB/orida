@@ -1,3 +1,4 @@
+import { FindManyOptions } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 export enum ProjectStatus {
@@ -21,7 +22,7 @@ class Project {
 }
 
 interface ProjectRepository {
-    find(): Promise<Project[]>;
+    find(condition?: FindManyOptions<Project>): Promise<Project[]>;
     findOne(id: string): Promise<Project | undefined>;
     findOne(condition: Partial<Project>): Promise<Project | undefined>;
     create(details: Partial<Project>): Project;
