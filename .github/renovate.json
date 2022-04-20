@@ -1,5 +1,6 @@
 {
     "extends": [
-        "@thetribe"
+        "@thetribe",
+        "group:allNonMajor"
     ]
 }
