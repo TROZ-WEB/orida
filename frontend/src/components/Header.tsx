@@ -1,11 +1,12 @@
 import { Button, ButtonLink } from '@design/buttons';
-import { Logo, LogoutIcon, SearchIcon } from '@design/icons';
+import Icon from '@design/Icon';
+import Logo from '@design/Logo';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
 import { logout } from '@store/auth/actions';
 import classnames from '@utils/classnames';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -46,12 +47,15 @@ const Header = () => {
                 <Logo />
             </ButtonLink>
             <div className='flex flex-row'>
-                <ButtonLink className={classnames(MENU_ITEM_CLASSES, MENU_ITEMS_ICON_ONLY)} to={AppRoutes.Search}>
-                    <SearchIcon color="#fff" />
+                <ButtonLink
+                    className={classnames(MENU_ITEM_CLASSES, MENU_ITEMS_ICON_ONLY)}
+                    to={AppRoutes.Search}
+                >
+                    <Icon color='#fff' name='search' />
                 </ButtonLink>
                 {isLoggedIn && (
                     <Button className={MENU_ITEM_CLASSES} onClick={onLogout}>
-                        <LogoutIcon color='#fff' />
+                        <Icon color='#fff' name='logout' />
                         <span className='text-white'>{t('nav_logout')}</span>
                     </Button>
                 )}

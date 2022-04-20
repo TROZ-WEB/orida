@@ -1,18 +1,26 @@
 import classnames from '@utils/classnames';
-import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
 import Button from './Button';
 
 type InvisibleButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
 
-const InvisibleButton = ({ children, className, type = 'button', ...props }: InvisibleButtonProps) => (
+const InvisibleButton = ({
+    children,
+    className,
+    type = 'button',
+    ...props
+}: InvisibleButtonProps) => (
     <Button
-        className={classnames(`
+        className={classnames(
+            `
                 bg-transparent
                 text-black
 
                 hover:bg-transparent
-            `, className)}
+            `,
+            className
+        )}
         type={type}
         {...props}
     >

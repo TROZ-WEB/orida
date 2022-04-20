@@ -1,7 +1,7 @@
 import Label from '@design/Label';
 import Space from '@design/Space';
 import classnames from '@utils/classnames';
-import React, { InputHTMLAttributes, ReactNode } from 'react';
+import { InputHTMLAttributes, ReactNode } from 'react';
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string | ReactNode;
@@ -45,15 +45,21 @@ const TextInput = ({
     type = 'text',
     ...props
 }: TextInputProps) => (
-    <div className="w-full">
+    <div className='w-full'>
         {label && (
             <>
-                <Label className={theme === 'dark' ? LABEL_DARK_THEME : undefined} htmlFor={name}>{label}</Label>
+                <Label className={theme === 'dark' ? LABEL_DARK_THEME : undefined} htmlFor={name}>
+                    {label}
+                </Label>
                 <Space px={8} />
             </>
         )}
         <input
-            className={classnames(INPUT_BASE_CLASSES, theme === 'dark' ? INPUT_DARK_THEME : undefined, className)}
+            className={classnames(
+                INPUT_BASE_CLASSES,
+                theme === 'dark' ? INPUT_DARK_THEME : undefined,
+                className
+            )}
             id={name}
             type={type}
             {...register(name, { required })}

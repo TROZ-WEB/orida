@@ -15,5 +15,5 @@ export interface RegisterProps {
 }
 
 export enum AuthError {
-    RegisterEmailAlreadyInUse = ''
+    RegisterEmailAlreadyInUse = '',
 }

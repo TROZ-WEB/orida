@@ -1,5 +1,5 @@
 import classnames from '@utils/classnames';
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
 interface ButtonLinkProps {
@@ -32,14 +32,19 @@ const INVISIBLE_CLASSES: string = `
     p-0
 `;
 
-const ButtonLink = ({ children, className = '', invisible = false, to }: PropsWithChildren<ButtonLinkProps>) => (
+const ButtonLink = ({
+    children,
+    className = '',
+    invisible = false,
+    to,
+}: PropsWithChildren<ButtonLinkProps>) => (
     <Link
         className={classnames(
             BASE_CLASSES,
             {
                 [INVISIBLE_CLASSES]: invisible,
             },
-            className,
+            className
         )}
         to={to}
     >

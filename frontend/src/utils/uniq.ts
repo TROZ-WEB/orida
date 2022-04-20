@@ -5,9 +5,9 @@ function isPropValuesEqual<T>(subject: T, target: T, propNames: (keyof T)[]) {
 
 function uniq<T>(items: T[], propNames: (keyof T)[]) {
     return items.filter(
-        (item, index, array) => index === array.findIndex(
-            (foundItem) => isPropValuesEqual<T>(foundItem, item, propNames),
-        ),
+        (item, index, array) =>
+            index ===
+            array.findIndex((foundItem) => isPropValuesEqual<T>(foundItem, item, propNames))
     );
 }
 

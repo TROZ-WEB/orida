@@ -5,7 +5,6 @@ import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
 import notify, { NotificationType } from '@services/notifications';
 import { register as authRegister } from '@store/auth/actions';
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -35,12 +34,12 @@ const RegisterForm = () => {
     };
 
     return (
-        <form className="max-w-[500px]" onSubmit={handleSubmit(onRegister)}>
+        <form className='max-w-[500px]' onSubmit={handleSubmit(onRegister)}>
             <TextInput
                 autoComplete='off'
                 label={t('login_email_label')}
-                name="email"
-                placeholder="bruce@wayneenterprise.com"
+                name='email'
+                placeholder='bruce@wayneenterprise.com'
                 register={register}
                 required
             />
@@ -48,13 +47,16 @@ const RegisterForm = () => {
             <TextInput
                 autoComplete='off'
                 label={t('login_password_label')}
-                name="password"
+                name='password'
                 register={register}
-                type="password"
+                type='password'
                 required
             />
             <Space px={62} />
-            <SubmitButton className="bg-secondary hover:bg-secondary-hover" value={t('register_submit') as string} />
+            <SubmitButton
+                className='bg-secondary hover:bg-secondary-hover'
+                value={t('register_submit') as string}
+            />
         </form>
     );
 };

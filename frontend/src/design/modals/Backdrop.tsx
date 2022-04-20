@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 interface BackdropProps {
     zIndex?: number;
@@ -24,9 +24,7 @@ h-full
 
 const Backdrop = ({ children, zIndex }: PropsWithChildren<BackdropProps>) => (
     <div className={BACKDROP_CLASSES} style={{ zIndex }}>
-        <div className={CONTENT_CLASSES}>
-            {children}
-        </div>
+        <div className={CONTENT_CLASSES}>{children}</div>
     </div>
 );
 

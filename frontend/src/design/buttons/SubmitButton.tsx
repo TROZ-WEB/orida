@@ -1,9 +1,10 @@
 import classnames from '@utils/classnames';
-import React, { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 
 const SubmitButton = ({ className, ...props }: ButtonHTMLAttributes<HTMLInputElement>) => (
     <input
-        className={classnames(`
+        className={classnames(
+            `
         bg-primary
         block
         border-0
@@ -17,9 +18,11 @@ const SubmitButton = ({ className, ...props }: ButtonHTMLAttributes<HTMLInputEle
         duration-300
 
         hover:bg-primary-hover
-    `, className)}
+    `,
+            className
+        )}
         {...props}
-        type="submit"
+        type='submit'
     />
 );
 

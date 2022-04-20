@@ -9,7 +9,10 @@ interface Context {
 }
 
 const createProject = ({ title }: Arg) => async ({ projectRepository }: Context): Promise<Project> => {
-    const project = projectRepository.create({ title, status: ProjectStatus.Design });
+    const project = projectRepository.create({
+        title,
+        status: ProjectStatus.Design,
+    });
 
     return projectRepository.save(project);
 };

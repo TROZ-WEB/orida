@@ -3,7 +3,6 @@ import NotFound from '@pages/404';
 import HomeRedirect from '@pages/Home/HomeRedirect';
 import Login from '@pages/Login';
 import Search from '@pages/Search';
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import AppRoutes from './AppRoutes';
@@ -15,7 +14,7 @@ const Router = () => (
             <Route element={<HomeRedirect />} path={AppRoutes.Home} />
             <Route element={<Search />} path={AppRoutes.Search} />
         </Route>
-        <Route element={<NotFound />} path="*" />
+        <Route element={<NotFound />} path='*' />
     </Routes>
 );
 

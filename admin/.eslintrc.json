@@ -14,5 +14,8 @@
                 "jest": true
             }
         }
-    ]
+    ],
+    "rules": {
+        "react/react-in-jsx-scope": "off" // Not necessary in React 17
+    }
 }

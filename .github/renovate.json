@@ -1,6 +1,3 @@
 {
-    "extends": [
-        "@thetribe",
-        "group:allNonMajor"
-    ]
+    "extends": ["@thetribe", "group:allNonMajor"]
 }

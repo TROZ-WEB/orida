@@ -8,7 +8,7 @@ import useModal from '@hooks/useModal';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { getAll as getAllProjects } from '@store/projects/actions';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const HomeCitizenPage = () => {
     const dispatch = useThunkDispatch();

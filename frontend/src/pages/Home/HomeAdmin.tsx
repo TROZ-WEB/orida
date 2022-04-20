@@ -1,6 +1,5 @@
 import Layout from '@components/Layout';
 import useSelector from '@hooks/useSelector';
-import React from 'react';
 
 const HomeadminPage = () => {
     const auth = useSelector((state) => state.auth.data);

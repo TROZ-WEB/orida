@@ -3,7 +3,7 @@ import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
 import AuthService from '@services/auth';
 import { logout } from '@store/auth/actions';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const AuthenticatedRoute = () => {

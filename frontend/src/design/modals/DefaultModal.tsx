@@ -1,7 +1,7 @@
 import IconButton from '@design/buttons/IconButton';
-import Cross from '@design/icons/Cross';
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
+import Icon from '../Icon';
 import Backdrop from './Backdrop';
 
 interface ModalProps {
@@ -34,14 +34,16 @@ py-2
 `;
 
 const Modal = ({ children, close, isOpen }: PropsWithChildren<ModalProps>) => {
-    if (!isOpen) { return null; }
+    if (!isOpen) {
+        return null;
+    }
 
     return (
         <Backdrop>
             <div className={MODAL_CLASSES}>
                 <div className={INNER_CLASSES}>
                     <IconButton className={CLOSE_CLASSES} onClick={close}>
-                        <Cross color="grey" />
+                        <Icon color='grey' name='cross' />
                     </IconButton>
                     {children}
                 </div>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SpaceProps {
     horizontal?: boolean;
     px: number;
@@ -8,7 +6,7 @@ interface SpaceProps {
 const Space = ({ horizontal, px }: SpaceProps) => {
     const style = horizontal ? { width: `${px}px` } : { height: `${px}px` };
 
-    return (<div style={style} />);
+    return <div style={style} />;
 };
 
 export default Space;

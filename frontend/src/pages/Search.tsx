@@ -6,7 +6,7 @@ import useDebounce from '@hooks/useDebounce';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { resetSearch, search } from '@store/projects/actions';
-import React, { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 
@@ -39,22 +39,22 @@ const Search = () => {
     }, []);
 
     return (
-        <Layout backgroundClassName="bg-primary">
+        <Layout backgroundClassName='bg-primary'>
             <Space px={80} />
-            <form className="w-full">
+            <form className='w-full'>
                 <SearchInput
-                    className="text-3xl pl-14 pb-1"
-                    name="search"
+                    className='text-3xl pl-14 pb-1'
+                    name='search'
                     onChange={onInputChange}
-                    placeholder="Recherche"
+                    placeholder='Recherche'
                     register={register}
-                    theme="dark"
-                    type="search"
+                    theme='dark'
+                    type='search'
                 />
             </form>
             <Space px={24} />
             <div className='flex w-full'>
-                <ProjectList className="w-1/3" projects={projects} />
+                <ProjectList className='w-1/3' projects={projects} />
             </div>
         </Layout>
     );

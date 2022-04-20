@@ -1,5 +1,4 @@
-class UserError extends Error {
-}
+class UserError extends Error {}
 
 export default UserError;
 

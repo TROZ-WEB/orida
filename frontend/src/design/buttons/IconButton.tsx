@@ -1,5 +1,5 @@
 import classnames from '@utils/classnames';
-import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
 import InvisibleButton from './InvisibleButton';
 
@@ -20,7 +20,9 @@ group
 type IconButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
 
 const IconButton = ({ children, className, ...props }: PropsWithChildren<IconButtonProps>) => (
-    <InvisibleButton className={classnames(CLASSES, className)} {...props}>{children}</InvisibleButton>
+    <InvisibleButton className={classnames(CLASSES, className)} {...props}>
+        {children}
+    </InvisibleButton>
 );
 
 export default IconButton;

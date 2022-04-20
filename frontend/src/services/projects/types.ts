@@ -10,8 +10,8 @@ export type Project = {
     status: ProjectStatus;
     theme: string;
     budget: number;
-}
+};
 
 export type CreateProps = {
     title: string;
-}
+};

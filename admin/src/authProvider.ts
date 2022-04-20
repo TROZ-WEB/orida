@@ -14,9 +14,7 @@ const http = async (method: string, path: string, init: Omit<RequestInit, 'metho
 };
 
 const authProvider = (): AuthProvider => ({
-    checkAuth: () => (localStorage.getItem('auth')
-        ? Promise.resolve()
-        : Promise.reject()),
+    checkAuth: () => (localStorage.getItem('auth') ? Promise.resolve() : Promise.reject()),
     checkError: async () => {},
     getPermissions: async () => {},
     login: async (params) => {

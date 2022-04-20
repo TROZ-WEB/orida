@@ -1,5 +1,4 @@
 import { Project } from '@services/projects';
-import React from 'react';
 
 import ProjectCard from './ProjectCard';
 
@@ -10,7 +9,11 @@ interface ProjectListProps {
 
 const ProjectList = ({ className, projects }: ProjectListProps) => (
     <ul className={className}>
-        {projects.map((project) => <li key={project.id}><ProjectCard project={project} /></li>)}
+        {projects.map((project) => (
+            <li key={project.id}>
+                <ProjectCard project={project} />
+            </li>
+        ))}
     </ul>
 );
 

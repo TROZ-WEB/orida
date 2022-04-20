@@ -16,44 +16,46 @@ export class HttpError extends Error {
     }
 }
 
-const factory = (method: string) => async < T > (url: string, data?: HttpBody): Promise<T> => {
-    const options: {
-        headers: { [key: string]: string },
-        body: string | FormData | undefined,
-    } = {
-        headers: {},
-        body: undefined,
+const factory =
+    (method: string) =>
+    async <T>(url: string, data?: HttpBody): Promise<T> => {
+        const options: {
+            headers: { [key: string]: string };
+            body: string | FormData | undefined;
+        } = {
+            headers: {},
+            body: undefined,
+        };
+
+        if (data) {
+            if (data instanceof FormData) {
+                options.body = data;
+            } else {
+                options.body = JSON.stringify(data);
+                options.headers = { ...options.headers, 'Content-Type': 'application/json' };
+            }
+        }
+
+        const response = await fetch(url, {
+            method,
+            credentials: 'include',
+            ...options,
+        });
+
+        if (!response.ok) {
+            const { status } = response;
+            let body = null;
+            try {
+                body = await response.json();
+            } catch (e) {
+                // No body
+            }
+
+            throw new HttpError(status, body);
+        }
+
+        return response.json();
     };
-
-    if (data) {
-        if (data instanceof FormData) {
-            options.body = data;
-        } else {
-            options.body = JSON.stringify(data);
-            options.headers = { ...options.headers, 'Content-Type': 'application/json' };
-        }
-    }
-
-    const response = await fetch(url, {
-        method,
-        credentials: 'include',
-        ...options,
-    });
-
-    if (!response.ok) {
-        const { status } = response;
-        let body = null;
-        try {
-            body = await response.json();
-        } catch (e) {
-            // No body
-        }
-
-        throw new HttpError(status, body);
-    }
-
-    return response.json();
-};
 
 export const GET = factory('GET');
 export const PATCH = factory('PATCH');

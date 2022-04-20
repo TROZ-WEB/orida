@@ -9,24 +9,33 @@ import { mapProject } from '../mappers';
 
 const router = Router();
 
-router.get('/', asyncRoute(async (req: Request, res: Response) => {
-    res.status(200).json((await findAllProjets()({ projectRepository })).map(mapProject));
-}));
+router.get(
+    '/',
+    asyncRoute(async (req: Request, res: Response) => {
+        res.status(200).json((await findAllProjets()({ projectRepository })).map(mapProject));
+    }),
+);
 
-router.post('/', asyncRoute(async (req: Request, res: Response) => {
-    const created = await createProject({
-        title: req.body.title,
-    })({ projectRepository });
+router.post(
+    '/',
+    asyncRoute(async (req: Request, res: Response) => {
+        const created = await createProject({
+            title: req.body.title,
+        })({ projectRepository });
 
-    res.status(200).json(mapProject(created));
-}));
+        res.status(200).json(mapProject(created));
+    }),
+);
 
-router.post('/search', asyncRoute(async (req: Request, res: Response) => {
-    const { search } = req.body;
-    const normalizedSearch = normalize(search);
-    const results = await findProjectsBySearch(normalizedSearch)({ projectRepository });
+router.post(
+    '/search',
+    asyncRoute(async (req: Request, res: Response) => {
+        const { search } = req.body;
+        const normalizedSearch = normalize(search);
+        const results = await findProjectsBySearch(normalizedSearch)({ projectRepository });
 
-    res.status(200).json(results.map(mapProject));
-}));
+        res.status(200).json(results.map(mapProject));
+    }),
+);
 
 export default router;

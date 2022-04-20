@@ -1,12 +1,11 @@
-import { SearchIcon } from '@design/icons';
+import Icon from '@design/Icon';
 import classnames from '@utils/classnames';
-import React from 'react';
 
 import TextInput, { TextInputProps } from './Text';
 
 const SearchInput = ({ className, ...props }: TextInputProps) => (
-    <div className="relative">
-        <SearchIcon className="absolute pb-2" />
+    <div className='relative'>
+        <Icon className='absolute pb-2' name='search' />
         <TextInput className={classnames('pl-9', className)} {...props} />
     </div>
 );

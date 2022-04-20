@@ -4,7 +4,6 @@ import Space from '@design/Space';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
 import { login } from '@store/auth/actions';
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -32,26 +31,29 @@ const LoginForm = () => {
     };
 
     return (
-        <form className="max-w-[500px]" onSubmit={handleSubmit(onLogin)}>
+        <form className='max-w-[500px]' onSubmit={handleSubmit(onLogin)}>
             <TextInput
                 autoComplete='on'
                 label={t('login_email_label')}
-                name="email"
-                placeholder="bruce@wayneenterprise.com"
+                name='email'
+                placeholder='bruce@wayneenterprise.com'
                 register={register}
-                theme="dark"
+                theme='dark'
             />
             <Space px={24} />
             <TextInput
                 autoComplete='on'
                 label={t('login_password_label')}
-                name="password"
+                name='password'
                 register={register}
-                theme="dark"
-                type="password"
+                theme='dark'
+                type='password'
             />
             <Space px={62} />
-            <SubmitButton className="bg-secondary hover:bg-secondary-hover" value={t('login_submit') as string} />
+            <SubmitButton
+                className='bg-secondary hover:bg-secondary-hover'
+                value={t('login_submit') as string}
+            />
         </form>
     );
 };

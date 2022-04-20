@@ -2,8 +2,8 @@ import { User, UserRepository } from '../../domain/User';
 import UserError from './UserError';
 
 interface Arg {
-    username: string,
-    password: string,
+    username: string;
+    password: string;
 }
 
 interface Context {
@@ -17,7 +17,7 @@ const loginUser = ({ username, password }: Arg) => async ({ userRepository }: Co
         throw new UserError('Incorrect username.');
     }
 
-    if (!await user.checkPassword(password)) {
+    if (!(await user.checkPassword(password))) {
         throw new UserError('Incorrect password.');
     }
 

@@ -23,9 +23,11 @@ if (!secret) {
     throw new Error('Missing COOKIE_SECRET env variable');
 }
 
-app.use(session({
-    secret,
-}) as RequestHandler);
+app.use(
+    session({
+        secret,
+    }) as RequestHandler,
+);
 
 // Init authentication
 app.use(auth.initialize() as RequestHandler);

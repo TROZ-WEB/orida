@@ -63,9 +63,10 @@ export const _createStore = (): ReturnTypeConfigStore => {
     ];
     const middlewareEnhancer = applyMiddleware(...middlewares);
 
-    const composeEnhancers = typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-        ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-        : compose;
+    const composeEnhancers =
+        typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+            ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+            : compose;
 
     const store = createReduxStore(persistedReducer, composeEnhancers(middlewareEnhancer));
 

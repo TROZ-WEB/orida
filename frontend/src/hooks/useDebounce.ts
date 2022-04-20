@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef } from 'react';
 
 const useDebounce = <F extends (...args: any) => any>(
     func: F,
-    waitFor: number = 300,
+    waitFor: number = 300
 ): ((...args: Parameters<F>) => ReturnType<F>) => {
     const timer = useRef<any | null>();
     const savedFunc = useRef<F | null>(func);

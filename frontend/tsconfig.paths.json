@@ -2,54 +2,22 @@
     "compilerOptions": {
         "baseUrl": "./src",
         "paths": {
-            "@assets/*": [
-                "./assets/*"
-            ],
-            "@components/*": [
-                "./components/*"
-            ],
-            "@contexts/*": [
-                "./contexts/*"
-            ],
-            "@customTypes/*": [
-                "./types/*"
-            ],
-            "@data/*": [
-                "./data/*"
-            ],
-            "@design/*": [
-                "./design/*"
-            ],
-            "@hooks/*": [
-                "./hooks/*"
-            ],
-            "@models/*": [
-                "./models/*"
-            ],
-            "@pages/*": [
-                "./pages/*"
-            ],
-            "@router/*": [
-                "./router/*"
-            ],
-            "@services/*": [
-                "./services/*"
-            ],
-            "@store": [
-                "./store/index"
-            ],
-            "@store/*": [
-                "./store/*"
-            ],
-            "@styles/*": [
-                "./styles/*"
-            ],
-            "@translations/*": [
-                "./translations/*"
-            ],
-            "@utils/*": [
-                "./utils/*"
-            ]
+            "@assets/*": ["./assets/*"],
+            "@components/*": ["./components/*"],
+            "@contexts/*": ["./contexts/*"],
+            "@customTypes/*": ["./types/*"],
+            "@data/*": ["./data/*"],
+            "@design/*": ["./design/*"],
+            "@hooks/*": ["./hooks/*"],
+            "@models/*": ["./models/*"],
+            "@pages/*": ["./pages/*"],
+            "@router/*": ["./router/*"],
+            "@services/*": ["./services/*"],
+            "@store": ["./store/index"],
+            "@store/*": ["./store/*"],
+            "@styles/*": ["./styles/*"],
+            "@translations/*": ["./translations/*"],
+            "@utils/*": ["./utils/*"]
         }
     }
 }

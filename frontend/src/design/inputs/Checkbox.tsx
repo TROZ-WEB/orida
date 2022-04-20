@@ -1,5 +1,4 @@
 import Label from '@design/Label';
-import React from 'react';
 
 interface CheckboxInputProps {
     label: string;
@@ -8,9 +7,9 @@ interface CheckboxInputProps {
 }
 
 const CheckboxInput = ({ label, name, register }: CheckboxInputProps) => (
-    <div className="flex">
+    <div className='flex'>
         <Label htmlFor={name}>{label}</Label>
-        <input className="ml-2" id={name} type="checkbox" {...register(name)} />
+        <input className='ml-2' id={name} type='checkbox' {...register(name)} />
     </div>
 );
 

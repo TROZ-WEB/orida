@@ -4,7 +4,6 @@ import Space from '@design/Space';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
 import { create } from '@store/projects/actions';
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -27,17 +26,17 @@ const CreateProjectForm = () => {
     };
 
     return (
-        <form className="max-w-[500px]" onSubmit={handleSubmit(onCreate)}>
+        <form className='max-w-[500px]' onSubmit={handleSubmit(onCreate)}>
             <TextInput
                 label={t('project_create_title_label')}
-                name="title"
+                name='title'
                 placeholder={t('project_create_title_placeholder')}
                 register={register}
                 required
             />
             <Space px={8} />
             <SubmitButton
-                className="bg-secondary hover:bg-secondary-hover"
+                className='bg-secondary hover:bg-secondary-hover'
                 value={t('project_create_button') as string}
             />
         </form>
