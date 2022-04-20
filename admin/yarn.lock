@@ -7722,7 +7722,7 @@ ra-core@^3.19.11:
     query-string "^5.1.1"
     reselect "~3.0.0"
 
-ra-data-simple-rest@^3.19.10:
+ra-data-simple-rest@^3.19.11:
   version "3.19.11"
   resolved "https://registry.yarnpkg.com/ra-data-simple-rest/-/ra-data-simple-rest-3.19.11.tgz#d0f6a41cd256aa018386267003b354f29c86baf2"
   integrity sha512-G5PD9pF8ICj7/Tx5AzF5NtZhzsneQ0eyhkLWNm76pEDhRMsGSAzoibAuwSfOk5Q3VH1mpZ1oSqnurCBQeBME6A==
@@ -7791,7 +7791,7 @@ raw-body@2.4.2:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-react-admin@^3.19.10:
+react-admin@^3.19.11:
   version "3.19.11"
   resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-3.19.11.tgz#dd3c8ac5ffc1736480b9f66fab55be4379ba0a46"
   integrity sha512-nF856kN0jE7QvKfR36VG+Mv9m6Uc7BA4U6+Ja+Ow7fhejH+UziE1nPfGWOlZ6VcoSzaTRFcCmlmewJcSkxxJew==
