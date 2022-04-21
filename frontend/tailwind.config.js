@@ -17,6 +17,9 @@ module.exports = {
                 transparent: "transparent",
                 warning: "#ffa755",
             },
+            maxWidth: {
+                'lg': '1024px',
+            }
         },
     },
     plugins: [],

@@ -11,26 +11,29 @@ interface ModalProps {
 
 const MODAL_CLASSES = `
 box-border
-z-900
+max-w-[500px]
+mx-2
 overflow-auto
+w-full
+z-900
 `;
 
 const INNER_CLASSES = `
-p-5
 bg-white
-rounded
-w-[500px]
+p-5
 relative
+rounded
+w-full
 `;
 
 const CLOSE_CLASSES = `
 absolute
-right-0
-top-0
-w-[30px]
 h-[30px]
 px-2
 py-2
+right-0
+top-0
+w-[30px]
 `;
 
 const Modal = ({ children, close, isOpen }: PropsWithChildren<ModalProps>) => {
