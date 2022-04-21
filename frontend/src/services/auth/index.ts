@@ -4,7 +4,7 @@ import { AuthError, LoginProps, LoginResponse, RegisterProps } from './types';
 
 async function login({ email, password }: LoginProps): Promise<LoginResponse> {
     try {
-        const response = await POST<LoginResponse>('api/auth/login', { email, password });
+        const response = await POST<LoginResponse>('/api/auth/login', { email, password });
 
         return response;
     } catch (error) {
@@ -16,7 +16,7 @@ async function login({ email, password }: LoginProps): Promise<LoginResponse> {
 
 async function register(props: RegisterProps) {
     try {
-        const response = await POST<LoginResponse>('api/auth/register', { ...props });
+        const response = await POST<LoginResponse>('/api/auth/register', { ...props });
 
         return response;
     } catch (error: any) {
@@ -31,7 +31,7 @@ async function register(props: RegisterProps) {
 
 async function logout() {
     try {
-        await POST('api/auth/logout');
+        await POST('/api/auth/logout');
 
         return true;
     } catch (error) {
@@ -43,7 +43,7 @@ async function logout() {
 
 async function me() {
     try {
-        const result = await GET('api/auth/me');
+        const result = await GET('/api/auth/me');
 
         return result;
     } catch (error: any) {

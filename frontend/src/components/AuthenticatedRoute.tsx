@@ -1,4 +1,3 @@
-import Loader from '@design/Loader';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
 import AuthService from '@services/auth';
@@ -9,8 +8,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 const AuthenticatedRoute = () => {
     const dispatch = useThunkDispatch();
 
-    const [loading, setLoading] = useState<boolean>(true);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true); // true for optimistic authentication
 
     useEffect(() => {
         async function checkToken() {
@@ -20,23 +18,16 @@ const AuthenticatedRoute = () => {
                 if (result === null) {
                     await dispatch(logout());
                     setIsLoggedIn(false);
-                    setLoading(false);
                 }
 
                 setIsLoggedIn(true);
-                setLoading(false);
             } catch (e) {
-                setLoading(false);
-                setLoading(false);
+                setIsLoggedIn(false);
             }
         }
 
         checkToken();
     }, []);
-
-    if (loading) {
-        return <Loader />;
-    }
 
     return isLoggedIn ? <Outlet /> : <Navigate to={AppRoutes.Login} />;
 };

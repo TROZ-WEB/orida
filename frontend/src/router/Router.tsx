@@ -2,6 +2,7 @@ import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import NotFound from '@pages/404';
 import HomeRedirect from '@pages/Home/HomeRedirect';
 import Login from '@pages/Login';
+import Project from '@pages/Project';
 import Search from '@pages/Search';
 import { Route, Routes } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ const Router = () => (
         <Route element={<AuthenticatedRoute />}>
             <Route element={<HomeRedirect />} path={AppRoutes.Home} />
             <Route element={<Search />} path={AppRoutes.Search} />
+            <Route element={<Project />} path={AppRoutes.Project} />
         </Route>
         <Route element={<NotFound />} path='*' />
     </Routes>

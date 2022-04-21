@@ -2,10 +2,11 @@ import Icons from '@assets/sprites.svg';
 import classnames from '@utils/classnames';
 
 const defaultStyle = `
-  group-hover:fill-black
-  group-hover:duration-100
   duration-100
+  group-hover:duration-100
+  group-hover:fill-black
   h-full
+  w-full
 `;
 
 interface Props {

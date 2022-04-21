@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import createProject from '../../useCases/project/createProject';
 import findAllProjets from '../../useCases/project/findAllProjects';
+import findProjectById from '../../useCases/project/findProjectById';
 import findProjectsBySearch from '../../useCases/project/findProjectsBySearch';
 import asyncRoute from '../../utils/asyncRoute';
 import normalize from '../../utils/normalize';
@@ -16,16 +17,21 @@ router.get(
     }),
 );
 
-router.post(
-    '/',
-    asyncRoute(async (req: Request, res: Response) => {
-        const created = await createProject({
-            title: req.body.title,
-        })({ projectRepository });
+router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const project = await findProjectById(id)({ projectRepository });
+    const result = project === undefined ? undefined : mapProject(project);
 
-        res.status(200).json(mapProject(created));
-    }),
-);
+    res.status(200).json(result);
+}));
+
+router.post('/', asyncRoute(async (req: Request, res: Response) => {
+    const created = await createProject({
+        title: req.body.title,
+    })({ projectRepository });
+
+    res.status(200).json(mapProject(created));
+}));
 
 router.post(
     '/search',

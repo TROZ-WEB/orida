@@ -27,6 +27,15 @@ export const getAll =
         dispatch(addAction(result));
     };
 
+export const getOne =
+    (id: string) =>
+    async (dispatch: ReduxDispatch): Promise<void> => {
+        const result = await ProjectService.getOne(id);
+        if (result) {
+            dispatch(addAction([result]));
+        }
+    };
+
 export const search =
     (value: string) =>
     async (dispatch: ReduxDispatch): Promise<void> => {

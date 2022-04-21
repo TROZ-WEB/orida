@@ -6,6 +6,7 @@ interface LayoutProps {
     backgroundClassName?: string;
     className?: string;
     header?: boolean;
+    fullWith?: boolean;
 }
 
 const classes = {
@@ -33,11 +34,14 @@ const Layout = ({
     backgroundClassName,
     className,
     children,
+    fullWith = false,
     header = true,
 }: PropsWithChildren<LayoutProps>) => (
     <div className={classnames(classes.wrapper, backgroundClassName)}>
         {header ? <Header /> : null}
-        <div className={classnames(classes.inner, className)}>{children}</div>
+        <div className={classnames(classes.inner, { 'max-w-[1100px]': !fullWith }, className)}>
+            {children}
+        </div>
     </div>
 );
 

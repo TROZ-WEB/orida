@@ -1,12 +1,12 @@
 import { GET, POST } from '@utils/http';
 
-import { CreateProps, Project } from './types';
+import { CreateProps, fromApi, Project } from './types';
 
 async function getAll(): Promise<Project[]> {
     try {
-        const response = await GET<Project[]>('api/projects/');
+        const response = await GET<Project[]>('/api/projects/');
 
-        return response;
+        return response.map(fromApi);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -14,11 +14,23 @@ async function getAll(): Promise<Project[]> {
     }
 }
 
+async function getOne(id: string): Promise<Project | undefined> {
+    try {
+        const response = await GET<Project>(`/api/projects/${id}`);
+
+        return fromApi(response);
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('ProjectService::getOne Unhandled error');
+    }
+}
+
 async function create(props: CreateProps): Promise<Project> {
     try {
-        const response = await POST<Project>('api/projects/', props);
+        const response = await POST<Project>('/api/projects/', props);
 
-        return response;
+        return fromApi(response);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -28,19 +40,20 @@ async function create(props: CreateProps): Promise<Project> {
 
 async function search(value: string): Promise<Project[]> {
     try {
-        const response = await POST<Project[]>('api/projects/search', { search: value });
+        const response = await POST<Project[]>('/api/projects/search', { search: value });
 
-        return response;
+        return response.map(fromApi);
     } catch (error) {
         // TODO::error handling
         console.error(error);
-        throw Error('ProjectService::create Unhandled error');
+        throw Error('ProjectService::search Unhandled error');
     }
 }
 
 const ProjectService = {
     create,
     getAll,
+    getOne,
     search,
 };
 
