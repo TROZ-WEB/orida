@@ -4,19 +4,19 @@ import '@translations/i18n'; // initialize language settings
 
 import * as Sentry from '@sentry/browser';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import version from './version';
 
-const root = document.getElementById('root');
+const container = document.getElementById('root');
 
-if (!root) {
+if (!container) {
     throw new Error('Missing root element');
 }
 
-const { environmentName, sentryDsn, ...props } = root.dataset;
+const { environmentName, sentryDsn, ...props } = container.dataset;
 
 Sentry.init({
     dsn: sentryDsn,
@@ -24,11 +24,12 @@ Sentry.init({
     release: version ? `orida-frontend@${version}` : undefined,
 });
 
-ReactDOM.render(
+const root = createRoot(container);
+
+root.render(
     <React.StrictMode>
         <App {...props} />
     </React.StrictMode>,
-    root
 );
 
 // If you want to start measuring performance in your app, pass a function
