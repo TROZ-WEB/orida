@@ -10,31 +10,32 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const MENU_ITEM_CLASSES = `
-bg-transparent
-h-full
-w-[120px]
-rounded-none
-px-2
-py-2
-flex
-justify-center
-items-center
-font-semibold
+const classes = {
+    menuItem: `
+        bg-transparent
+        flex
+        font-semibold
+        h-full
+        items-center
+        justify-center
+        px-2
+        py-2
+        rounded-none
+        w-[120px]
 
-hover:bg-primary
-`;
-
-const MENU_ITEM_ACTIVE_CLASSES = `
-bg-primary
-`;
-
-const MENU_ITEMS_ICON_ONLY = `
-px-6
-py-6
-w-auto
-min-w-auto
-`;
+        hover:bg-primary
+    `,
+    menuItemActive: `
+        bg-primary
+    `,
+    menuItemIconOnly: `
+        min-w-auto
+        px-6
+        py-6
+        w-auto
+    `,
+    wrapper: 'h-[70px] bg-primary-dark flex justify-between w-full',
+};
 
 const Header = () => {
     const { t } = useTranslation();
@@ -48,18 +49,18 @@ const Header = () => {
         navigate(AppRoutes.Login);
     }, []);
 
-    const exploreTabIsActive = pathname.includes('/project/');
+    const exploreTabIsActive = pathname.includes('/project/') || pathname.includes('/explore');
     const searchTabIsActive = pathname.includes('/search');
 
     return (
-        <div className='h-[70px] bg-primary-dark flex justify-between w-full'>
+        <div className={classes.wrapper}>
             <div className='flex flex-row'>
-                <ButtonLink className={MENU_ITEM_CLASSES} to={AppRoutes.Home}>
+                <ButtonLink className={classes.menuItem} to={AppRoutes.Home}>
                     <Logo />
                 </ButtonLink>
                 <ButtonLink
-                    className={classnames(MENU_ITEM_CLASSES, {
-                        [MENU_ITEM_ACTIVE_CLASSES]: exploreTabIsActive,
+                    className={classnames(classes.menuItem, {
+                        [classes.menuItemActive]: exploreTabIsActive,
                     })}
                     to={AppRoutes.Explore}
                 >
@@ -68,15 +69,15 @@ const Header = () => {
             </div>
             <div className='flex flex-row'>
                 <ButtonLink
-                    className={classnames(MENU_ITEM_CLASSES, MENU_ITEMS_ICON_ONLY, {
-                        [MENU_ITEM_ACTIVE_CLASSES]: searchTabIsActive,
+                    className={classnames(classes.menuItem, classes.menuItemIconOnly, {
+                        [classes.menuItemActive]: searchTabIsActive,
                     })}
                     to={AppRoutes.Search}
                 >
                     <Icon color='#fff' name='search' />
                 </ButtonLink>
                 {isLoggedIn && (
-                    <Button className={MENU_ITEM_CLASSES} onClick={onLogout}>
+                    <Button className={classes.menuItem} onClick={onLogout}>
                         <Icon className='w-auto' color='#fff' name='logout' />
                         <span className='text-white font-normal'>{t('nav_logout')}</span>
                     </Button>

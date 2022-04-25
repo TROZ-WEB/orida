@@ -23,7 +23,7 @@ export const mapProject = (project: Project) => ({
     startDate: project.startDate,
     status: project.status,
     title: project.title,
-    theme: 'Environnement', //! MOCK
+    themes: ['Environnement'], //! MOCK
 });
 
 //! ANY TO FIX

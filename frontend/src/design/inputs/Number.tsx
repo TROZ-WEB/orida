@@ -1,14 +1,14 @@
+import WithTheme, { Theme } from '@customTypes/theme';
 import Label from '@design/Label';
 import Space from '@design/Space';
 import classnames from '@utils/classnames';
 import { InputHTMLAttributes, ReactNode } from 'react';
 
-export interface NumberInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface NumberInputProps extends InputHTMLAttributes<HTMLInputElement>, WithTheme {
     label?: ReactNode;
     name: string;
     register: any;
     required?: boolean;
-    theme?: 'light' | 'dark';
 }
 
 const classes = {
@@ -22,9 +22,9 @@ const classes = {
     outline-none
     text-black
     duration-300
-    
+
     focus:border-b-secondary
-    
+
     hover:border-b-secondary
     hover:cursor-text
     `,
@@ -43,7 +43,7 @@ const NumberInput = ({
     name,
     register,
     required = false,
-    theme = 'light',
+    theme = Theme.Light,
     type = 'number',
     ...props
 }: NumberInputProps) => (
@@ -51,7 +51,7 @@ const NumberInput = ({
         {label && (
             <>
                 <Label
-                    className={theme === 'dark' ? classes.labelDarkTheme : undefined}
+                    className={theme === Theme.Dark ? classes.labelDarkTheme : undefined}
                     htmlFor={name}
                 >
                     {label}
@@ -62,7 +62,7 @@ const NumberInput = ({
         <input
             className={classnames(
                 classes.input,
-                theme === 'dark' ? classes.inputDarkTheme : undefined,
+                theme === Theme.Dark ? classes.inputDarkTheme : undefined,
                 className
             )}
             id={name}

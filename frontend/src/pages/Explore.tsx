@@ -1,5 +1,6 @@
 import Filters from '@components/filters';
 import ProjectList from '@components/ProjectList';
+import { Theme } from '@customTypes/theme';
 import Divider from '@design/Divider';
 import ThreeColsLayout, { MenuItem } from '@design/layouts/ThreeCols';
 import { H2 } from '@design/titles';
@@ -33,7 +34,7 @@ const ExplorePage = () => {
 
     return (
         <ThreeColsLayout left={left} menuItems={menuItems}>
-            <ProjectList projects={projects} />
+            <ProjectList projects={projects} theme={Theme.Dark} />
         </ThreeColsLayout>
     );
 };

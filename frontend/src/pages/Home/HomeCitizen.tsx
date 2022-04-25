@@ -1,5 +1,6 @@
 import ProjectCreateForm from '@components/ProjectCreateForm';
 import ProjectList from '@components/ProjectList';
+import { Theme } from '@customTypes/theme';
 import { Button } from '@design/buttons';
 import Layout from '@design/layouts/Layout';
 import Modal from '@design/modals/DefaultModal';
@@ -23,7 +24,7 @@ const HomeCitizenPage = () => {
     return (
         <Layout>
             <Modal {...modalProps}>
-                <ProjectCreateForm />
+                <ProjectCreateForm onCreated={() => modalProps.close()} />
             </Modal>
 
             <h1>{`Bienvenue ${auth.email}`}</h1>
@@ -32,7 +33,7 @@ const HomeCitizenPage = () => {
             <Button onClick={modalProps.open}>Créer un projet</Button>
             <Space px={40} />
             <h1>Projets</h1>
-            <ProjectList projects={projects} />
+            <ProjectList projects={projects} theme={Theme.Dark} />
         </Layout>
     );
 };

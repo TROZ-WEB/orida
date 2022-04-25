@@ -1,3 +1,4 @@
+import { Theme } from '@customTypes/theme';
 import { SubmitButton } from '@design/buttons';
 import { TextInput } from '@design/inputs';
 import Space from '@design/Space';
@@ -38,7 +39,7 @@ const LoginForm = () => {
                 name='email'
                 placeholder='bruce@wayneenterprise.com'
                 register={register}
-                theme='dark'
+                theme={Theme.Dark}
             />
             <Space px={24} />
             <TextInput
@@ -46,7 +47,7 @@ const LoginForm = () => {
                 label={t('login_password_label')}
                 name='password'
                 register={register}
-                theme='dark'
+                theme={Theme.Dark}
                 type='password'
             />
             <Space px={62} />

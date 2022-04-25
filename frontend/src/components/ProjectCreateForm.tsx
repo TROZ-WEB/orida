@@ -1,5 +1,12 @@
 import { SubmitButton } from '@design/buttons';
-import { DateInput, NumberInput, SelectInput, TextAreaInput, TextInput } from '@design/inputs';
+import {
+    DateInput,
+    NumberInput,
+    SelectInput,
+    SelectOption,
+    TextAreaInput,
+    TextInput,
+} from '@design/inputs';
 import Space from '@design/Space';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
@@ -14,27 +21,27 @@ type Inputs = {
     description: string;
 };
 
-interface Option {
-    label: string;
-    value: undefined | string;
+interface CreateProjectFormProps {
+    onCreated: () => void;
 }
 
-const CreateProjectForm = () => {
+const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
     const { register, handleSubmit, reset } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
-    const [yearsOptions, setYearsOptions] = useState<Option[] | null>(null);
+    const [yearsOptions, setYearsOptions] = useState<SelectOption[]>([]);
 
     const onCreate: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
             await dispatch(create(data));
             reset();
-        } catch (e) {
-            notify(NotificationType.Error, 'non');
+            onCreated();
+        } catch (e: any) {
+            notify(NotificationType.Error, e.message);
         }
     };
 
-    const statusOptions: Option[] = [
+    const statusOptions: SelectOption[] = [
         { label: t('project_create_status_design'), value: ProjectStatus.Design },
         { label: t('project_create_status_running'), value: ProjectStatus.Running },
         { label: t('project_create_status_complete'), value: ProjectStatus.Complete },
@@ -43,7 +50,7 @@ const CreateProjectForm = () => {
     const currentYear = new Date().getFullYear();
 
     useMemo(() => {
-        const years: Option[] = [];
+        const years: SelectOption[] = [];
 
         for (let i = 2000; i <= currentYear; i++) {
             years.unshift({ label: i.toString(), value: i.toString() });
@@ -51,7 +58,7 @@ const CreateProjectForm = () => {
 
         years.unshift({
             label: t('project_create_participatorybudgetyear_placeholder'),
-            value: undefined,
+            value: '',
         });
         setYearsOptions(years);
     }, []);
@@ -86,15 +93,12 @@ const CreateProjectForm = () => {
                 name='participatorybudgetyear'
                 options={yearsOptions}
                 register={register}
-                required
             />
             <Space px={8} />
             <DateInput
                 label={t('project_create_startdate_label')}
                 name='startdate'
-                placeholder={t('project_create_startdate_placeholder')}
                 register={register}
-                required
             />
             <Space px={8} />
             <SelectInput
@@ -102,7 +106,6 @@ const CreateProjectForm = () => {
                 name='status'
                 options={statusOptions}
                 register={register}
-                required
             />
             <Space px={8} />
             <SubmitButton

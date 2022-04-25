@@ -1,20 +1,20 @@
+import WithTheme, { Theme } from '@customTypes/theme';
 import Label from '@design/Label';
 import Space from '@design/Space';
 import classnames from '@utils/classnames';
 import { InputHTMLAttributes, ReactNode } from 'react';
 
-export interface Props extends InputHTMLAttributes<HTMLInputElement> {
+export interface Option {
+    label: string;
+    value: string;
+}
+
+interface Props extends InputHTMLAttributes<HTMLInputElement>, WithTheme {
     label?: ReactNode;
     name: string;
     register: any;
     required?: boolean;
-    theme?: 'light' | 'dark';
-    options:
-        | {
-              label: string;
-              value: string | undefined;
-          }[]
-        | null;
+    options: Option[];
 }
 
 const classes = {
@@ -28,9 +28,9 @@ const classes = {
     outline-none
     text-black
     duration-300
-    
+
     focus:border-b-secondary
-    
+
     hover:border-b-secondary
     hover:cursor-text
     `,
@@ -49,7 +49,7 @@ const SelectInput = ({
     name,
     register,
     required = false,
-    theme = 'light',
+    theme = Theme.Light,
     options,
     ...props
 }: Props) => (
@@ -57,7 +57,7 @@ const SelectInput = ({
         {label && (
             <>
                 <Label
-                    className={theme === 'dark' ? classes.labelDarkTheme : undefined}
+                    className={theme === Theme.Dark ? classes.labelDarkTheme : undefined}
                     htmlFor={name}
                 >
                     {label}
@@ -68,7 +68,7 @@ const SelectInput = ({
         <select
             className={classnames(
                 classes.input,
-                theme === 'dark' ? classes.inputDarkTheme : undefined,
+                theme === Theme.Dark ? classes.inputDarkTheme : undefined,
                 className
             )}
             id={name}
@@ -76,7 +76,9 @@ const SelectInput = ({
             {...props}
         >
             {options?.map((option) => (
-                <option value={option.value}>{option.label}</option>
+                <option key={option.value?.toString()} value={option.value}>
+                    {option.label}
+                </option>
             ))}
         </select>
     </div>

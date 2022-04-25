@@ -1,4 +1,5 @@
 import ProjectList from '@components/ProjectList';
+import { Theme } from '@customTypes/theme';
 import { SearchInput } from '@design/inputs';
 import Layout from '@design/layouts/Layout';
 import Space from '@design/Space';
@@ -48,7 +49,7 @@ const Search = () => {
                     onChange={onInputChange}
                     placeholder='Recherche'
                     register={register}
-                    theme='dark'
+                    theme={Theme.Dark}
                     type='search'
                 />
             </form>
