@@ -25,6 +25,22 @@ router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
     res.status(200).json(result);
 }));
 
+router.post(
+    '/',
+    asyncRoute(async (req: Request, res: Response) => {
+        const created = await createProject({
+            budget: req.body.budget,
+            description: req.body.description,
+            participatoryBudgetYear: req.body.participatoryBudgetYear,
+            startDate: req.body.startDate,
+            status: req.body.status,
+            title: req.body.title,
+        })({ projectRepository });
+
+        res.status(200).json(mapProject(created));
+    }),
+);
+
 router.post('/', asyncRoute(async (req: Request, res: Response) => {
     const created = await createProject({
         title: req.body.title,

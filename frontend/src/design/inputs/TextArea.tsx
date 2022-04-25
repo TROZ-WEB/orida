@@ -3,7 +3,7 @@ import Space from '@design/Space';
 import classnames from '@utils/classnames';
 import { InputHTMLAttributes, ReactNode } from 'react';
 
-export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     label?: ReactNode;
     name: string;
     register: any;
@@ -37,16 +37,15 @@ const classes = {
     `,
 };
 
-const TextInput = ({
+const TextAreaInput = ({
     className,
     label,
     name,
     register,
     required = false,
     theme = 'light',
-    type = 'text',
     ...props
-}: TextInputProps) => (
+}: Props) => (
     <div className='w-full'>
         {label && (
             <>
@@ -59,18 +58,17 @@ const TextInput = ({
                 <Space px={8} />
             </>
         )}
-        <input
+        <textarea
             className={classnames(
                 classes.input,
                 theme === 'dark' ? classes.inputDarkTheme : undefined,
                 className
             )}
             id={name}
-            type={type}
             {...register(name, { required })}
             {...props}
         />
     </div>
 );
 
-export default TextInput;
+export default TextAreaInput;

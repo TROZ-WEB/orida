@@ -19,29 +19,36 @@ function castToProjectStatus(value: string) {
 }
 
 export type Project = {
-    id: string;
-    title: string;
-    status: ProjectStatus;
-    themes: string[];
     budget: number;
-    location: string;
+    createdAt: string;
     description: string;
+    id: string;
+    location: string;
+    participatoryBudgetYear: number;
+    startDate: Date;
+    status: ProjectStatus;
+    title: string;
+    themes: string[];
     images: string[];
 };
 
 export function fromApi(data: any): Project {
     return {
-        id: data.id,
-        title: data.title,
-        status: castToProjectStatus(data.status),
-        themes: data.themes ?? [],
         budget: data.budget,
-        location: data.location,
+        createdAt: data.createdAt,
         description: data.description,
+        id: data.id,
+        location: data.location,
+        participatoryBudgetYear: data.participatoryBudgetYear,
+        startDate: data.startDate,
+        status: castToProjectStatus(data.status),
+        title: data.title,
+        themes: data.themes ?? [],
         images: data.images,
     };
 }
 
 export type CreateProps = {
     title: string;
+    description: string;
 };

@@ -1,8 +1,8 @@
 import placeholderProjectSrc from '@assets/placeholder-project.jpg';
 import Tag from '@design/Tag';
+import { goToProject } from '@router/AppRoutes';
 import { Project } from '@services/projects';
 import formatBudget from '@utils/formatBudget';
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface ProjectCardProps {
@@ -10,10 +10,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => (
-    <Link
-        className='border-b-2 border-border py-5 w-full flex'
-        to='/project/ac130e23-84c0-4b50-9e45-a5db20668fda'
-    >
+    <Link className='border-b-2 border-border py-5 w-full flex' to={goToProject(project.id)}>
         <img alt='project' className='w-1/3 rounded mr-4' src={placeholderProjectSrc} />
         <div className='flex flex-col'>
             <Tag className='mb-4'>{project.themes[0]}</Tag>

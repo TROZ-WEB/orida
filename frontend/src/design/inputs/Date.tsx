@@ -3,7 +3,7 @@ import Space from '@design/Space';
 import classnames from '@utils/classnames';
 import { InputHTMLAttributes, ReactNode } from 'react';
 
-export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface DateInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: ReactNode;
     name: string;
     register: any;
@@ -37,16 +37,16 @@ const classes = {
     `,
 };
 
-const TextInput = ({
+const DateInput = ({
     className,
     label,
     name,
     register,
     required = false,
     theme = 'light',
-    type = 'text',
+    type = 'date',
     ...props
-}: TextInputProps) => (
+}: DateInputProps) => (
     <div className='w-full'>
         {label && (
             <>
@@ -73,4 +73,4 @@ const TextInput = ({
     </div>
 );
 
-export default TextInput;
+export default DateInput;

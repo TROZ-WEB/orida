@@ -3,12 +3,18 @@ import Space from '@design/Space';
 import classnames from '@utils/classnames';
 import { InputHTMLAttributes, ReactNode } from 'react';
 
-export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     label?: ReactNode;
     name: string;
     register: any;
     required?: boolean;
     theme?: 'light' | 'dark';
+    options:
+        | {
+              label: string;
+              value: string | undefined;
+          }[]
+        | null;
 }
 
 const classes = {
@@ -37,16 +43,16 @@ const classes = {
     `,
 };
 
-const TextInput = ({
+const SelectInput = ({
     className,
     label,
     name,
     register,
     required = false,
     theme = 'light',
-    type = 'text',
+    options,
     ...props
-}: TextInputProps) => (
+}: Props) => (
     <div className='w-full'>
         {label && (
             <>
@@ -59,18 +65,21 @@ const TextInput = ({
                 <Space px={8} />
             </>
         )}
-        <input
+        <select
             className={classnames(
                 classes.input,
                 theme === 'dark' ? classes.inputDarkTheme : undefined,
                 className
             )}
             id={name}
-            type={type}
             {...register(name, { required })}
             {...props}
-        />
+        >
+            {options?.map((option) => (
+                <option value={option.value}>{option.label}</option>
+            ))}
+        </select>
     </div>
 );
 
-export default TextInput;
+export default SelectInput;

@@ -2,16 +2,32 @@ import { Project, ProjectRepository, ProjectStatus } from '../../domain/Project'
 
 interface Arg {
     title: string;
+    description?: string;
+    budget?: Number;
+    participatoryBudgetYear?: Number;
+    startDate?: Date;
+    status?: ProjectStatus;
 }
 
 interface Context {
     projectRepository: ProjectRepository;
 }
 
-const createProject = ({ title }: Arg) => async ({ projectRepository }: Context): Promise<Project> => {
+const createProject = ({
+    budget,
+    description,
+    participatoryBudgetYear,
+    status,
+    startDate,
+    title,
+}: Arg) => async ({ projectRepository }: Context): Promise<Project> => {
     const project = projectRepository.create({
+        budget,
+        description,
+        participatoryBudgetYear,
+        status: status || ProjectStatus.Design,
+        startDate,
         title,
-        status: ProjectStatus.Design,
     });
 
     return projectRepository.save(project);

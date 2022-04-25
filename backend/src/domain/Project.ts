@@ -10,14 +10,41 @@ export enum ProjectStatus {
 class Project {
     id: string;
 
-    title: string;
+    createdAt: Date;
+
+    updatedAt: Date;
+
+    budget: Number;
+
+    description: string;
+
+    participatoryBudgetYear: Number;
+
+    startDate: Date;
 
     status: ProjectStatus;
 
-    constructor(title: string, status: ProjectStatus) {
+    title: string;
+
+    constructor(
+        createdAt: Date,
+        updatedAt: Date,
+        budget: Number,
+        description: string,
+        participatoryBudgetYear: Number,
+        startDate: Date,
+        status: ProjectStatus,
+        title: string,
+    ) {
         this.id = uuidv4();
-        this.title = title;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.budget = budget;
+        this.description = description;
+        this.participatoryBudgetYear = participatoryBudgetYear;
+        this.startDate = startDate;
         this.status = status;
+        this.title = title;
     }
 }
 
