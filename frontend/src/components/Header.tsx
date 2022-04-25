@@ -61,7 +61,7 @@ const Header = () => {
                     className={classnames(MENU_ITEM_CLASSES, {
                         [MENU_ITEM_ACTIVE_CLASSES]: exploreTabIsActive,
                     })}
-                    to='#'
+                    to={AppRoutes.Explore}
                 >
                     {t('nav_explore')}
                 </ButtonLink>

@@ -1,3 +1,5 @@
+import { GlobalActionTypes } from '@store/_global/types';
+
 export const LOGOUT = 'LOGOUT';
 export const SIGN_OUT = 'SIGN_OUT';
 export const LOGIN = 'LOGIN';
@@ -13,7 +15,7 @@ interface Logout {
     type: typeof LOGOUT;
 }
 
-export type AuthActionTypes = Logout | Login;
+export type AuthActionTypes = GlobalActionTypes | Logout | Login;
 
 export interface AuthState {
     data: {

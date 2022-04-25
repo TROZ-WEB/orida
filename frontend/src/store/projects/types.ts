@@ -1,7 +1,8 @@
 import { Project } from '@services/projects';
+import { GlobalActionTypes } from '@store/_global/types';
 
-export const ADD = 'ADD';
-export const SEARCH = 'SEARCH';
+export const ADD = 'PROJECTS_ADD';
+export const SEARCH = 'PROJECTS_SEARCH';
 
 export interface Add {
     type: typeof ADD;
@@ -13,7 +14,7 @@ export interface Search {
     projects: Project[];
 }
 
-export type ProjectActionTypes = Add | Search;
+export type ProjectActionTypes = GlobalActionTypes | Add | Search;
 
 export interface ProjectState {
     data: Project[];

@@ -6,8 +6,8 @@ interface H3Props {
 }
 
 const H3_CLASSES = `
-font-semibold
-leading-7
+font-medium
+leading-6
 text-lg
 text-primary-dark
 `;

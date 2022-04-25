@@ -20,9 +20,9 @@ const classes = {
     inner: `
         flex
         flex-col
+        h-full
         items-start
         justify-start
-        max-w-lg
         px-4
         w-full
 
@@ -39,7 +39,7 @@ const Layout = ({
 }: PropsWithChildren<LayoutProps>) => (
     <div className={classnames(classes.wrapper, backgroundClassName)}>
         {header ? <Header /> : null}
-        <div className={classnames(classes.inner, { 'max-w-[1100px]': !fullWith }, className)}>
+        <div className={classnames(classes.inner, { 'max-w-lg': !fullWith }, className)}>
             {children}
         </div>
     </div>

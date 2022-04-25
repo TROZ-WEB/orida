@@ -1,5 +1,6 @@
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import NotFound from '@pages/404';
+import Explore from '@pages/Explore';
 import HomeRedirect from '@pages/Home/HomeRedirect';
 import Login from '@pages/Login';
 import Project from '@pages/Project';
@@ -15,6 +16,7 @@ const Router = () => (
             <Route element={<HomeRedirect />} path={AppRoutes.Home} />
             <Route element={<Search />} path={AppRoutes.Search} />
             <Route element={<Project />} path={AppRoutes.Project} />
+            <Route element={<Explore />} path={AppRoutes.Explore} />
         </Route>
         <Route element={<NotFound />} path='*' />
     </Routes>

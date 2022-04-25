@@ -1,4 +1,4 @@
-import Layout from '@components/Layout';
+import Layout from '@design/layouts/Layout';
 import useSelector from '@hooks/useSelector';
 
 const HomeadminPage = () => {

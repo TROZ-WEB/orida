@@ -1,6 +1,6 @@
-import Layout from '@components/Layout';
 import ProjectList from '@components/ProjectList';
 import { SearchInput } from '@design/inputs';
+import Layout from '@design/layouts/Layout';
 import Space from '@design/Space';
 import useDebounce from '@hooks/useDebounce';
 import useSelector from '@hooks/useSelector';

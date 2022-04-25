@@ -3,12 +3,18 @@ import AppRoutes from '@router/AppRoutes';
 import AuthService from '@services/auth';
 import { logout } from '@store/auth/actions';
 import { useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 
 const AuthenticatedRoute = () => {
     const dispatch = useThunkDispatch();
+    const navigate = useNavigate();
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true); // true for optimistic authentication
+
+    const forceLogout = () => {
+        dispatch(logout());
+        navigate(AppRoutes.Login);
+    };
 
     useEffect(() => {
         async function checkToken() {
@@ -16,13 +22,14 @@ const AuthenticatedRoute = () => {
                 const result = await AuthService.me();
 
                 if (result === null) {
-                    await dispatch(logout());
                     setIsLoggedIn(false);
+                    forceLogout();
                 }
 
                 setIsLoggedIn(true);
             } catch (e) {
                 setIsLoggedIn(false);
+                forceLogout();
             }
         }
 

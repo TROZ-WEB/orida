@@ -1,5 +1,6 @@
 import { ReduxDispatch } from '@hooks/useThunkDispatch';
 import AuthService, { LoginProps, RegisterProps } from '@services/auth';
+import { resetStoreAction } from '@store/_global/actions';
 
 import { AuthActionTypes, LOGIN, Login, LOGOUT } from './types';
 
@@ -24,6 +25,7 @@ export const logout =
     async (dispatch: ReduxDispatch): Promise<any> => {
         await AuthService.logout();
         dispatch(logoutAction());
+        dispatch(resetStoreAction());
     };
 
 export const register =

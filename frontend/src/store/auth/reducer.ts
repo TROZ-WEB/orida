@@ -1,3 +1,5 @@
+import { RESET_STORE } from '@store/_global/types';
+
 import { AuthActionTypes, AuthState, LOGIN, LOGOUT } from './types';
 
 const initialState: AuthState = {
@@ -23,6 +25,7 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthState =
             };
         }
         case LOGOUT:
+        case RESET_STORE:
             return initialState;
         default:
             return state;

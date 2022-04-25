@@ -3,8 +3,10 @@ import express, { NextFunction, Request, RequestHandler, Response } from 'expres
 import session from 'express-session';
 import auth from './auth';
 import authRouter from './routes/auth';
+import categoriesRouter from './routes/categories';
 import healthRouter from './routes/health';
 import projectsRouter from './routes/projects';
+import statusRouter from './routes/status';
 import usersRouter from './routes/users';
 
 const app = express();
@@ -34,7 +36,9 @@ app.use(auth.initialize() as RequestHandler);
 app.use(auth.session());
 
 app.use('/auth/', authRouter);
+app.use('/categories/', categoriesRouter);
 app.use('/projects/', projectsRouter);
+app.use('/status/', statusRouter);
 app.use('/users/', usersRouter);
 
 app.use(Sentry.Handlers.errorHandler());

@@ -1,24 +1,27 @@
 import { Project } from '@services/projects';
+import { RESET_STORE } from '@store/_global/types';
 import uniq from '@utils/uniq';
 
-import { initialState, ProjectActionTypes, ProjectState } from './types';
+import { ADD, initialState, ProjectActionTypes, ProjectState, SEARCH } from './types';
 
 /* eslint-disable-next-line default-param-last */
-const authReducer = (state = initialState, action: ProjectActionTypes): ProjectState => {
+const projectsReducer = (state = initialState, action: ProjectActionTypes): ProjectState => {
     switch (action.type) {
-        case 'ADD':
+        case ADD:
             return {
                 ...state,
                 data: uniq<Project>([...state.data, ...action.projects], ['id']),
             };
-        case 'SEARCH':
+        case SEARCH:
             return {
                 ...state,
                 search: action.projects,
             };
+        case RESET_STORE:
+            return initialState;
         default:
             return state;
     }
 };
 
-export default authReducer;
+export default projectsReducer;

@@ -25,3 +25,10 @@ export const mapProject = (project: Project) => ({
     title: project.title,
     theme: 'Environnement', //! MOCK
 });
+
+//! ANY TO FIX
+export const mapCategory = (category: any) => ({
+    id: category.id,
+    label: category.label,
+    picture: category.picture,
+});

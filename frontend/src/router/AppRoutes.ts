@@ -3,6 +3,7 @@ enum AppRoutes {
     Home = '/home',
     Search = '/search',
     Project = '/project/:projectId',
+    Explore = '/explore',
 }
 
 export enum ProjectTab {

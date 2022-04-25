@@ -1,7 +1,7 @@
-import Layout from '@components/Layout';
 import ProjectCreateForm from '@components/ProjectCreateForm';
 import ProjectList from '@components/ProjectList';
 import { Button } from '@design/buttons';
+import Layout from '@design/layouts/Layout';
 import Modal from '@design/modals/DefaultModal';
 import Space from '@design/Space';
 import useModal from '@hooks/useModal';

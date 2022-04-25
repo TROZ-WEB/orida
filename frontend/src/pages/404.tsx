@@ -1,7 +1,7 @@
-import Layout from '@components/Layout';
 import { ButtonLink } from '@design/buttons';
+import Layout from '@design/layouts/Layout';
 import Space from '@design/Space';
-import H1 from '@design/titles/H1';
+import { H1 } from '@design/titles';
 import AppRoutes from '@router/AppRoutes';
 import { useTranslation } from 'react-i18next';
 

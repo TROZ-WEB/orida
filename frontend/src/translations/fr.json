@@ -1,4 +1,7 @@
 {
+    "explore_title": "Explorer",
+    "filters_categories_title": "Catégories",
+    "filters_status_title": "Statut",
     "login_email_label": "Email",
     "login_password_label": "Mot de passe",
     "login_submit": "Connexion",
