@@ -24,6 +24,7 @@ COPY public ./public
 COPY src ./src
 COPY craco.config.js ./craco.config.js
 COPY tsconfig.paths.json ./tsconfig.paths.json
+COPY tailwind.config.js ./tailwind.config.js
 
 ARG VERSION
 RUN echo "export default '$VERSION';" > src/version.ts
