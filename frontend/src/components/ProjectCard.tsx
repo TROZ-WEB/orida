@@ -25,7 +25,11 @@ const ProjectCard = ({ project, theme = Theme.Light }: ProjectCardProps) => (
     <Link className={classes.wrapper} to={goToProject(project.id)}>
         <img alt='project' className={classes.image} src={placeholderProjectSrc} />
         <div className={classes.content}>
-            <Tag className={classes.tag}>{project.themes[0]}</Tag>
+            {project.categories.map((category) => (
+                <Tag key={category.id} className={classes.tag}>
+                    {category.label}
+                </Tag>
+            ))}
             <span
                 className={classnames(classes.title, { [classes.titleDark]: theme === Theme.Dark })}
             >

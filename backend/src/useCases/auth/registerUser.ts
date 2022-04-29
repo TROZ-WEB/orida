@@ -1,4 +1,5 @@
-import { User, UserRepository } from '../../domain/User';
+import { Repository } from 'typeorm';
+import { User } from '../../domain/User';
 import UserError, { UserErrorType } from './UserError';
 
 interface Arg {
@@ -7,11 +8,11 @@ interface Arg {
 }
 
 interface Context {
-    userRepository: UserRepository;
+    userRepository: Repository<User>;
 }
 
 const registerUser = ({ email, password }: Arg) => async ({ userRepository }: Context): Promise<User> => {
-    const existingUser = await userRepository.findOne({ email });
+    const existingUser = await userRepository.findOne({ where: { email } });
 
     if (existingUser) {
         throw new UserError(UserErrorType.RegisterEmailAlreadyInUse);

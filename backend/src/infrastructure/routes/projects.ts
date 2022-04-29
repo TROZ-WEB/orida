@@ -1,11 +1,12 @@
 import { Request, Response, Router } from 'express';
+import { categoryRepository } from '../../domain/Category';
+import { projectRepository } from '../../domain/Project';
 import createProject from '../../useCases/project/createProject';
 import findAllProjets from '../../useCases/project/findAllProjects';
 import findProjectById from '../../useCases/project/findProjectById';
 import findProjectsBySearch from '../../useCases/project/findProjectsBySearch';
 import asyncRoute from '../../utils/asyncRoute';
 import normalize from '../../utils/normalize';
-import { projectRepository } from '../database';
 import { mapProject } from '../mappers';
 
 const router = Router();
@@ -20,7 +21,7 @@ router.get(
 router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
     const { id } = req.params;
     const project = await findProjectById(id)({ projectRepository });
-    const result = project === undefined ? undefined : mapProject(project);
+    const result = project === null ? null : mapProject(project);
 
     res.status(200).json(result);
 }));
@@ -35,19 +36,12 @@ router.post(
             startDate: req.body.startDate,
             status: req.body.status,
             title: req.body.title,
-        })({ projectRepository });
+            categories: req.body.categories,
+        })({ projectRepository, categoryRepository });
 
         res.status(200).json(mapProject(created));
     }),
 );
-
-router.post('/', asyncRoute(async (req: Request, res: Response) => {
-    const created = await createProject({
-        title: req.body.title,
-    })({ projectRepository });
-
-    res.status(200).json(mapProject(created));
-}));
 
 router.post(
     '/search',

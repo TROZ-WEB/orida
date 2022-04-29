@@ -2,6 +2,7 @@
     "extends": "@tsconfig/node16/tsconfig.json",
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
         "importHelpers": true,
         "noImplicitAny": true,
         "moduleResolution": "node",

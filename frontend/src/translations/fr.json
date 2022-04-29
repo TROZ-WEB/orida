@@ -13,6 +13,7 @@
     "notifications_error_title": "Erreur",
     "project_create_budget_label": "Budget",
     "project_create_budget_placeholder": "15000",
+    "project_create_startdate_categories": "Catégories",
     "project_create_description_label": "Description",
     "project_create_description_placeholder": "...",
     "project_create_participatorybudgetyear_label": "Année du budget participatif",

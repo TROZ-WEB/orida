@@ -12,4 +12,4 @@ script/bootstrap
 docker-compose build
 
 docker-compose up --detach postgres
-docker-compose run --rm --no-deps backend wait-for-it postgres:5432 -- typeorm migration:run
+docker-compose run --rm --no-deps backend wait-for-it postgres:5432 -- ts-node node_modules/.bin/typeorm migration:run -d src/infrastructure/database/index.ts

@@ -39,7 +39,11 @@ const ProjectPage = () => {
     const left = (
         <>
             <H2 className='pb-3'>{project.title}</H2>
-            <Tag className='mb-6'>{project.themes[0]}</Tag>
+            {project.categories.map((category) => (
+                <Tag key={category.id} className='mb-6'>
+                    {category.label}
+                </Tag>
+            ))}
             <span className='text-sm leading-4 opacity-70'>{project.location}</span>
         </>
     );

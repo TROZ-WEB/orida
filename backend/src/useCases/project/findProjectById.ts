@@ -1,11 +1,12 @@
-import { Project, ProjectRepository } from '../../domain/Project';
+import { Repository } from 'typeorm';
+import { Project } from '../../domain/Project';
 
 interface Context {
-    projectRepository: ProjectRepository;
+    projectRepository: Repository<Project>;
 }
 
-const findProjectById = (id: string) => async ({ projectRepository }: Context): Promise<Project | undefined> => (
-    projectRepository.findOne({ id })
+const findProjectById = (id: string) => async ({ projectRepository }: Context): Promise<Project | null> => (
+    projectRepository.findOne({ where: { id } })
 );
 
 export default findProjectById;

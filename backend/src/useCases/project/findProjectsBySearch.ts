@@ -1,8 +1,8 @@
-import { ILike } from 'typeorm';
-import { Project, ProjectRepository } from '../../domain/Project';
+import { ILike, Repository } from 'typeorm';
+import { Project } from '../../domain/Project';
 
 interface Context {
-    projectRepository: ProjectRepository;
+    projectRepository: Repository<Project>;
 }
 
 /* general search among projects by a string on a subselection of fields */

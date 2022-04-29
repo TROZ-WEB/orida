@@ -1,4 +1,5 @@
-import { User, UserRepository } from '../../domain/User';
+import { Repository } from 'typeorm';
+import { User } from '../../domain/User';
 import UserError from './UserError';
 
 interface Arg {
@@ -7,11 +8,11 @@ interface Arg {
 }
 
 interface Context {
-    userRepository: UserRepository;
+    userRepository: Repository<User>;
 }
 
 const loginUser = ({ username, password }: Arg) => async ({ userRepository }: Context): Promise<User> => {
-    const user = await userRepository.findOne({ email: username });
+    const user = await userRepository.findOne({ where: { email: username } });
 
     if (!user) {
         throw new UserError('Incorrect username.');

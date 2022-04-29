@@ -1,8 +1,15 @@
-import { getRepository } from 'typeorm';
-import { Project } from '../../domain/Project';
-import { User } from '../../domain/User';
+import 'reflect-metadata';
+import { DataSource } from 'typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
-const projectRepository = getRepository<Project>(Project);
-const userRepository = getRepository<User>(User);
+const AppDataSource = new DataSource({
+    type: 'postgres',
+    url: process.env.DATABASE_URL,
+    entities: [`${__dirname}/entities/*.ts`],
+    migrations: [`${__dirname}/migrations/*.ts`],
+    logging: false,
+    entitySkipConstructor: true,
+    namingStrategy: new SnakeNamingStrategy(),
+});
 
-export { projectRepository, userRepository };
+export default AppDataSource;

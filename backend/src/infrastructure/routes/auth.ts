@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express';
+import { userRepository } from '../../domain/User';
 import registerUser from '../../useCases/auth/registerUser';
 import { UserErrorType } from '../../useCases/auth/UserError';
 import auth from '../auth';
-import { userRepository } from '../database';
 import { mapUser } from '../mappers';
 
 const router = Router();

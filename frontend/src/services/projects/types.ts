@@ -18,9 +18,18 @@ function castToProjectStatus(value: string) {
     }
 }
 
+export type Category = {
+    createdAt: Date;
+    modifiedAt: Date;
+    id: string;
+    label: string;
+    picture: string;
+};
+
 export type Project = {
     budget: number;
-    createdAt: string;
+    createdAt: Date;
+    modifiedAt: Date;
     description: string;
     id: string;
     location: string;
@@ -28,7 +37,7 @@ export type Project = {
     startDate: Date;
     status: ProjectStatus;
     title: string;
-    themes: string[];
+    categories: Category[];
     images: string[];
 };
 
@@ -36,6 +45,7 @@ export function fromApi(data: any): Project {
     return {
         budget: data.budget,
         createdAt: data.createdAt,
+        modifiedAt: data.modifiedAt,
         description: data.description,
         id: data.id,
         location: data.location,
@@ -43,12 +53,19 @@ export function fromApi(data: any): Project {
         startDate: data.startDate,
         status: castToProjectStatus(data.status),
         title: data.title,
-        themes: data.themes ?? [],
+        categories: data.categories ?? [],
         images: data.images,
     };
 }
 
 export type CreateProps = {
+    budget?: number;
+    description?: string;
+    location?: string;
+    participatoryBudgetYear?: number;
+    startDate?: Date;
+    status: ProjectStatus;
     title: string;
-    description: string;
+    categories?: string[];
+    images?: string[];
 };

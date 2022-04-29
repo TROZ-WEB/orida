@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
+import { userRepository } from '../../domain/User';
 import asyncRoute from '../../utils/asyncRoute';
-import { userRepository } from '../database';
 import { mapUser } from '../mappers';
 
 const router = Router();

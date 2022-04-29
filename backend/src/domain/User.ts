@@ -1,7 +1,13 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
+import { User as UserEntity } from '../infrastructure/database/entities/User';
+import AppDataSource from '../infrastructure/database/index';
 
 class User {
+    createdAt: Date;
+
+    modifiedAt: Date;
+
     id: string;
 
     email: string;
@@ -10,7 +16,12 @@ class User {
 
     isAdmin: boolean;
 
-    constructor(email: string, isAdmin: boolean = false) {
+    constructor(
+        email: string,
+        isAdmin: boolean = false,
+    ) {
+        this.createdAt = new Date();
+        this.modifiedAt = new Date();
         this.id = uuidv4();
         this.email = email;
         this.isAdmin = isAdmin;
@@ -29,11 +40,6 @@ class User {
     }
 }
 
-interface UserRepository {
-    findOne(id: string): Promise<User | undefined>;
-    findOne(condition: Partial<User>): Promise<User | undefined>;
-    create(details: Partial<User>): User;
-    save(user: User): Promise<User>;
-}
+const userRepository = AppDataSource.getRepository(UserEntity);
 
-export { User, UserRepository };
+export { User, userRepository };

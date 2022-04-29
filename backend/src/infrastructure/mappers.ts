@@ -1,15 +1,19 @@
-import { Project } from '../domain/Project';
-import { User } from '../domain/User';
+import { Category } from './database/entities/Category';
+import { Project } from './database/entities/Project';
+import { User } from './database/entities/User';
 
 export const mapUser = (user: User) => ({
     id: user.id,
+    modifiedAt: user.modifiedAt,
+    createdAt: user.createdAt,
     email: user.email,
     isAdmin: user.isAdmin,
 });
 
 export const mapProject = (project: Project) => ({
-    budget: project.budget,
+    modifiedAt: project.modifiedAt,
     createdAt: project.createdAt,
+    budget: project.budget,
     description: project.description,
     id: project.id,
     images: [
@@ -23,12 +27,14 @@ export const mapProject = (project: Project) => ({
     startDate: project.startDate,
     status: project.status,
     title: project.title,
-    themes: ['Environnement'], //! MOCK
+    categories: project.categories,
 });
 
-//! ANY TO FIX
-export const mapCategory = (category: any) => ({
+export const mapCategory = (category: Category) => ({
     id: category.id,
+    modifiedAt: category.modifiedAt,
+    createdAt: category.createdAt,
     label: category.label,
     picture: category.picture,
+    projects: category.projects,
 });
