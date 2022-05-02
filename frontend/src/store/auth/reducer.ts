@@ -1,3 +1,4 @@
+import { Role } from '@customTypes/role';
 import { RESET_STORE } from '@store/_global/types';
 
 import { AuthActionTypes, AuthState, LOGIN, LOGOUT } from './types';
@@ -6,7 +7,7 @@ const initialState: AuthState = {
     data: {
         email: '',
         id: '',
-        isAdmin: false,
+        role: Role.None,
     },
 };
 
@@ -20,7 +21,7 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthState =
                     ...state.data,
                     id: action.id,
                     email: action.email,
-                    isAdmin: action.isAdmin,
+                    role: action.role,
                 },
             };
         }

@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express';
-import { userRepository } from '../../domain/User';
+import { AuthErrorType } from '../../useCases/auth/AuthError';
 import registerUser from '../../useCases/auth/registerUser';
-import { UserErrorType } from '../../useCases/auth/UserError';
 import auth from '../auth';
+import { userRepository } from '../database';
 import { mapUser } from '../mappers';
 
 const router = Router();
@@ -20,13 +20,13 @@ router.post('/register', async (req: Request, res: Response) => {
         const newUser = await registerUser(user)({ userRepository });
         res.json(mapUser(newUser));
     } catch (e: any) {
-        if (e.message === UserErrorType.RegisterEmailAlreadyInUse) {
+        if (e.message === AuthErrorType.RegisterEmailAlreadyInUse) {
             res.status(409).json({
                 error: e.message,
             });
         }
         res.status(500).json({
-            error: UserErrorType.RegisterUnknownError,
+            error: AuthErrorType.RegisterUnknownError,
         });
     }
 });

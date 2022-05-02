@@ -1,6 +1,9 @@
 /* eslint-disable import/prefer-default-export */
+/* eslint-disable import/prefer-default-export */
 import bcrypt from 'bcrypt';
 import { Entity, Column } from 'typeorm';
+import Role from '../../../domain/Role';
+import { User as UserDomain } from '../../../domain/User';
 import BaseColumns from './BaseColumns';
 
 @Entity('user')
@@ -14,6 +17,9 @@ class User extends BaseColumns {
     @Column({ type: 'boolean', name: 'is-admin' })
         isAdmin: boolean;
 
+    @Column({ type: 'boolean', name: 'is-manager' })
+        isManager: boolean;
+
     constructor(
         id: string,
         createdAt: Date,
@@ -21,11 +27,13 @@ class User extends BaseColumns {
         email: string,
         passwordHash: string,
         isAdmin: boolean,
+        isManager: boolean,
     ) {
         super(id, createdAt, modifiedAt);
         this.email = email;
         this.passwordHash = passwordHash;
         this.isAdmin = isAdmin;
+        this.isManager = isManager;
     }
 
     async updatePassword(password: string): Promise<void> {
@@ -38,6 +46,22 @@ class User extends BaseColumns {
         }
 
         return bcrypt.compare(password, this.passwordHash);
+    }
+
+    computeRole() {
+        if (this.isAdmin) { return Role.Admin; }
+        if (this.isManager) { return Role.Manager; }
+
+        return Role.None;
+    }
+
+    toDomain(): UserDomain {
+        return new UserDomain({
+            email: this.email,
+            role: this.computeRole(),
+            passwordHash: this.passwordHash,
+            id: this.id,
+        });
     }
 }
 

@@ -1,12 +1,12 @@
 import { GET, POST } from '@utils/http';
 
-import { AuthError, LoginProps, LoginResponse, RegisterProps } from './types';
+import { AuthConverter, AuthError, LoginProps, LoginResponse, RegisterProps } from './types';
 
 async function login({ email, password }: LoginProps): Promise<LoginResponse> {
     try {
         const response = await POST<LoginResponse>('/api/auth/login', { email, password });
 
-        return response;
+        return AuthConverter.fromApi(response);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -18,7 +18,7 @@ async function register(props: RegisterProps) {
     try {
         const response = await POST<LoginResponse>('/api/auth/register', { ...props });
 
-        return response;
+        return AuthConverter.fromApi(response);
     } catch (error: any) {
         if (error.status === 409) {
             throw Error(AuthError.RegisterEmailAlreadyInUse);
@@ -43,9 +43,9 @@ async function logout() {
 
 async function me() {
     try {
-        const result = await GET('/api/auth/me');
+        const result = await GET<LoginResponse>('/api/auth/me');
 
-        return result;
+        return AuthConverter.fromApi(result);
     } catch (error: any) {
         if (error.status === 404) {
             return null;

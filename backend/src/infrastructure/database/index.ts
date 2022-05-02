@@ -4,6 +4,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { Category as CategoryEntity } from './entities/Category';
 import { Project as ProjectEntity } from './entities/Project';
 import { ProjectStatusEntity } from './entities/ProjectStatus';
+import { User as UserEntity } from './entities/User';
 
 const AppDataSource = new DataSource({
     type: 'postgres',
@@ -15,6 +16,7 @@ const AppDataSource = new DataSource({
     namingStrategy: new SnakeNamingStrategy(),
 });
 
+export const userRepository = AppDataSource.getRepository<UserEntity>(UserEntity);
 export const categoryRepository = AppDataSource.getRepository<CategoryEntity>(CategoryEntity);
 export const projectRepository = AppDataSource.getRepository<ProjectEntity>(ProjectEntity);
 export const projectStatusRepository = AppDataSource.getRepository<ProjectStatusEntity>(ProjectStatusEntity);

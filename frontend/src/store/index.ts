@@ -12,6 +12,7 @@ import { Persistor } from 'redux-persist/es/types';
 import storage from 'redux-persist/lib/storage';
 import thunkMiddleware from 'redux-thunk';
 
+import adminReducer from './admin/reducer';
 import authReducer from './auth/reducer';
 import { SIGN_OUT } from './auth/types';
 import categoriesReducer from './categories/reducer';
@@ -28,6 +29,7 @@ declare global {
 }
 
 const appReducer = combineReducers({
+    admin: adminReducer,
     auth: authReducer,
     categories: categoriesReducer,
     filters: filtersReducer,

@@ -1,3 +1,4 @@
+import { Role } from '@customTypes/role';
 import { Button, ButtonLink } from '@design/buttons';
 import Icon from '@design/Icon';
 import Logo from '@design/Logo';
@@ -42,6 +43,7 @@ const Header = () => {
     const dispatch = useThunkDispatch();
     const navigate = useNavigate();
     const isLoggedIn = !!useSelector((state) => state.auth.data.id);
+    const isAdmin = useSelector((state) => state.auth.data.role) === Role.Admin;
     const { pathname } = useLocation();
 
     const onLogout = useCallback(async () => {
@@ -51,6 +53,7 @@ const Header = () => {
 
     const exploreTabIsActive = pathname.includes('/project/') || pathname.includes('/explore');
     const searchTabIsActive = pathname.includes('/search');
+    const accountTabIsActive = pathname.includes('/accounts');
 
     return (
         <div className={classes.wrapper}>
@@ -66,6 +69,16 @@ const Header = () => {
                 >
                     {t('nav_explore')}
                 </ButtonLink>
+                {isAdmin && (
+                    <ButtonLink
+                        className={classnames(classes.menuItem, classes.menuItemIconOnly, {
+                            [classes.menuItemActive]: accountTabIsActive,
+                        })}
+                        to={AppRoutes.Accounts}
+                    >
+                        {t('nav_accounts')}
+                    </ButtonLink>
+                )}
             </div>
             <div className='flex flex-row'>
                 <ButtonLink
@@ -76,6 +89,7 @@ const Header = () => {
                 >
                     <Icon color='#fff' name='search' />
                 </ButtonLink>
+                )
                 {isLoggedIn && (
                     <Button className={classes.menuItem} onClick={onLogout}>
                         <Icon className='w-auto' color='#fff' name='logout' />

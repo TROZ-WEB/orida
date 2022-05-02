@@ -1,5 +1,7 @@
+import AdminRoute from '@components/AdminRoute';
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import NotFound from '@pages/404';
+import Accounts from '@pages/Accounts';
 import Explore from '@pages/Explore';
 import HomeRedirect from '@pages/Home/HomeRedirect';
 import Login from '@pages/Login';
@@ -17,6 +19,10 @@ const Router = () => (
             <Route element={<Search />} path={AppRoutes.Search} />
             <Route element={<Project />} path={AppRoutes.Project} />
             <Route element={<Explore />} path={AppRoutes.Explore} />
+
+            <Route element={<AdminRoute />}>
+                <Route element={<Accounts />} path={AppRoutes.Accounts} />
+            </Route>
         </Route>
         <Route element={<NotFound />} path='*' />
     </Routes>

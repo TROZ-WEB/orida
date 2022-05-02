@@ -1,9 +1,11 @@
 import { callbackify } from 'util';
 import { Authenticator } from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { User, userRepository } from '../domain/User';
+import { User } from '../domain/User';
+import UserError from '../useCases/auth/AuthError';
 import loginUser from '../useCases/auth/loginUser';
-import UserError from '../useCases/auth/UserError';
+import findOneById from '../useCases/users/findOneById';
+import { userRepository } from './database';
 
 const auth = new Authenticator();
 
@@ -11,11 +13,7 @@ const auth = new Authenticator();
 auth.serializeUser(callbackify(async (user: User): Promise<string> => user.id));
 
 auth.deserializeUser(
-    callbackify(async (id: string): Promise<User | null> => {
-        const user = await userRepository.findOne({ where: { id } });
-
-        return user ?? null;
-    }),
+    callbackify(async (id: string): Promise<User | null> => findOneById(id)({ userRepository })),
 );
 
 // Strategies

@@ -5,10 +5,8 @@ import { User } from '../domain/User';
 
 export const mapUser = (user: User) => ({
     id: user.id,
-    modifiedAt: user.modifiedAt,
-    createdAt: user.createdAt,
     email: user.email,
-    isAdmin: user.isAdmin,
+    role: user.role,
 });
 
 export const mapProjectStatus = (status: ProjectStatus) => ({

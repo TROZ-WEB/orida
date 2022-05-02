@@ -1,7 +1,8 @@
 import * as Sentry from '@sentry/node';
-import express, { NextFunction, Request, RequestHandler, Response } from 'express';
+import express, { RequestHandler } from 'express';
 import session from 'express-session';
 import auth from './auth';
+import errorHandler from './middlewares/errorHandler';
 import authRouter from './routes/auth';
 import categoriesRouter from './routes/categories';
 import healthRouter from './routes/health';
@@ -43,11 +44,6 @@ app.use('/users/', usersRouter);
 
 app.use(Sentry.Handlers.errorHandler());
 
-// eslint-disable required because all 4 parameters need to be explicit in order for Express to detect
-// it as error handler
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    res.status(500).send('Internal error');
-});
+app.use(errorHandler);
 
 export default app;

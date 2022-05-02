@@ -1,30 +1,34 @@
+/* eslint-disable import/prefer-default-export */
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { User as UserEntity } from '../infrastructure/database/entities/User';
-import AppDataSource from '../infrastructure/database/index';
+import Role from './Role';
+
+interface UserConstructorProps {
+    id: string;
+    email: string;
+    role?: Role;
+    passwordHash: string | null;
+}
 
 class User {
-    createdAt: Date;
-
-    modifiedAt: Date;
-
     id: string;
 
     email: string;
 
     passwordHash: string | null = null;
 
-    isAdmin: boolean;
+    role?: Role;
 
-    constructor(
-        email: string,
-        isAdmin: boolean = false,
-    ) {
-        this.createdAt = new Date();
-        this.modifiedAt = new Date();
-        this.id = uuidv4();
+    constructor({
+        id,
+        email,
+        role,
+        passwordHash,
+    }: UserConstructorProps) {
+        this.id = id ?? uuidv4();
         this.email = email;
-        this.isAdmin = isAdmin;
+        this.role = role;
+        this.passwordHash = passwordHash;
     }
 
     async updatePassword(password: string): Promise<void> {
@@ -40,6 +44,4 @@ class User {
     }
 }
 
-const userRepository = AppDataSource.getRepository(UserEntity);
-
-export { User, userRepository };
+export { User };

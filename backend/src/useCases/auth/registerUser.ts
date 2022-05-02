@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm';
 import { User } from '../../domain/User';
-import UserError, { UserErrorType } from './UserError';
+import { User as UserEntity } from '../../infrastructure/database/entities/User';
+import AuthError, { AuthErrorType } from './AuthError';
 
 interface Arg {
     email: string;
@@ -8,20 +9,21 @@ interface Arg {
 }
 
 interface Context {
-    userRepository: Repository<User>;
+    userRepository: Repository<UserEntity>;
 }
 
 const registerUser = ({ email, password }: Arg) => async ({ userRepository }: Context): Promise<User> => {
     const existingUser = await userRepository.findOne({ where: { email } });
 
     if (existingUser) {
-        throw new UserError(UserErrorType.RegisterEmailAlreadyInUse);
+        throw new AuthError(AuthErrorType.RegisterEmailAlreadyInUse);
     }
 
     const user = userRepository.create({ email, isAdmin: false });
     await user.updatePassword(password);
+    const saved = await userRepository.save(user);
 
-    return userRepository.save(user);
+    return saved.toDomain();
 };
 
 export default registerUser;

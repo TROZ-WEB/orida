@@ -1,6 +1,6 @@
 /// <reference types="./types" />
 import * as Sentry from '@sentry/node';
-import AppDataSource from './infrastructure/database/index';
+import AppDataSource from './infrastructure/database';
 import version from './version';
 
 Sentry.init({

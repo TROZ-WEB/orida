@@ -1,9 +1,10 @@
 enum AppRoutes {
-    Login = '/',
-    Home = '/home',
-    Search = '/search',
-    Project = '/project/:projectId',
+    Accounts = '/accounts',
     Explore = '/explore',
+    Home = '/home',
+    Login = '/',
+    Project = '/project/:projectId',
+    Search = '/search',
 }
 
 export enum ProjectTab {

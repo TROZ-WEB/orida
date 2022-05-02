@@ -32,6 +32,17 @@
         "react/react-in-jsx-scope": "off", // Not necessary in React 17
         "simple-import-sort/exports": "error",
         "simple-import-sort/imports": "error",
-        "sort-imports": "off" // collision with simple-import-sort as specified here: https://github.com/lydell/eslint-plugin-simple-import-sort
+        "sort-imports": "off", // collision with simple-import-sort as specified here: https://github.com/lydell/eslint-plugin-simple-import-sort
+        "jsx-a11y/label-has-associated-control": [
+            "error",
+            {
+                "required": {
+                    "some": [
+                        "nesting",
+                        "id"
+                    ]
+                }
+            }
+        ]
     }
 }
