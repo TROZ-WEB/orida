@@ -26,12 +26,8 @@ const Filters = () => {
     const selectedStatus = useSelector((state) => state.filters.status);
 
     useEffect(() => {
-        if (categories.length === 0) {
-            dispatch(getAllCategories());
-        }
-        if (status.length === 0) {
-            dispatch(getAllStatus());
-        }
+        dispatch(getAllCategories());
+        dispatch(getAllStatus());
     }, []);
 
     return (

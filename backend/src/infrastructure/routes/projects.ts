@@ -1,12 +1,11 @@
 import { Request, Response, Router } from 'express';
-import { categoryRepository } from '../../domain/Category';
-import { projectRepository } from '../../domain/Project';
 import createProject from '../../useCases/project/createProject';
 import findAllProjets from '../../useCases/project/findAllProjects';
 import findProjectById from '../../useCases/project/findProjectById';
 import findProjectsBySearch from '../../useCases/project/findProjectsBySearch';
 import asyncRoute from '../../utils/asyncRoute';
 import normalize from '../../utils/normalize';
+import { categoryRepository, projectRepository } from '../database';
 import { mapProject } from '../mappers';
 
 const router = Router();
@@ -29,26 +28,36 @@ router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
 router.post(
     '/',
     asyncRoute(async (req: Request, res: Response) => {
-        const created = await createProject({
+        const project = {
             budget: req.body.budget,
             description: req.body.description,
             participatoryBudgetYear: req.body.participatoryBudgetYear,
             startDate: req.body.startDate,
-            status: req.body.status,
             title: req.body.title,
             categories: req.body.categories,
-        })({ projectRepository, categoryRepository });
+            status: req.body.status,
+        };
+        const created = await createProject(project)({ projectRepository, categoryRepository });
 
         res.status(200).json(mapProject(created));
     }),
 );
 
+interface SearchProps {
+    search?: string;
+    status?: string[]; // ids only
+}
+
 router.post(
     '/search',
     asyncRoute(async (req: Request, res: Response) => {
-        const { search } = req.body;
-        const normalizedSearch = normalize(search);
-        const results = await findProjectsBySearch(normalizedSearch)({ projectRepository });
+        const { search, status } = req.body as SearchProps;
+        const normalizedSearch = search ? normalize(search) : undefined;
+
+        const results = await findProjectsBySearch({
+            search: normalizedSearch,
+            status,
+        })({ projectRepository });
 
         res.status(200).json(results.map(mapProject));
     }),

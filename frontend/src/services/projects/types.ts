@@ -1,22 +1,4 @@
-export enum ProjectStatus {
-    Design = 'DESIGN', // project is under conception
-    Running = 'RUNNING', // project is going on
-    Complete = 'COMPLETE', // project has been fully completed
-    Unknown = 'UNKNOWN', // error
-}
-
-function castToProjectStatus(value: string) {
-    switch (value) {
-        case 'DESIGN':
-            return ProjectStatus.Design;
-        case 'RUNNING':
-            return ProjectStatus.Running;
-        case 'COMPLETE':
-            return ProjectStatus.Complete;
-        default:
-            return ProjectStatus.Unknown;
-    }
-}
+import { Status, StatusConverter } from '@services/status';
 
 export type Category = {
     createdAt: Date;
@@ -35,7 +17,7 @@ export type Project = {
     location: string;
     participatoryBudgetYear: number;
     startDate: Date;
-    status: ProjectStatus;
+    status: Status;
     title: string;
     categories: Category[];
     images: string[];
@@ -51,7 +33,7 @@ export function fromApi(data: any): Project {
         location: data.location,
         participatoryBudgetYear: data.participatoryBudgetYear,
         startDate: data.startDate,
-        status: castToProjectStatus(data.status),
+        status: StatusConverter.fromApi(data.status),
         title: data.title,
         categories: data.categories ?? [],
         images: data.images,
@@ -64,7 +46,7 @@ export type CreateProps = {
     location?: string;
     participatoryBudgetYear?: number;
     startDate?: Date;
-    status: ProjectStatus;
+    statusId: string;
     title: string;
     categories?: string[];
     images?: string[];

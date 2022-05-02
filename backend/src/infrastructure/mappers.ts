@@ -1,6 +1,7 @@
-import { Category } from './database/entities/Category';
-import { Project } from './database/entities/Project';
-import { User } from './database/entities/User';
+import { Category } from '../domain/Category';
+import { Project } from '../domain/Project';
+import { ProjectStatus } from '../domain/ProjectStatus';
+import { User } from '../domain/User';
 
 export const mapUser = (user: User) => ({
     id: user.id,
@@ -8,6 +9,11 @@ export const mapUser = (user: User) => ({
     createdAt: user.createdAt,
     email: user.email,
     isAdmin: user.isAdmin,
+});
+
+export const mapProjectStatus = (status: ProjectStatus) => ({
+    id: status.id,
+    label: status.label,
 });
 
 export const mapProject = (project: Project) => ({
@@ -25,7 +31,7 @@ export const mapProject = (project: Project) => ({
     location: '16 Rue Tristan Tzara, 75018 Paris', //! MOCK
     participatoryBudgetYear: project.participatoryBudgetYear,
     startDate: project.startDate,
-    status: project.status,
+    status: mapProjectStatus(project.status),
     title: project.title,
     categories: project.categories,
 });

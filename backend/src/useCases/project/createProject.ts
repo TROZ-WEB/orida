@@ -1,47 +1,60 @@
-/* eslint-disable max-len */
 import { Repository, In } from 'typeorm';
 import { Category } from '../../domain/Category';
-import { Project, ProjectStatus } from '../../domain/Project';
+import { Project } from '../../domain/Project';
+import { projectStatusRepository } from '../../infrastructure/database';
+import { Category as CategoryEntity } from '../../infrastructure/database/entities/Category';
+import { Project as ProjectEntity } from '../../infrastructure/database/entities/Project';
 
 interface Arg {
-    title: string;
-    description?: string;
     budget?: Number;
+    categories: Category[];
+    description?: string;
     participatoryBudgetYear?: Number;
     startDate?: Date;
-    status?: ProjectStatus;
-    categories: Category[]
+    status: string;
+    title: string;
 }
 
 interface Context {
-    projectRepository: Repository<Project>;
-    categoryRepository: Repository<Category>;
+    projectRepository: Repository<ProjectEntity>;
+    categoryRepository: Repository<CategoryEntity>;
 }
 
 const createProject = ({
     budget,
+    categories,
     description,
     participatoryBudgetYear,
-    status,
     startDate,
+    status,
     title,
-    categories,
 }: Arg) => async ({ projectRepository, categoryRepository }: Context): Promise<Project> => {
     const categoriesData = await categoryRepository.findBy({
         id: In(categories),
-    }); // Will execute the query: SELECT * FROM "categories" WHERE "id" IN <categories-ids-array> (doc : https://typeorm.io/find-options)
+    }); // Will execute the query: SELECT * FROM "categories" WHERE "id" IN <categories-ids-array>
+    // (doc : https://typeorm.io/find-options)
+
+    const statusData = await projectStatusRepository.findOne({
+        where: { id: status },
+    });
+
+    if (!statusData) {
+        throw Error('Missing StatusData');
+    }
 
     const project = projectRepository.create({
         budget,
         description,
         participatoryBudgetYear,
-        status: status || ProjectStatus.Design,
         startDate,
         title,
         categories: categoriesData,
+        status: statusData,
     });
 
-    return projectRepository.save(project);
+    const entity = await projectRepository.save(project);
+
+    return entity.toDomain();
 };
 
 export default createProject;

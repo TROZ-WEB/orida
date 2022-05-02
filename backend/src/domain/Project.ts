@@ -1,13 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { v4 as uuidv4 } from 'uuid';
-import { Project as ProjectEntity } from '../infrastructure/database/entities/Project';
-import AppDataSource from '../infrastructure/database/index'; import { Category } from './Category';
-
-enum ProjectStatus {
-    Design = 'DESIGN', // project is under conception
-    Running = 'RUNNING', // project is going on
-    Complete = 'COMPLETE', // project has been fully completed
-}
+import { Category } from './Category';
+import { ProjectStatus } from './ProjectStatus';
 
 class Project {
     createdAt: Date;
@@ -52,6 +46,4 @@ class Project {
     }
 }
 
-const projectRepository = AppDataSource.getRepository(ProjectEntity);
-
-export { Project, ProjectStatus, projectRepository };
+export { Project, ProjectStatus };

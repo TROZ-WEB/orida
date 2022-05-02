@@ -1,13 +1,10 @@
-import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
+/* eslint-disable import/no-cycle */
+/* eslint-disable import/prefer-default-export */
+import { Entity, Column, ManyToMany, JoinTable, ManyToOne, JoinColumn } from 'typeorm';
+import { Project as ProjectDomain } from '../../../domain/Project';
 import BaseColumns from './BaseColumns';
-// eslint-disable-next-line import/no-cycle
 import { Category } from './Category';
-
-enum ProjectStatus {
-    Design = 'DESIGN', // project is under conception
-    Running = 'RUNNING', // project is going on
-    Complete = 'COMPLETE', // project has been fully completed
-}
+import { ProjectStatusEntity } from './ProjectStatus';
 
 @Entity('project')
 class Project extends BaseColumns {
@@ -23,15 +20,16 @@ class Project extends BaseColumns {
     @Column({ type: 'timestamp with time zone', nullable: true, name: 'start-date' })
         startDate: Date;
 
-    @Column({ type: 'enum', enum: ProjectStatus, default: ProjectStatus.Design })
-        status: ProjectStatus;
-
     @Column({ type: 'character varying' })
         title: string;
 
     @ManyToMany(() => Category, (category: Category) => category.projects, { cascade: true })
     @JoinTable()
         categories: Category[];
+
+    @ManyToOne(() => ProjectStatusEntity, (projectStatus) => projectStatus.projects, { eager: true })
+    @JoinColumn({ name: 'status' })
+        status: ProjectStatusEntity;
 
     constructor(
         id: string,
@@ -41,19 +39,34 @@ class Project extends BaseColumns {
         description: string,
         participatoryBudgetYear: Number,
         startDate: Date,
-        status: ProjectStatus,
         title: string,
         categories: Category[],
+        status: ProjectStatusEntity,
     ) {
         super(id, createdAt, modifiedAt);
         this.budget = budget;
         this.description = description;
         this.participatoryBudgetYear = participatoryBudgetYear;
         this.startDate = startDate;
-        this.status = status;
         this.title = title;
         this.categories = categories;
+        this.status = status;
+    }
+
+    toDomain(): ProjectDomain {
+        return {
+            createdAt: this.createdAt,
+            modifiedAt: this.modifiedAt,
+            id: this.id,
+            budget: this.budget,
+            description: this.description,
+            participatoryBudgetYear: this.participatoryBudgetYear,
+            startDate: this.startDate,
+            title: this.title,
+            categories: [],
+            status: this.status,
+        };
     }
 }
 
-export { Project, ProjectStatus };
+export { Project };

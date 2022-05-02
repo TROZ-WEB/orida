@@ -6,20 +6,19 @@ import ThreeColsLayout, { MenuItem } from '@design/layouts/ThreeCols';
 import { H2 } from '@design/titles';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import { getAll } from '@store/projects/actions';
+import { filter } from '@store/projects/actions';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const ExplorePage = () => {
     const dispatch = useThunkDispatch();
     const { t } = useTranslation();
-    const projects = useSelector((state) => state.projects.data);
+    const projects = useSelector((state) => state.projects.filter);
+    const filters = useSelector((state) => state.filters);
 
     useEffect(() => {
-        if (projects.length === 0) {
-            dispatch(getAll());
-        }
-    });
+        dispatch(filter({ status: filters.status }));
+    }, [filters]);
 
     const left = (
         <>

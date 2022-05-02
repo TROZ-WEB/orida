@@ -1,7 +1,6 @@
 /* eslint-disable import/no-cycle */
+/* eslint-disable import/prefer-default-export */
 import { v4 as uuidv4 } from 'uuid';
-import { Category as CategoryEntity } from '../infrastructure/database/entities/Category';
-import AppDataSource from '../infrastructure/database/index';
 import { Project } from './Project';
 
 class Category {
@@ -31,6 +30,4 @@ class Category {
     }
 }
 
-const categoryRepository = AppDataSource.getRepository(CategoryEntity);
-
-export { Category, categoryRepository };
+export { Category };

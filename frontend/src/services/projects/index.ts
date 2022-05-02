@@ -1,3 +1,4 @@
+import { Status } from '@services/status';
 import { GET, POST } from '@utils/http';
 
 import { CreateProps, fromApi, Project } from './types';
@@ -38,9 +39,17 @@ async function create(props: CreateProps): Promise<Project> {
     }
 }
 
-async function search(value: string): Promise<Project[]> {
+interface SearchProps {
+    status?: Status[];
+    search?: string;
+}
+
+async function search({ status, search: searchStr }: SearchProps): Promise<Project[]> {
     try {
-        const response = await POST<Project[]>('/api/projects/search', { search: value });
+        const response = await POST<Project[]>('/api/projects/search', {
+            status: status?.map((s) => s.id),
+            search: searchStr,
+        });
 
         return response.map(fromApi);
     } catch (error) {

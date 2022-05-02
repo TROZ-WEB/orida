@@ -12,7 +12,7 @@ import Space from '@design/Space';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
-import { ProjectStatus } from '@services/projects';
+import { Status } from '@services/status';
 import { getAll as getAllCategories } from '@store/categories/actions';
 import { create } from '@store/projects/actions';
 import { useEffect, useMemo, useState } from 'react';
@@ -25,21 +25,26 @@ type Inputs = {
     description: string;
     participatoryBudgetYear: number;
     startDate: Date;
-    status: ProjectStatus;
+    status: Status;
     categories: string[];
 };
 
 interface CreateProjectFormProps {
+    projectStatuses: Status[];
     onCreated: () => void;
 }
 
-const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
+const CreateProjectForm = ({ projectStatuses, onCreated }: CreateProjectFormProps) => {
     const { register, handleSubmit, reset } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
     const [yearsOptions, setYearsOptions] = useState<SelectOption[]>([]);
 
     const categories = useSelector((state) => state.categories.data);
+    const statusesOptions = projectStatuses.map((status) => ({
+        value: status.id,
+        label: status.label,
+    }));
 
     useEffect(() => {
         if (categories.length === 0) {
@@ -56,25 +61,21 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
             const cleanBudget = data.budget || 0;
             const cleanParticipatoryBudgetYear = data.participatoryBudgetYear || 0;
             const cleanCategories = data.categories || [];
-            const cleanData = {
-                ...data,
-                budget: cleanBudget,
-                participatoryBudgetYear: cleanParticipatoryBudgetYear,
-                categories: cleanCategories,
-            };
-            await dispatch(create(cleanData));
+            await dispatch(
+                create({
+                    ...data,
+                    budget: cleanBudget,
+                    participatoryBudgetYear: cleanParticipatoryBudgetYear,
+                    categories: cleanCategories,
+                    statusId: data.status.id,
+                })
+            );
             reset();
             onCreated();
         } catch (e: any) {
             notify(NotificationType.Error, e.message);
         }
     };
-
-    const statusOptions: SelectOption[] = [
-        { label: t('project_create_status_design'), value: ProjectStatus.Design },
-        { label: t('project_create_status_running'), value: ProjectStatus.Running },
-        { label: t('project_create_status_complete'), value: ProjectStatus.Complete },
-    ];
 
     const currentYear = new Date().getFullYear();
 
@@ -132,7 +133,7 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
             <SelectInput
                 label={t('project_create_status_label')}
                 name='status'
-                options={statusOptions}
+                options={statusesOptions}
                 register={register}
             />
             <MultiSelectInput

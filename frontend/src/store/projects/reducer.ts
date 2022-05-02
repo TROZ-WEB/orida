@@ -2,7 +2,7 @@ import { Project } from '@services/projects';
 import { RESET_STORE } from '@store/_global/types';
 import uniq from '@utils/uniq';
 
-import { ADD, initialState, ProjectActionTypes, ProjectState, SEARCH } from './types';
+import { ADD, FILTER, initialState, ProjectActionTypes, ProjectState, SEARCH } from './types';
 
 /* eslint-disable-next-line default-param-last */
 const projectsReducer = (state = initialState, action: ProjectActionTypes): ProjectState => {
@@ -16,6 +16,11 @@ const projectsReducer = (state = initialState, action: ProjectActionTypes): Proj
             return {
                 ...state,
                 search: action.projects,
+            };
+        case FILTER:
+            return {
+                ...state,
+                filter: action.projects,
             };
         case RESET_STORE:
             return initialState;
