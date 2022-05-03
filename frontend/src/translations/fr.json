@@ -34,5 +34,18 @@
     "register_toLogin": "Déjà un compte ? Je me connecte",
     "register_type_label": "Vous êtes...",
     "type_userType_citizen": "Citoyen",
-    "type_userType_community": "Collectivité"
+    "type_userType_community": "Collectivité",
+    "categories_livingenvironment" : "Cadre de vie",
+    "categories_culture" : "Culture et patrimoine",
+    "categories_economy" : "Économie, emploi et attractivité",
+    "categories_education" : "Éducation et jeunesse",
+    "categories_environment" : "Environnement",
+    "categories_prevention" : "Prévention et sécurité",
+    "categories_cleanliness" : "Propreté",
+    "categories_health" : "Santé",
+    "categories_solidarity" : "Solidarité et cohésion sociale",
+    "categories_sport" : "Sport",
+    "categories_transportation" : "Transport et mobilité",
+    "categories_smartcity" : "Ville intelligente et numérique"
 }
+

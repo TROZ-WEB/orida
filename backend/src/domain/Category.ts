@@ -10,21 +10,21 @@ class Category {
 
     id: string;
 
-    picture: string;
+    color: string;
 
     label: string;
 
     projects: Project[];
 
     constructor(
-        picture: string,
+        color: string,
         label: string,
         projects: Project[],
     ) {
         this.createdAt = new Date();
         this.modifiedAt = new Date();
         this.id = uuidv4();
-        this.picture = picture;
+        this.color = color;
         this.label = label;
         this.projects = projects;
     }

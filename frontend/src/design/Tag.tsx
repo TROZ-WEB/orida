@@ -3,10 +3,10 @@ import React, { PropsWithChildren } from 'react';
 
 interface TagProps {
     className?: string;
+    color: string;
 }
 
 const TAG_CLASSES = `
-bg-success
 inline-block
 px-4
 py-1
@@ -16,8 +16,11 @@ text-xs
 w-fit
 `;
 
-const Tag = ({ children, className }: PropsWithChildren<TagProps>) => (
-    <span className={classnames(TAG_CLASSES, className)}>{children}</span>
-);
-
+const Tag = ({ children, className, color }: PropsWithChildren<TagProps>) => {
+    return (
+        <span className={classnames(TAG_CLASSES, className)} style={{ backgroundColor: color }}>
+            {children}
+        </span>
+    );
+};
 export default Tag;

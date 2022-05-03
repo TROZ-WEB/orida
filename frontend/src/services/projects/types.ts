@@ -1,12 +1,5 @@
+import { Category, CategoryConverter } from '@services/categories';
 import { Status, StatusConverter } from '@services/status';
-
-export type Category = {
-    createdAt: Date;
-    modifiedAt: Date;
-    id: string;
-    label: string;
-    picture: string;
-};
 
 export type Project = {
     budget: number;
@@ -35,7 +28,8 @@ export function fromApi(data: any): Project {
         startDate: data.startDate,
         status: StatusConverter.fromApi(data.status),
         title: data.title,
-        categories: data.categories ?? [],
+        categories:
+            data.categories.map((category: Category) => CategoryConverter.fromApi(category)) ?? [],
         images: data.images,
     };
 }

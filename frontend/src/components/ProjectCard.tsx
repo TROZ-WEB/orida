@@ -21,23 +21,27 @@ const classes = {
     wrapper: 'border-b-2 border-border flex py-5 w-full',
 };
 
-const ProjectCard = ({ project, theme = Theme.Light }: ProjectCardProps) => (
-    <Link className={classes.wrapper} to={goToProject(project.id)}>
-        <img alt='project' className={classes.image} src={placeholderProjectSrc} />
-        <div className={classes.content}>
-            {project.categories.map((category) => (
-                <Tag key={category.id} className={classes.tag}>
-                    {category.label}
-                </Tag>
-            ))}
-            <span
-                className={classnames(classes.title, { [classes.titleDark]: theme === Theme.Dark })}
-            >
-                {project.title}
-            </span>
-            <span className={classes.budget}>{formatBudget(project.budget)} €</span>
-        </div>
-    </Link>
-);
+const ProjectCard = ({ project, theme = Theme.Light }: ProjectCardProps) => {
+    return (
+        <Link className={classes.wrapper} to={goToProject(project.id)}>
+            <img alt='project' className={classes.image} src={placeholderProjectSrc} />
+            <div className={classes.content}>
+                {project.categories.map((category) => (
+                    <Tag key={category.id} className={classes.tag} color={category.color}>
+                        {category.label}
+                    </Tag>
+                ))}
+                <span
+                    className={classnames(classes.title, {
+                        [classes.titleDark]: theme === Theme.Dark,
+                    })}
+                >
+                    {project.title}
+                </span>
+                <span className={classes.budget}>{formatBudget(project.budget)} €</span>
+            </div>
+        </Link>
+    );
+};
 
 export default ProjectCard;

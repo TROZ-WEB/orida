@@ -5,8 +5,6 @@ const defaultStyle = `
   duration-100
   group-hover:duration-100
   group-hover:fill-black
-  h-full
-  w-full
 `;
 
 interface Props {
@@ -17,7 +15,11 @@ interface Props {
 }
 
 const Icon = ({ name, color = '#000', size = 20, className }: Props) => (
-    <svg className={classnames(defaultStyle, className)} fill={color} width={size}>
+    <svg
+        className={classnames(defaultStyle, className)}
+        fill={color}
+        style={{ width: `${size}px` }}
+    >
         <use xlinkHref={`${Icons}#${name}`} />
     </svg>
 );

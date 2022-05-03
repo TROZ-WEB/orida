@@ -14,12 +14,16 @@ interface CategoryFilterProps {
 const classes = {
     wrapper: `pt-6 pb-5`,
     title: `mb-3.5`,
+    scroller: `
+        flex
+        overflow-scroll
+    `,
 };
 
 const CategoryFilter = ({ options, select, unselect, selection, title }: CategoryFilterProps) => (
     <div className={classes.wrapper}>
         <H3 className={classes.title}>{title}</H3>
-        <div className='flex'>
+        <div className={classes.scroller}>
             {options.map((category) => {
                 const isActive = selection.map((element) => element.id).includes(category.id);
 

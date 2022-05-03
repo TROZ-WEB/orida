@@ -1,3 +1,4 @@
+import Icon from '@design/Icon';
 import { Category } from '@services/categories';
 import classnames from '@utils/classnames';
 import React from 'react';
@@ -46,7 +47,7 @@ const CategoryTile = ({ active = false, category, onClick }: CategoryTileProps) 
             className={classnames(classes.wrapper, { [classes.wrapperActive]: active })}
             onClick={handleClick}
         >
-            <img alt='category' className={classes.image} src={category.picture} />
+            <Icon className={classes.image} name={category.id} size={45} />
             <span className={classes.label}>{category.label}</span>
         </button>
     );

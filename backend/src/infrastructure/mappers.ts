@@ -39,6 +39,6 @@ export const mapCategory = (category: Category) => ({
     modifiedAt: category.modifiedAt,
     createdAt: category.createdAt,
     label: category.label,
-    picture: category.picture,
+    color: category.color,
     projects: category.projects,
 });

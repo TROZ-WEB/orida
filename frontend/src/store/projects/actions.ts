@@ -1,4 +1,5 @@
 import { ReduxDispatch } from '@hooks/useThunkDispatch';
+import { Category } from '@services/categories';
 import ProjectService, { CreateProps, Project } from '@services/projects';
 import { Status } from '@services/status';
 
@@ -53,14 +54,15 @@ export const search =
 
 interface FilterFiltersProps {
     status: Status[];
+    categories: Category[];
 }
 
-export const filter =
-    ({ status }: FilterFiltersProps) =>
-    async (dispatch: ReduxDispatch): Promise<void> => {
-        const result = await ProjectService.search({ status });
+export const filter = ({ status, categories }: FilterFiltersProps) => {
+    return async (dispatch: ReduxDispatch): Promise<void> => {
+        const result = await ProjectService.search({ status, categories });
         dispatch(filterAction(result));
     };
+};
 
 export const resetSearch =
     () =>

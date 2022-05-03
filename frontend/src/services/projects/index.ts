@@ -1,3 +1,4 @@
+import { Category } from '@services/categories';
 import { Status } from '@services/status';
 import { GET, POST } from '@utils/http';
 
@@ -42,12 +43,14 @@ async function create(props: CreateProps): Promise<Project> {
 interface SearchProps {
     status?: Status[];
     search?: string;
+    categories?: Category[];
 }
 
-async function search({ status, search: searchStr }: SearchProps): Promise<Project[]> {
+async function search({ categories, status, search: searchStr }: SearchProps): Promise<Project[]> {
     try {
         const response = await POST<Project[]>('/api/projects/search', {
             status: status?.map((s) => s.id),
+            categories: categories?.map((c) => c.id),
             search: searchStr,
         });
 

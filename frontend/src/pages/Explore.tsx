@@ -17,7 +17,7 @@ const ExplorePage = () => {
     const filters = useSelector((state) => state.filters);
 
     useEffect(() => {
-        dispatch(filter({ status: filters.status }));
+        dispatch(filter({ status: filters.status, categories: filters.categories }));
     }, [filters]);
 
     const left = (

@@ -8,7 +8,7 @@ import { Project } from './Project';
 @Entity('category')
 class Category extends BaseColumns {
     @Column({ type: 'character varying', nullable: true })
-        picture: string;
+        color: string;
 
     @Column({ type: 'character varying' })
         label: string;
@@ -20,12 +20,12 @@ class Category extends BaseColumns {
         id: string,
         createdAt: Date,
         modifiedAt: Date,
-        picture: string,
+        color: string,
         label: string,
         projects: Project[],
     ) {
         super(id, createdAt, modifiedAt);
-        this.picture = picture;
+        this.color = color;
         this.label = label;
         this.projects = projects;
     }
@@ -33,11 +33,11 @@ class Category extends BaseColumns {
     toDomain(): CategoryDomain {
         return {
             id: this.id,
-            picture: this.picture,
+            color: this.color,
             label: this.label,
             createdAt: this.createdAt,
             modifiedAt: this.modifiedAt,
-            projects: [],
+            projects: this.projects,
         };
     }
 }

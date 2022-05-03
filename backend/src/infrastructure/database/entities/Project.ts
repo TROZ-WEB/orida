@@ -23,7 +23,7 @@ class Project extends BaseColumns {
     @Column({ type: 'character varying' })
         title: string;
 
-    @ManyToMany(() => Category, (category: Category) => category.projects, { cascade: true })
+    @ManyToMany(() => Category, (category: Category) => category.projects, { cascade: true, eager: true })
     @JoinTable()
         categories: Category[];
 
@@ -63,7 +63,7 @@ class Project extends BaseColumns {
             participatoryBudgetYear: this.participatoryBudgetYear,
             startDate: this.startDate,
             title: this.title,
-            categories: [],
+            categories: this.categories,
             status: this.status,
         };
     }

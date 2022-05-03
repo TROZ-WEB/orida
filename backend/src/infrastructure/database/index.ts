@@ -10,7 +10,7 @@ const AppDataSource = new DataSource({
     type: 'postgres',
     url: process.env.DATABASE_URL,
     entities: [`${__dirname}/entities/*.ts`],
-    migrations: [`${__dirname}/migrations/*.ts`],
+    migrations: [`${__dirname}/migrations/*.ts`, `${__dirname}/seeds/*.ts`],
     logging: false,
     entitySkipConstructor: true,
     namingStrategy: new SnakeNamingStrategy(),

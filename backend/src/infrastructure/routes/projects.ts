@@ -46,17 +46,19 @@ router.post(
 interface SearchProps {
     search?: string;
     status?: string[]; // ids only
+    categories?: string[]; // ids only
 }
 
 router.post(
     '/search',
     asyncRoute(async (req: Request, res: Response) => {
-        const { search, status } = req.body as SearchProps;
+        const { search, status, categories } = req.body as SearchProps;
         const normalizedSearch = search ? normalize(search) : undefined;
 
         const results = await findProjectsBySearch({
             search: normalizedSearch,
             status,
+            categories,
         })({ projectRepository });
 
         res.status(200).json(results.map(mapProject));

@@ -40,7 +40,7 @@ const ProjectPage = () => {
         <>
             <H2 className='pb-3'>{project.title}</H2>
             {project.categories.map((category) => (
-                <Tag key={category.id} className='mb-6'>
+                <Tag key={category.id} className='mb-6' color={category.color}>
                     {category.label}
                 </Tag>
             ))}
