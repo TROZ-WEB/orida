@@ -20,6 +20,8 @@ spec:
           command:
             - typeorm
             - migration:run
+            - -d
+            - ./dist/infrastructure/database/index.js
           env:
             - name: DATABASE_URL
               valueFrom:
