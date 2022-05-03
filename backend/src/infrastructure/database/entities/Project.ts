@@ -23,7 +23,7 @@ class Project extends BaseColumns {
     @Column({ type: 'character varying' })
         title: string;
 
-    @ManyToMany(() => Category, (category: Category) => category.projects, { cascade: true, eager: true })
+    @ManyToMany(() => Category, (category: Category) => category.projects, { eager: true })
     @JoinTable()
         categories: Category[];
 

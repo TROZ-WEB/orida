@@ -17,16 +17,16 @@ class User extends BaseColumns {
     @Column({ type: 'boolean', name: 'is-admin' })
         isAdmin: boolean;
 
-    @Column({ type: 'boolean', name: 'is-manager' })
+    @Column({ type: 'boolean', name: 'is-manager', default: false })
         isManager: boolean;
 
-    @Column({ type: 'character varying', unique: true })
+    @Column({ type: 'character varying', default: 'noname' })
         lastname: string;
 
-    @Column({ type: 'character varying', unique: true })
+    @Column({ type: 'character varying', default: 'noname' })
         firstname: string;
 
-    @Column({ type: 'character varying', unique: true })
+    @Column({ type: 'character varying', default: 'noname' })
         fullname: string;
 
     constructor(
