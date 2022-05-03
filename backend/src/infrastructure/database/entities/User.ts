@@ -20,20 +20,34 @@ class User extends BaseColumns {
     @Column({ type: 'boolean', name: 'is-manager' })
         isManager: boolean;
 
+    @Column({ type: 'character varying', unique: true })
+        lastname: string;
+
+    @Column({ type: 'character varying', unique: true })
+        firstname: string;
+
+    @Column({ type: 'character varying', unique: true })
+        fullname: string;
+
     constructor(
         id: string,
         createdAt: Date,
         modifiedAt: Date,
         email: string,
-        passwordHash: string,
         isAdmin: boolean,
         isManager: boolean,
+        firstname: string,
+        lastname: string,
+        fullname: string,
     ) {
         super(id, createdAt, modifiedAt);
         this.email = email;
-        this.passwordHash = passwordHash;
+        this.firstname = firstname;
+        this.fullname = fullname;
         this.isAdmin = isAdmin;
         this.isManager = isManager;
+        this.lastname = lastname;
+        this.passwordHash = '';
     }
 
     async updatePassword(password: string): Promise<void> {
@@ -58,9 +72,12 @@ class User extends BaseColumns {
     toDomain(): UserDomain {
         return new UserDomain({
             email: this.email,
-            role: this.computeRole(),
-            passwordHash: this.passwordHash,
+            firstname: this.firstname,
+            fullname: this.fullname,
             id: this.id,
+            lastname: this.lastname,
+            passwordHash: this.passwordHash,
+            role: this.computeRole(),
         });
     }
 }

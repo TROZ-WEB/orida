@@ -1,7 +1,7 @@
 import { RoleConverter } from '@customTypes/role';
 import { User } from '@services/users';
 
-export interface LoginResponse extends User {}
+export interface Auth extends User {}
 
 export interface LoginProps {
     email: string;
@@ -23,6 +23,7 @@ export const AuthConverter = {
             id: data.id,
             email: data.email,
             role: RoleConverter.fromApi(data.role),
+            fullname: data.fullname,
         };
     },
 };

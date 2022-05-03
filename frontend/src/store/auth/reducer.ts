@@ -1,15 +1,6 @@
-import { Role } from '@customTypes/role';
 import { RESET_STORE } from '@store/_global/types';
 
-import { AuthActionTypes, AuthState, LOGIN, LOGOUT } from './types';
-
-const initialState: AuthState = {
-    data: {
-        email: '',
-        id: '',
-        role: Role.None,
-    },
-};
+import { AuthActionTypes, AuthState, initialState, LOGIN, LOGOUT } from './types';
 
 /* eslint-disable-next-line default-param-last */
 const authReducer = (state = initialState, action: AuthActionTypes): AuthState => {
@@ -22,6 +13,7 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthState =
                     id: action.id,
                     email: action.email,
                     role: action.role,
+                    fullname: action.fullname,
                 },
             };
         }

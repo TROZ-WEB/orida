@@ -8,6 +8,9 @@ interface UserConstructorProps {
     email: string;
     role?: Role;
     passwordHash: string | null;
+    lastname: string,
+    firstname: string,
+    fullname: string,
 }
 
 class User {
@@ -19,16 +22,28 @@ class User {
 
     role?: Role;
 
+    lastname: string;
+
+    firstname: string;
+
+    fullname: string;
+
     constructor({
         id,
         email,
         role,
         passwordHash,
+        lastname,
+        fullname,
+        firstname,
     }: UserConstructorProps) {
         this.id = id ?? uuidv4();
         this.email = email;
         this.role = role;
         this.passwordHash = passwordHash;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.fullname = fullname;
     }
 
     async updatePassword(password: string): Promise<void> {

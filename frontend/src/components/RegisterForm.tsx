@@ -5,13 +5,15 @@ import Space from '@design/Space';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
 import notify, { NotificationType } from '@services/notifications';
-import { register as authRegister } from '@store/auth/actions';
+import { login, register as authRegister } from '@store/auth/actions';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 type Inputs = {
     email: string;
+    firstname: string;
+    lastname: string;
     password: string;
 };
 
@@ -23,11 +25,8 @@ const RegisterForm = () => {
 
     const onRegister: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
-            const typedData = {
-                email: data.email,
-                password: data.password,
-            };
-            await dispatch(authRegister(typedData));
+            await dispatch(authRegister(data));
+            await dispatch(login(data));
             navigate(AppRoutes.Home);
         } catch (e) {
             notify(NotificationType.Error, t('register_error_emailAlreadyInUse'));
@@ -38,9 +37,9 @@ const RegisterForm = () => {
         <form className='max-w-[500px]' onSubmit={handleSubmit(onRegister)}>
             <TextInput
                 autoComplete='off'
-                label={t('login_email_label')}
-                name='email'
-                placeholder='bruce@wayneenterprise.com'
+                label={t('register_firstname_label')}
+                name='firstname'
+                placeholder='Diana'
                 register={register}
                 theme={Theme.Dark}
                 required
@@ -48,7 +47,27 @@ const RegisterForm = () => {
             <Space px={24} />
             <TextInput
                 autoComplete='off'
-                label={t('login_password_label')}
+                label={t('register_lastname_label')}
+                name='lastname'
+                placeholder='Prince'
+                register={register}
+                theme={Theme.Dark}
+                required
+            />
+            <Space px={24} />
+            <TextInput
+                autoComplete='off'
+                label={t('register_email_label')}
+                name='email'
+                placeholder='diana@princecorp.com'
+                register={register}
+                theme={Theme.Dark}
+                required
+            />
+            <Space px={24} />
+            <TextInput
+                autoComplete='off'
+                label={t('register_password_label')}
                 name='password'
                 register={register}
                 theme={Theme.Dark}

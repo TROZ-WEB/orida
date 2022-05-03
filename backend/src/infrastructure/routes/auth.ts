@@ -15,19 +15,22 @@ router.post('/register', async (req: Request, res: Response) => {
     try {
         const user = {
             email: req.body.email,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
             password: req.body.password,
         };
         const newUser = await registerUser(user)({ userRepository });
         res.json(mapUser(newUser));
     } catch (e: any) {
+        console.error(e);
+
         if (e.message === AuthErrorType.RegisterEmailAlreadyInUse) {
             res.status(409).json({
                 error: e.message,
             });
         }
-        res.status(500).json({
-            error: AuthErrorType.RegisterUnknownError,
-        });
+
+        throw Error(AuthErrorType.RegisterUnknownError);
     }
 });
 

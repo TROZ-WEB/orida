@@ -1,10 +1,10 @@
 import { GET, POST } from '@utils/http';
 
-import { AuthConverter, AuthError, LoginProps, LoginResponse, RegisterProps } from './types';
+import { Auth, AuthConverter, AuthError, LoginProps, RegisterProps } from './types';
 
-async function login({ email, password }: LoginProps): Promise<LoginResponse> {
+async function login({ email, password }: LoginProps): Promise<Auth> {
     try {
-        const response = await POST<LoginResponse>('/api/auth/login', { email, password });
+        const response = await POST<Auth>('/api/auth/login', { email, password });
 
         return AuthConverter.fromApi(response);
     } catch (error) {
@@ -16,7 +16,7 @@ async function login({ email, password }: LoginProps): Promise<LoginResponse> {
 
 async function register(props: RegisterProps) {
     try {
-        const response = await POST<LoginResponse>('/api/auth/register', { ...props });
+        const response = await POST<Auth>('/api/auth/register', { ...props });
 
         return AuthConverter.fromApi(response);
     } catch (error: any) {
@@ -43,7 +43,7 @@ async function logout() {
 
 async function me() {
     try {
-        const result = await GET<LoginResponse>('/api/auth/me');
+        const result = await GET<Auth>('/api/auth/me');
 
         return AuthConverter.fromApi(result);
     } catch (error: any) {

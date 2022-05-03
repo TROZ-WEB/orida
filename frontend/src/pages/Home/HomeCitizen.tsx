@@ -33,7 +33,7 @@ const HomeCitizenPage = () => {
                 />
             </Modal>
 
-            <h1>{`Bienvenue ${auth.email}`}</h1>
+            <h1>{`Bienvenue ${auth.fullname} (${auth.email})`}</h1>
             <p>Citizen</p>
             <Space px={40} />
             <Button onClick={modalProps.open}>Créer un projet</Button>

@@ -1,8 +1,9 @@
 import { Role, RoleConverter } from '@customTypes/role';
 
 export interface User {
-    id: string;
     email: string;
+    fullname: string;
+    id: string;
     role: Role;
 }
 
@@ -11,5 +12,6 @@ export function fromApi(data: any): User {
         id: data.id,
         email: data.email,
         role: RoleConverter.fromApi(data.role),
+        fullname: data.fullname,
     };
 }
