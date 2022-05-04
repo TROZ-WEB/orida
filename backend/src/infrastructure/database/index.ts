@@ -9,8 +9,8 @@ import { User as UserEntity } from './entities/User';
 const AppDataSource = new DataSource({
     type: 'postgres',
     url: process.env.DATABASE_URL,
-    entities: [`${__dirname}/entities/*.ts`],
-    migrations: [`${__dirname}/migrations/*.ts`, `${__dirname}/seeds/*.ts`],
+    entities: [`${__dirname}/entities/*.{js,ts}`],
+    migrations: [`${__dirname}/migrations/*.{js,ts}`, `${__dirname}/seeds/*.{js,ts}`],
     logging: false,
     entitySkipConstructor: true,
     namingStrategy: new SnakeNamingStrategy(),

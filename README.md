@@ -28,4 +28,8 @@ Check under `/environments` folder for Terraform information about provisionning
 
 ## Deploy
 
-Deploy is automatically performed by Circle CI on each push on target branches (develop and main)
+run `yarn deploy:<environment>`
+```bash
+# staging
+yarn deploy:staging
+```
