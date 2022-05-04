@@ -7,7 +7,14 @@ interface Context {
 }
 
 const findProjectById = (id: string) => async ({ projectRepository }: Context): Promise<Project | null> => {
-    const entity = await projectRepository.findOne({ where: { id } });
+    const entity = await projectRepository.findOne({
+        where: { id },
+        relations: {
+            posts: {
+                poll: true,
+            },
+        },
+    });
 
     return entity ? entity.toDomain() : null;
 };

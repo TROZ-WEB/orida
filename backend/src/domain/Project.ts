@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { v4 as uuidv4 } from 'uuid';
 import { Category } from './Category';
+import { Post } from './Post';
 import { ProjectStatus } from './ProjectStatus';
 
 class Project {
@@ -24,6 +25,8 @@ class Project {
 
     categories: Category[];
 
+    posts: Post[];
+
     constructor(
         budget: Number,
         description: string,
@@ -32,6 +35,7 @@ class Project {
         status: ProjectStatus,
         title: string,
         categories: Category[],
+        posts: Post[],
     ) {
         this.createdAt = new Date();
         this.modifiedAt = new Date();
@@ -43,6 +47,7 @@ class Project {
         this.status = status;
         this.title = title;
         this.categories = categories;
+        this.posts = posts;
     }
 }
 

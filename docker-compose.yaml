@@ -21,6 +21,7 @@ services:
         environment:
             COOKIE_SECRET: development-secret
             DATABASE_URL: postgresql://user:password@postgres/backend
+            TYPEFORM_TOKEN: secret
     frontend:
         build:
             context: frontend/docker

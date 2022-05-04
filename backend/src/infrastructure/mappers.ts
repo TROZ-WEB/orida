@@ -1,4 +1,5 @@
 import { Category } from '../domain/Category';
+import { Post } from '../domain/Post';
 import { Project } from '../domain/Project';
 import { ProjectStatus } from '../domain/ProjectStatus';
 import { User } from '../domain/User';
@@ -14,6 +15,13 @@ export const mapUser = (user: User) => ({
 export const mapProjectStatus = (status: ProjectStatus) => ({
     id: status.id,
     label: status.label,
+});
+
+export const mapPost = (post: Post) => ({
+    id: post.id,
+    type: post.type,
+    poll: post.poll,
+    date: post.date,
 });
 
 export const mapProject = (project: Project) => ({
@@ -34,6 +42,7 @@ export const mapProject = (project: Project) => ({
     status: mapProjectStatus(project.status),
     title: project.title,
     categories: project.categories,
+    posts: project.posts.map((post) => mapPost(post)),
 });
 
 export const mapCategory = (category: Category) => ({

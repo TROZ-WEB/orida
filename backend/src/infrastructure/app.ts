@@ -6,6 +6,7 @@ import errorHandler from './middlewares/errorHandler';
 import authRouter from './routes/auth';
 import categoriesRouter from './routes/categories';
 import healthRouter from './routes/health';
+import pollsRouter from './routes/polls';
 import projectsRouter from './routes/projects';
 import statusRouter from './routes/status';
 import usersRouter from './routes/users';
@@ -41,6 +42,7 @@ app.use('/categories/', categoriesRouter);
 app.use('/projects/', projectsRouter);
 app.use('/status/', statusRouter);
 app.use('/users/', usersRouter);
+app.use('/polls/', pollsRouter);
 
 app.use(Sentry.Handlers.errorHandler());
 

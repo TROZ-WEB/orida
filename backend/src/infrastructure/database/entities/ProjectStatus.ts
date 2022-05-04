@@ -14,7 +14,7 @@ interface ProjectStatusEntityConstructorProps {
 
 @Entity('project_status')
 class ProjectStatusEntity extends BaseColumns {
-    @Column({ type: 'character varying', nullable: false })
+    @Column({ type: 'character varying' })
         label: string;
 
     @OneToMany(() => Project, (project) => project.status)

@@ -10,7 +10,7 @@ const projectsReducer = (state = initialState, action: ProjectActionTypes): Proj
         case ADD:
             return {
                 ...state,
-                data: uniq<Project>([...state.data, ...action.projects], ['id']),
+                data: [...uniq<Project>([...action.projects, ...state.data], ['id'])],
             };
         case SEARCH:
             return {

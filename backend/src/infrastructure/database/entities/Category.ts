@@ -2,6 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 import { Entity, Column, ManyToMany } from 'typeorm';
 import { Category as CategoryDomain } from '../../../domain/Category';
+import { Project as ProjectDomain } from '../../../domain/Project';
 import BaseColumns from './BaseColumns';
 import { Project } from './Project';
 
@@ -14,7 +15,7 @@ class Category extends BaseColumns {
         label: string;
 
     @ManyToMany(() => Project, (project: Project) => project.categories)
-        projects: Project[];
+        projects: ProjectDomain[];
 
     constructor(
         id: string,
@@ -22,7 +23,7 @@ class Category extends BaseColumns {
         modifiedAt: Date,
         color: string,
         label: string,
-        projects: Project[],
+        projects: ProjectDomain[],
     ) {
         super(id, createdAt, modifiedAt);
         this.color = color;

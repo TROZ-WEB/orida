@@ -5,6 +5,7 @@ enum AppRoutes {
     Login = '/',
     Project = '/project/:projectId',
     Search = '/search',
+    Test = '/test',
 }
 
 export enum ProjectTab {

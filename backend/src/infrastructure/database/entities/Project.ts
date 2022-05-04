@@ -1,9 +1,10 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
-import { Entity, Column, ManyToMany, JoinTable, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Project as ProjectDomain } from '../../../domain/Project';
 import BaseColumns from './BaseColumns';
 import { Category } from './Category';
+import { Post } from './Post';
 import { ProjectStatusEntity } from './ProjectStatus';
 
 @Entity('project')
@@ -31,6 +32,9 @@ class Project extends BaseColumns {
     @JoinColumn({ name: 'status' })
         status: ProjectStatusEntity;
 
+    @OneToMany(() => Post, (post) => post.project, { cascade: true })
+        posts: Post[];
+
     constructor(
         id: string,
         createdAt: Date,
@@ -42,6 +46,7 @@ class Project extends BaseColumns {
         title: string,
         categories: Category[],
         status: ProjectStatusEntity,
+        posts: Post[],
     ) {
         super(id, createdAt, modifiedAt);
         this.budget = budget;
@@ -51,6 +56,7 @@ class Project extends BaseColumns {
         this.title = title;
         this.categories = categories;
         this.status = status;
+        this.posts = posts;
     }
 
     toDomain(): ProjectDomain {
@@ -65,6 +71,7 @@ class Project extends BaseColumns {
             title: this.title,
             categories: this.categories,
             status: this.status,
+            posts: this.posts ? this.posts.map((post) => post.toDomain()) : [],
         };
     }
 }

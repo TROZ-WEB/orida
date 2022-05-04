@@ -1,10 +1,15 @@
+import PollCreateForm from '@components/PollCreateForm';
+import { PostType } from '@customTypes/post';
+import { Button } from '@design/buttons';
 import Layout from '@design/layouts/Layout';
 import ThreeColsLayout, { MenuItem } from '@design/layouts/ThreeCols';
 import Loader from '@design/Loader';
+import Modal from '@design/modals/DefaultModal';
 import Tag from '@design/Tag';
 import Paragraph from '@design/texts/Paragraph';
-import { H2 } from '@design/titles';
+import { H1, H2 } from '@design/titles';
 import H3 from '@design/titles/H3';
+import useModal from '@hooks/useModal';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { castToProjectTab, goToProject, ProjectTab } from '@router/AppRoutes';
@@ -21,11 +26,14 @@ const ProjectPage = () => {
     const project = useSelector((state) => state.projects.data.find((p) => p.id === projectId));
     const dispatch = useThunkDispatch();
     const { t } = useTranslation();
+    const modalProps = useModal();
+
+    const refresh = () => {
+        dispatch(getOne(projectId));
+    };
 
     useEffect(() => {
-        if (!project) {
-            dispatch(getOne(projectId));
-        }
+        refresh();
     }, []);
 
     if (!project) {
@@ -35,6 +43,8 @@ const ProjectPage = () => {
             </Layout>
         );
     }
+
+    const polls = project.posts.filter((post) => post.type === PostType.Poll);
 
     const left = (
         <>
@@ -74,6 +84,22 @@ const ProjectPage = () => {
                     ))}
                 </div>
             </div>
+            <div className='pt-16 px-16'>
+                <H1>Sondages ({polls.length})</H1>
+                <Button onClick={() => modalProps.open()}>Créer un sondage</Button>
+                {polls.map((poll) => (
+                    <div key={poll.id}>{poll.id}</div>
+                ))}
+            </div>
+            <Modal {...modalProps}>
+                <PollCreateForm
+                    onSubmit={() => {
+                        modalProps.close();
+                        refresh();
+                    }}
+                    projectId={project.id}
+                />
+            </Modal>
         </ThreeColsLayout>
     );
 };

@@ -2,6 +2,8 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { Category as CategoryEntity } from './entities/Category';
+import { Poll as PollEntity } from './entities/Poll';
+import { Post as PostEntity } from './entities/Post';
 import { Project as ProjectEntity } from './entities/Project';
 import { ProjectStatusEntity } from './entities/ProjectStatus';
 import { User as UserEntity } from './entities/User';
@@ -16,9 +18,11 @@ const AppDataSource = new DataSource({
     namingStrategy: new SnakeNamingStrategy(),
 });
 
-export const userRepository = AppDataSource.getRepository<UserEntity>(UserEntity);
 export const categoryRepository = AppDataSource.getRepository<CategoryEntity>(CategoryEntity);
+export const pollRepository = AppDataSource.getRepository<PollEntity>(PollEntity);
+export const postRepository = AppDataSource.getRepository<PostEntity>(PostEntity);
 export const projectRepository = AppDataSource.getRepository<ProjectEntity>(ProjectEntity);
 export const projectStatusRepository = AppDataSource.getRepository<ProjectStatusEntity>(ProjectStatusEntity);
+export const userRepository = AppDataSource.getRepository<UserEntity>(UserEntity);
 
 export default AppDataSource;
