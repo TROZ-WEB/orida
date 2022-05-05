@@ -36,8 +36,6 @@ class Category extends BaseColumns {
             id: this.id,
             color: this.color,
             label: this.label,
-            createdAt: this.createdAt,
-            modifiedAt: this.modifiedAt,
             projects: this.projects,
         };
     }

@@ -4,6 +4,7 @@ import { Entity, Column, ManyToMany, JoinTable, ManyToOne, OneToMany, JoinColumn
 import { Project as ProjectDomain } from '../../../domain/Project';
 import BaseColumns from './BaseColumns';
 import { Category } from './Category';
+import { Organization } from './Organization';
 import { Post } from './Post';
 import { ProjectStatusEntity } from './ProjectStatus';
 
@@ -13,16 +14,20 @@ class Project extends BaseColumns {
         budget: Number;
 
     @Column({ type: 'text', nullable: true })
-        description: string;
+        description: string | null;
 
     @Column({ type: 'int', nullable: true, name: 'participatory-budget-year' })
-        participatoryBudgetYear: Number;
+        participatoryBudgetYear: Number | null;
 
     @Column({ type: 'timestamp with time zone', nullable: true, name: 'start-date' })
-        startDate: Date;
+        startDate: Date | null;
 
     @Column({ type: 'character varying' })
         title: string;
+
+    @ManyToMany(() => Organization, (organization: Organization) => organization.projects, { cascade: true })
+    @JoinTable()
+        organizations: Organization[];
 
     @ManyToMany(() => Category, (category: Category) => category.projects, { eager: true })
     @JoinTable()
@@ -40,10 +45,11 @@ class Project extends BaseColumns {
         createdAt: Date,
         modifiedAt: Date,
         budget: Number,
-        description: string,
-        participatoryBudgetYear: Number,
-        startDate: Date,
+        description: string | null,
+        participatoryBudgetYear: Number | null,
+        startDate: Date | null,
         title: string,
+        organizations: Organization[],
         categories: Category[],
         status: ProjectStatusEntity,
         posts: Post[],
@@ -54,6 +60,7 @@ class Project extends BaseColumns {
         this.participatoryBudgetYear = participatoryBudgetYear;
         this.startDate = startDate;
         this.title = title;
+        this.organizations = organizations;
         this.categories = categories;
         this.status = status;
         this.posts = posts;
@@ -62,16 +69,16 @@ class Project extends BaseColumns {
     toDomain(): ProjectDomain {
         return {
             createdAt: this.createdAt,
-            modifiedAt: this.modifiedAt,
             id: this.id,
             budget: this.budget,
             description: this.description,
             participatoryBudgetYear: this.participatoryBudgetYear,
             startDate: this.startDate,
             title: this.title,
-            categories: this.categories,
+            organizations: this.organizations?.map((o) => o.toDomain()) || [],
+            categories: this.categories?.map((c) => c.toDomain()) || [],
             status: this.status,
-            posts: this.posts ? this.posts.map((post) => post.toDomain()) : [],
+            posts: this.posts?.map((post) => post.toDomain()) || [],
         };
     }
 }

@@ -16,6 +16,7 @@ mx-2
 overflow-auto
 w-full
 z-900
+max-h-screen
 `;
 
 const INNER_CLASSES = `

@@ -3,6 +3,7 @@ import { Category } from '../../domain/Category';
 import { Project } from '../../domain/Project';
 import { projectStatusRepository } from '../../infrastructure/database';
 import { Category as CategoryEntity } from '../../infrastructure/database/entities/Category';
+import { Organization as OrganizationEntity } from '../../infrastructure/database/entities/Organization';
 import { Project as ProjectEntity } from '../../infrastructure/database/entities/Project';
 
 interface Arg {
@@ -12,12 +13,14 @@ interface Arg {
     participatoryBudgetYear?: Number;
     startDate?: Date;
     status: string;
+    organizations: string[];
     title: string;
 }
 
 interface Context {
     projectRepository: Repository<ProjectEntity>;
     categoryRepository: Repository<CategoryEntity>;
+    organizationRepository: Repository<OrganizationEntity>;
 }
 
 const createProject = ({
@@ -27,12 +30,17 @@ const createProject = ({
     participatoryBudgetYear,
     startDate,
     status,
+    organizations,
     title,
-}: Arg) => async ({ projectRepository, categoryRepository }: Context): Promise<Project> => {
+}: Arg) => async ({ projectRepository, categoryRepository, organizationRepository }: Context): Promise<Project> => {
     const categoriesData = await categoryRepository.findBy({
         id: In(categories),
     }); // Will execute the query: SELECT * FROM "categories" WHERE "id" IN <categories-ids-array>
     // (doc : https://typeorm.io/find-options)
+
+    const organizationsData = await organizationRepository.findBy({
+        id: In(organizations),
+    });
 
     const statusData = await projectStatusRepository.findOne({
         where: { id: status },
@@ -48,6 +56,7 @@ const createProject = ({
         participatoryBudgetYear,
         startDate,
         title,
+        organizations: organizationsData,
         categories: categoriesData,
         status: statusData,
     });

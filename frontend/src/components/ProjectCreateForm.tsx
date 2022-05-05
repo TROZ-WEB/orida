@@ -12,8 +12,10 @@ import Space from '@design/Space';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
+import { Organization } from '@services/organizations/types';
 import { Status } from '@services/status';
 import { getAll as getAllCategories } from '@store/categories/actions';
+import { getAll as getAllOrganizations } from '@store/organizations/actions';
 import { create } from '@store/projects/actions';
 import { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -27,6 +29,7 @@ type Inputs = {
     startDate: Date;
     status: Status;
     categories: string[];
+    organizations: string[];
 };
 
 interface CreateProjectFormProps {
@@ -45,10 +48,14 @@ const CreateProjectForm = ({ projectStatuses, onCreated }: CreateProjectFormProp
         value: status.id,
         label: status.label,
     }));
+    const organizations = useSelector((state) => state.organizations.data);
 
     useEffect(() => {
         if (categories.length === 0) {
             dispatch(getAllCategories());
+        }
+        if (organizations.length === 0) {
+            dispatch(getAllOrganizations());
         }
     }, []);
 
@@ -56,11 +63,16 @@ const CreateProjectForm = ({ projectStatuses, onCreated }: CreateProjectFormProp
         return { label: category.label, value: category.id };
     });
 
+    const organizationsOptions = organizations.map((organization: Organization) => {
+        return { label: organization.name, value: organization.id };
+    });
+
     const onCreate: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
             const cleanBudget = data.budget || 0;
             const cleanParticipatoryBudgetYear = data.participatoryBudgetYear || 0;
             const cleanCategories = data.categories || [];
+            const cleanOrganizations = data.organizations || [];
             await dispatch(
                 create({
                     ...data,
@@ -68,6 +80,7 @@ const CreateProjectForm = ({ projectStatuses, onCreated }: CreateProjectFormProp
                     participatoryBudgetYear: cleanParticipatoryBudgetYear,
                     categories: cleanCategories,
                     statusId: data.status.id,
+                    organizations: cleanOrganizations,
                 })
             );
             reset();
@@ -137,9 +150,15 @@ const CreateProjectForm = ({ projectStatuses, onCreated }: CreateProjectFormProp
                 register={register}
             />
             <MultiSelectInput
-                label={t('project_create_startdate_categories')}
+                label={t('project_create_startdate_label')}
                 name='categories'
                 options={categoriesOptions}
+                register={register}
+            />
+            <MultiSelectInput
+                label={t('project_create_organizations_label')}
+                name='organizations'
+                options={organizationsOptions}
                 register={register}
             />
             <Space px={8} />

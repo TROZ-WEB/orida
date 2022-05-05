@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from 'react';
 
 interface TagProps {
     className?: string;
-    color: string;
+    color?: string;
 }
 
 const TAG_CLASSES = `
@@ -16,7 +16,7 @@ text-xs
 w-fit
 `;
 
-const Tag = ({ children, className, color }: PropsWithChildren<TagProps>) => {
+const Tag = ({ children, className, color = '#cccccc' }: PropsWithChildren<TagProps>) => {
     return (
         <span className={classnames(TAG_CLASSES, className)} style={{ backgroundColor: color }}>
             {children}

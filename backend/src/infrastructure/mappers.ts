@@ -1,4 +1,5 @@
 import { Category } from '../domain/Category';
+import { Organization } from '../domain/Organization';
 import { Post } from '../domain/Post';
 import { Project } from '../domain/Project';
 import { ProjectStatus } from '../domain/ProjectStatus';
@@ -25,7 +26,6 @@ export const mapPost = (post: Post) => ({
 });
 
 export const mapProject = (project: Project) => ({
-    modifiedAt: project.modifiedAt,
     createdAt: project.createdAt,
     budget: project.budget,
     description: project.description,
@@ -47,9 +47,23 @@ export const mapProject = (project: Project) => ({
 
 export const mapCategory = (category: Category) => ({
     id: category.id,
-    modifiedAt: category.modifiedAt,
-    createdAt: category.createdAt,
     label: category.label,
     color: category.color,
     projects: category.projects,
+});
+
+export const mapOrganization = (organization: Organization) => ({
+    id: organization.id,
+    name: organization.name,
+    type: organization.type,
+    description: organization.description,
+    site: organization.site,
+    email: organization.email,
+    phone: organization.phone,
+    facebook: organization.facebook,
+    twitter: organization.twitter,
+    linkedin: organization.linkedin,
+    instagram: organization.instagram,
+    projects: organization.projects,
+    parentOrganizations: organization.parentOrganizations,
 });

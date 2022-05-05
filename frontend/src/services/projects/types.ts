@@ -43,6 +43,7 @@ export type CreateProps = {
     description?: string;
     images?: string[];
     location?: string;
+    organizations?: string[];
     participatoryBudgetYear?: number;
     startDate?: Date;
     statusId: string;
