@@ -56,5 +56,5 @@ export type CreateProps = {
     linkedin?: string;
     instagram?: string;
     projects?: Project[];
-    parentOrganizations?: Organization[];
+    parentOrganizations?: string[];
 };

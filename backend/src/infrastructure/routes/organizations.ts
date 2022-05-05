@@ -5,6 +5,7 @@ import findOrganizationById from '../../useCases/organization/findOrganizationBy
 import asyncRoute from '../../utils/asyncRoute';
 import { organizationRepository } from '../database';
 import { mapOrganization } from '../mappers';
+import { ErrorType } from './types';
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
     const { id } = req.params;
     const organization = await findOrganizationById(id)({ organizationRepository });
     if (organization === null) {
-        throw Error('404 : Missing element');
+        throw Error(ErrorType.e404);
     }
 
     const result = mapOrganization(organization);

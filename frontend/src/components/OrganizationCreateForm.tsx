@@ -1,11 +1,13 @@
 import { SubmitButton } from '@design/buttons';
-import { SelectInput, TextAreaInput, TextInput } from '@design/inputs';
+import { MultiSelectInput, SelectInput, TextAreaInput, TextInput } from '@design/inputs';
 import Space from '@design/Space';
+import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
 import { Organization, OrganizationType } from '@services/organizations/types';
 import { Project } from '@services/projects/types';
-import { create } from '@store/organizations/actions';
+import { create, getAll as getAllOrganizations } from '@store/organizations/actions';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -21,7 +23,7 @@ type Inputs = {
     linkedin: string;
     instagram: string;
     projects: Project[];
-    parentOrganizations: Organization[];
+    parentOrganizations: string[];
 };
 
 interface CreateOrganizationFormProps {
@@ -33,6 +35,18 @@ const CreateOrganizationForm = ({ onCreated }: CreateOrganizationFormProps) => {
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
 
+    const organizations = useSelector((state) => state.organizations.data);
+
+    useEffect(() => {
+        if (organizations.length === 0) {
+            dispatch(getAllOrganizations());
+        }
+    }, []);
+
+    const parentOrganizationsOptions = organizations.map((organization: Organization) => {
+        return { label: organization.name, value: organization.id };
+    });
+
     const typesOptions = [
         { label: t('organization_type_collectivity'), value: 'COLLECTIVITY' },
         { label: t('organization_type_association'), value: 'ASSOCIATION' },
@@ -42,7 +56,8 @@ const CreateOrganizationForm = ({ onCreated }: CreateOrganizationFormProps) => {
     const onCreate: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
             const cleanProjects: Project[] = [];
-            const cleanOrganizations = data.parentOrganizations || [];
+            let cleanOrganizations = data.parentOrganizations || [];
+            if (typeof cleanOrganizations === 'string') cleanOrganizations = [cleanOrganizations];
             await dispatch(
                 create({
                     ...data,
@@ -123,6 +138,13 @@ const CreateOrganizationForm = ({ onCreated }: CreateOrganizationFormProps) => {
             <TextInput
                 label={t('organization_create_instagram_label')}
                 name='instagram'
+                register={register}
+            />
+            <Space px={8} />
+            <MultiSelectInput
+                label={t('organization_create_parentOrganizations_label')}
+                name='parentOrganizations'
+                options={parentOrganizationsOptions}
                 register={register}
             />
             <Space px={8} />
