@@ -1,10 +1,12 @@
 import { Request, Response, Router } from 'express';
+import Role from '../../domain/Role';
 import createOrganization from '../../useCases/organization/createOrganization';
 import findAllOrganizations from '../../useCases/organization/findAllOrganizations';
 import findOrganizationById from '../../useCases/organization/findOrganizationById';
 import asyncRoute from '../../utils/asyncRoute';
 import { organizationRepository } from '../database';
 import { mapOrganization } from '../mappers';
+import authorize from '../middlewares/authorize';
 import { ErrorType } from './types';
 
 const router = Router();
@@ -29,6 +31,7 @@ router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
 
 router.post(
     '/',
+    authorize([Role.Admin]),
     asyncRoute(async (req: Request, res: Response) => {
         const organization = {
             name: req.body.name,
