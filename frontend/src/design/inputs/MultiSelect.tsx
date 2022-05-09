@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-useless-fragment */
+import Option from '@customTypes/Option';
 import Label from '@design/Label';
 import Space from '@design/Space';
 import classnames from '@utils/classnames';
-import { InputHTMLAttributes, ReactNode } from 'react';
+import { InputHTMLAttributes, ReactNode, useState } from 'react';
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     label?: ReactNode;
@@ -10,12 +11,8 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     register: any;
     required?: boolean;
     theme?: 'light' | 'dark';
-    options:
-        | {
-              label: string;
-              value: string;
-          }[]
-        | null;
+    defaultValue?: string[];
+    options: Option[];
 }
 
 const classes = {
@@ -66,46 +63,67 @@ const MultiSelectInput = ({
     required = false,
     theme = 'light',
     options,
+    defaultValue,
     ...props
-}: Props) => (
-    <div className='w-full'>
-        {label && (
-            <>
-                <Label
-                    className={theme === 'dark' ? classes.labelDarkTheme : undefined}
-                    htmlFor={name}
-                >
-                    {label}
-                </Label>
-                <Space px={8} />
-            </>
-        )}
-        {options?.map((option) => (
-            <label key={option.value} className={classes.wrapper} htmlFor={option.value}>
-                <input
-                    {...register(name, { required })}
-                    className={classnames(
-                        classes.input,
-                        theme === 'dark' ? classes.inputDarkTheme : undefined,
-                        className
-                    )}
-                    id={option.value}
-                    name={name}
-                    type='checkbox'
-                    value={option.value}
-                    {...props}
-                />
-                <span
-                    className={classnames(
-                        classes.label,
-                        theme === 'dark' ? classes.labelDarkTheme : undefined
-                    )}
-                >
-                    {option.label}
-                </span>
-            </label>
-        ))}
-    </div>
-);
+}: Props) => {
+    const [values, setValues] = useState<string[]>(defaultValue ?? []);
+
+    const onChange = (val: string) => {
+        const index = values.indexOf(val);
+        const newValues = [...values];
+        if (index === -1) {
+            newValues.push(val);
+            setValues(newValues);
+        } else {
+            newValues.splice(index, 1);
+            setValues(newValues);
+        }
+    };
+
+    return (
+        <div className='w-full'>
+            {label && (
+                <>
+                    <Label
+                        className={theme === 'dark' ? classes.labelDarkTheme : undefined}
+                        htmlFor={name}
+                    >
+                        {label}
+                    </Label>
+                    <Space px={8} />
+                </>
+            )}
+            {options.map((option) => {
+                return (
+                    <label key={option.value} className={classes.wrapper} htmlFor={option.value}>
+                        <input
+                            {...register(name, { required })}
+                            checked={values?.includes(option.value)}
+                            className={classnames(
+                                classes.input,
+                                theme === 'dark' ? classes.inputDarkTheme : undefined,
+                                className
+                            )}
+                            id={option.value}
+                            name={name}
+                            onChange={() => onChange(option.value)}
+                            type='checkbox'
+                            value={option.value}
+                            {...props}
+                        />
+                        <span
+                            className={classnames(
+                                classes.label,
+                                theme === 'dark' ? classes.labelDarkTheme : undefined
+                            )}
+                        >
+                            {option.label}
+                        </span>
+                    </label>
+                );
+            })}
+        </div>
+    );
+};
 
 export default MultiSelectInput;

@@ -7,7 +7,7 @@ import { Project } from './Project';
 
 @Entity('organization')
 class Organization extends BaseColumns {
-    @Column({ type: 'character varying' })
+    @Column({ type: 'character varying', unique: true })
         name: string;
 
     @Column({ type: 'enum', enum: OrganizationType, default: OrganizationType.collectivity })

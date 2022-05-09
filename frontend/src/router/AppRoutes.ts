@@ -4,6 +4,7 @@ enum AppRoutes {
     Home = '/home',
     Login = '/',
     Project = '/project/:projectId',
+    Organization = '/organization/:organizationId',
     Search = '/search',
     Test = '/test',
 }
@@ -25,6 +26,10 @@ export function castToProjectTab(value: string): ProjectTab {
 
 export function goToProject(id: string, tab: ProjectTab = ProjectTab.general) {
     return `/project/${id}?tab=${tab}`;
+}
+
+export function goToOrganization(id: string) {
+    return `/organization/${id}`;
 }
 
 export default AppRoutes;

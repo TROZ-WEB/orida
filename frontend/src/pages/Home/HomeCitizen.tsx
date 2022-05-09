@@ -8,7 +8,6 @@ import Space from '@design/Space';
 import useModal from '@hooks/useModal';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import { getAll as getAllOrganizations } from '@store/organizations/actions';
 import { getAll as getAllProjects } from '@store/projects/actions';
 import { getAll as getAllProjectStatuses } from '@store/status/actions';
 import { useEffect } from 'react';
@@ -23,7 +22,6 @@ const HomeCitizenPage = () => {
     const { t } = useTranslation();
 
     useEffect(() => {
-        dispatch(getAllOrganizations());
         dispatch(getAllProjects());
         dispatch(getAllProjectStatuses());
     }, []);

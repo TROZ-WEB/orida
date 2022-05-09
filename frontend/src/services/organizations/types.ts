@@ -58,3 +58,7 @@ export type CreateProps = {
     projects?: Project[];
     parentOrganizations?: string[];
 };
+
+export type UpdateProps = CreateProps & {
+    id: string;
+};

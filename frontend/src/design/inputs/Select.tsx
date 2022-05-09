@@ -1,13 +1,9 @@
+import Option from '@customTypes/Option';
 import WithTheme, { Theme } from '@customTypes/theme';
 import Label from '@design/Label';
 import Space from '@design/Space';
 import classnames from '@utils/classnames';
 import { InputHTMLAttributes, ReactNode } from 'react';
-
-export interface Option {
-    label: string;
-    value: string;
-}
 
 interface Props extends InputHTMLAttributes<HTMLInputElement>, WithTheme {
     label?: ReactNode;

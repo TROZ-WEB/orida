@@ -1,10 +1,10 @@
+import Option from '@customTypes/Option';
 import { SubmitButton } from '@design/buttons';
 import {
     DateInput,
     MultiSelectInput,
     NumberInput,
     SelectInput,
-    SelectOption,
     TextAreaInput,
     TextInput,
 } from '@design/inputs';
@@ -41,7 +41,7 @@ const CreateProjectForm = ({ projectStatuses, onCreated }: CreateProjectFormProp
     const { register, handleSubmit, reset } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
-    const [yearsOptions, setYearsOptions] = useState<SelectOption[]>([]);
+    const [yearsOptions, setYearsOptions] = useState<Option[]>([]);
 
     const categories = useSelector((state) => state.categories.data);
     const statusesOptions = projectStatuses.map((status) => ({
@@ -93,7 +93,7 @@ const CreateProjectForm = ({ projectStatuses, onCreated }: CreateProjectFormProp
     const currentYear = new Date().getFullYear();
 
     useMemo(() => {
-        const years: SelectOption[] = [];
+        const years: Option[] = [];
 
         for (let i = 2000; i <= currentYear; i++) {
             years.unshift({ label: i.toString(), value: i.toString() });

@@ -1,14 +1,14 @@
 import { Status } from '@services/status';
 import { GlobalActionTypes } from '@store/_global/types';
 
-export const ADD = 'STATUS_ADD';
+export const UPSERT = 'STATUS_UPSERT';
 
-export interface Add {
-    type: typeof ADD;
+export interface Upsert {
+    type: typeof UPSERT;
     status: Status[];
 }
 
-export type StatusActionTypes = GlobalActionTypes | Add;
+export type StatusActionTypes = GlobalActionTypes | Upsert;
 
 export interface StatusState {
     data: Status[];

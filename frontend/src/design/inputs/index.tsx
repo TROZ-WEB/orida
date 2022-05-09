@@ -1,7 +1,3 @@
-import { Option } from './Select';
-
-export type SelectOption = Option;
-
 export { default as CheckboxInput } from './Checkbox';
 export { default as DateInput } from './Date';
 export { default as MultiSelectInput } from './MultiSelect';

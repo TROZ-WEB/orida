@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import ErrorType from '../../types/Error';
 import createProject from '../../useCases/project/createProject';
 import findAllProjets from '../../useCases/project/findAllProjects';
 import findOneById from '../../useCases/project/findOneById';
@@ -7,7 +8,6 @@ import asyncRoute from '../../utils/asyncRoute';
 import normalize from '../../utils/normalize';
 import { categoryRepository, projectRepository, organizationRepository } from '../database';
 import { mapProject } from '../mappers';
-import { ErrorType } from './types';
 
 const router = Router();
 

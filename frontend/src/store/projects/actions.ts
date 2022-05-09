@@ -3,10 +3,10 @@ import { Category } from '@services/categories';
 import ProjectService, { CreateProps, Project } from '@services/projects';
 import { Status } from '@services/status';
 
-import { ADD, FILTER, ProjectActionTypes, SEARCH } from './types';
+import { FILTER, ProjectActionTypes, SEARCH, UPSERT } from './types';
 
-export const addAction = (projects: Project[]): ProjectActionTypes => ({
-    type: ADD,
+export const upsertAction = (projects: Project[]): ProjectActionTypes => ({
+    type: UPSERT,
     projects,
 });
 
@@ -26,14 +26,14 @@ export const create =
     (props: CreateProps) =>
     async (dispatch: ReduxDispatch): Promise<void> => {
         const result = await ProjectService.create(props);
-        dispatch(addAction([result]));
+        dispatch(upsertAction([result]));
     };
 
 export const getAll =
     () =>
     async (dispatch: ReduxDispatch): Promise<void> => {
         const result = await ProjectService.getAll();
-        dispatch(addAction(result));
+        dispatch(upsertAction(result));
     };
 
 export const getOne =
@@ -41,7 +41,7 @@ export const getOne =
     async (dispatch: ReduxDispatch): Promise<void> => {
         const result = await ProjectService.getOne(id);
         if (result) {
-            dispatch(addAction([result]));
+            dispatch(upsertAction([result]));
         }
     };
 

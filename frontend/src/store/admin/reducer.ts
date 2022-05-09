@@ -3,12 +3,12 @@ import { RESET_STORE } from '@store/_global/types';
 import sortBy from '@utils/sortBy';
 import uniq from '@utils/uniq';
 
-import { ADD_USERS, AdminActionTypes, AdminState, initialState } from './types';
+import { AdminActionTypes, AdminState, initialState, UPSERT_USERS } from './types';
 
 /* eslint-disable-next-line default-param-last */
 const reducer = (state = initialState, action: AdminActionTypes): AdminState => {
     switch (action.type) {
-        case ADD_USERS:
+        case UPSERT_USERS:
             return {
                 ...state,
                 users: uniq<User>([...action.users, ...state.users], ['id']).sort(

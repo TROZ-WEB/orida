@@ -1,14 +1,14 @@
 import { User } from '@services/users/types';
 import { GlobalActionTypes } from '@store/_global/types';
 
-export const ADD_USERS = 'ADMIN_ADD_USERS';
+export const UPSERT_USERS = 'ADMIN_UPSERT_USERS';
 
-export interface AddUsers {
-    type: typeof ADD_USERS;
+export interface upsertUsers {
+    type: typeof UPSERT_USERS;
     users: User[];
 }
 
-export type AdminActionTypes = GlobalActionTypes | AddUsers;
+export type AdminActionTypes = GlobalActionTypes | upsertUsers;
 
 export interface AdminState {
     users: User[];

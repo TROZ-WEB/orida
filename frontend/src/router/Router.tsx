@@ -5,6 +5,7 @@ import Accounts from '@pages/Accounts';
 import Explore from '@pages/Explore';
 import HomeRedirect from '@pages/Home/HomeRedirect';
 import Login from '@pages/Login';
+import Organization from '@pages/Organization';
 import PollTestPage from '@pages/PollTest';
 import Project from '@pages/Project';
 import Search from '@pages/Search';
@@ -18,6 +19,7 @@ const Router = () => (
         <Route element={<AuthenticatedRoute />}>
             <Route element={<HomeRedirect />} path={AppRoutes.Home} />
             <Route element={<Search />} path={AppRoutes.Search} />
+            <Route element={<Organization />} path={AppRoutes.Organization} />
             <Route element={<Project />} path={AppRoutes.Project} />
             <Route element={<Explore />} path={AppRoutes.Explore} />
             <Route element={<PollTestPage />} path={AppRoutes.Test} />

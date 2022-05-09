@@ -1,14 +1,14 @@
 import { Category } from '@services/categories';
 import { GlobalActionTypes } from '@store/_global/types';
 
-export const ADD = 'CATEGORIES_ADD';
+export const UPSERT = 'CATEGORIES_UPSERT';
 
-export interface Add {
-    type: typeof ADD;
+export interface Upsert {
+    type: typeof UPSERT;
     categories: Category[];
 }
 
-export type CategoriesActionTypes = GlobalActionTypes | Add;
+export type CategoriesActionTypes = GlobalActionTypes | Upsert;
 
 export interface CategoriesState {
     data: Category[];

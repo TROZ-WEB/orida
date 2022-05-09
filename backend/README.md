@@ -39,3 +39,10 @@ then :
 ```
 
 then : any SQL query you want
+
+### To set a user as admin
+
+```
+docker-compose exec postgres psql -d backend
+update "user" set "is-admin"=true where "email"='your-email';
+```

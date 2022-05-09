@@ -2,7 +2,7 @@ import { Organization } from '@services/organizations';
 import { RESET_STORE } from '@store/_global/types';
 import uniq from '@utils/uniq';
 
-import { ADD, initialState, OrganizationActionTypes, OrganizationState } from './types';
+import { initialState, OrganizationActionTypes, OrganizationState, UPSERT } from './types';
 
 const organizationsReducer = (
     // eslint-disable-next-line default-param-last
@@ -10,10 +10,10 @@ const organizationsReducer = (
     action: OrganizationActionTypes
 ): OrganizationState => {
     switch (action.type) {
-        case ADD:
+        case UPSERT:
             return {
                 ...state,
-                data: uniq<Organization>([...state.data, ...action.organizations], ['id']),
+                data: uniq<Organization>([...action.organizations, ...state.data], ['id']),
             };
         case RESET_STORE:
             return initialState;

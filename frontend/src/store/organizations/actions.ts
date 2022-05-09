@@ -1,17 +1,28 @@
 import { ReduxDispatch } from '@hooks/useThunkDispatch';
-import OrganizationService, { CreateProps, Organization } from '@services/organizations';
+import OrganizationService, {
+    CreateProps,
+    Organization,
+    UpdateProps,
+} from '@services/organizations';
 
-import { ADD, OrganizationActionTypes } from './types';
+import { OrganizationActionTypes, UPSERT } from './types';
 
-export const addAction = (organizations: Organization[]): OrganizationActionTypes => ({
-    type: ADD,
+export const upsertAction = (organizations: Organization[]): OrganizationActionTypes => ({
+    type: UPSERT,
     organizations,
 });
 
 export const create = (props: CreateProps) => {
     return async (dispatch: ReduxDispatch): Promise<void> => {
         const result = await OrganizationService.create(props);
-        dispatch(addAction([result]));
+        dispatch(upsertAction([result]));
+    };
+};
+
+export const update = (props: UpdateProps) => {
+    return async (dispatch: ReduxDispatch): Promise<void> => {
+        const result = await OrganizationService.update(props);
+        dispatch(upsertAction([result]));
     };
 };
 
@@ -19,7 +30,7 @@ export const getAll =
     () =>
     async (dispatch: ReduxDispatch): Promise<void> => {
         const result = await OrganizationService.getAll();
-        dispatch(addAction(result));
+        dispatch(upsertAction(result));
     };
 
 export const getOne =
@@ -27,6 +38,6 @@ export const getOne =
     async (dispatch: ReduxDispatch): Promise<void> => {
         const result = await OrganizationService.getOne(id);
         if (result) {
-            dispatch(addAction([result]));
+            dispatch(upsertAction([result]));
         }
     };

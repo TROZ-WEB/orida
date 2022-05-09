@@ -5,6 +5,8 @@ import { Organization } from '@services/organizations';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 
+import { goToOrganization } from '../router/AppRoutes';
+
 interface OrganizationCardProps extends WithTheme {
     organization: Organization;
 }
@@ -21,7 +23,7 @@ const classes = {
 
 const OrganizationCard = ({ organization, theme = Theme.Light }: OrganizationCardProps) => {
     return (
-        <Link className={classes.wrapper} to='/'>
+        <Link className={classes.wrapper} to={goToOrganization(organization.id)}>
             <img alt='organization' className={classes.image} src={placeholderOrganizationSrc} />
             <div className={classes.content}>
                 {organization.parentOrganizations.map((po) => (

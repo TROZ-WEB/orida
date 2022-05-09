@@ -2,10 +2,10 @@ import { Role } from '@customTypes/role';
 import { ReduxDispatch } from '@hooks/useThunkDispatch';
 import UserService, { User } from '@services/users';
 
-import { ADD_USERS, AdminActionTypes } from './types';
+import { AdminActionTypes, UPSERT_USERS } from './types';
 
-const addUsersAction = (users: User[]): AdminActionTypes => ({
-    type: ADD_USERS,
+const upsertUsersAction = (users: User[]): AdminActionTypes => ({
+    type: UPSERT_USERS,
     users,
 });
 
@@ -13,7 +13,7 @@ export const getAllUsers =
     () =>
     async (dispatch: ReduxDispatch): Promise<void> => {
         const result = await UserService.getAll();
-        dispatch(addUsersAction(result));
+        dispatch(upsertUsersAction(result));
     };
 
 export const updateRole =
@@ -23,5 +23,5 @@ export const updateRole =
             id: user.id,
             role: newRole,
         });
-        dispatch(addUsersAction([result]));
+        dispatch(upsertUsersAction([result]));
     };

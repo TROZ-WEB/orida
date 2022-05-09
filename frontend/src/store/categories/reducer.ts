@@ -2,7 +2,7 @@ import { Category } from '@services/categories';
 import { RESET_STORE } from '@store/_global/types';
 import uniq from '@utils/uniq';
 
-import { ADD, CategoriesActionTypes, CategoriesState, initialState } from './types';
+import { CategoriesActionTypes, CategoriesState, initialState, UPSERT } from './types';
 
 const categoriesReducer = (
     /* eslint-disable-next-line default-param-last */
@@ -10,7 +10,7 @@ const categoriesReducer = (
     action: CategoriesActionTypes
 ): CategoriesState => {
     switch (action.type) {
-        case ADD:
+        case UPSERT:
             return {
                 ...state,
                 data: uniq<Category>([...state.data, ...action.categories], ['id']),
