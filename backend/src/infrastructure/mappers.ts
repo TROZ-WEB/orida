@@ -1,5 +1,6 @@
 import { Category } from '../domain/Category';
 import { Organization } from '../domain/Organization';
+import { Poll } from '../domain/Poll';
 import { Post } from '../domain/Post';
 import { Project } from '../domain/Project';
 import { ProjectStatus } from '../domain/ProjectStatus';
@@ -18,10 +19,17 @@ export const mapProjectStatus = (status: ProjectStatus) => ({
     label: status.label,
 });
 
+export const mapPoll = (poll: Poll) => ({
+    id: poll.id,
+    post: poll.post,
+    externalPollId: poll.externalPollId,
+    answered: poll.responses.length !== 0,
+});
+
 export const mapPost = (post: Post) => ({
     id: post.id,
     type: post.type,
-    poll: post.poll,
+    poll: post.poll ? mapPoll(post.poll) : undefined,
     date: post.date,
 });
 

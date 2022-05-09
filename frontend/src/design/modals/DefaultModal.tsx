@@ -9,33 +9,36 @@ interface ModalProps {
     isOpen: boolean;
 }
 
-const MODAL_CLASSES = `
-box-border
-max-w-[500px]
-mx-2
-overflow-auto
-w-full
-z-900
-max-h-screen
-`;
+const classes = {
+    modal: `
+        box-border
+        max-h-screen
+        max-w-[500px]
+        mx-2
+        overflow-auto
+        w-full
+        z-900
+    `,
+    inner: `
+        bg-white
+        p-5
+        relative
+        rounded
+        w-full
+    `,
+    close: `
+        absolute
+        bg-transparent
+        h-[30px]
+        px-2
+        py-2
+        right-0
+        top-0
+        w-[30px]
 
-const INNER_CLASSES = `
-bg-white
-p-5
-relative
-rounded
-w-full
-`;
-
-const CLOSE_CLASSES = `
-absolute
-h-[30px]
-px-2
-py-2
-right-0
-top-0
-w-[30px]
-`;
+        hover:bg-transparent
+    `,
+};
 
 const Modal = ({ children, close, isOpen }: PropsWithChildren<ModalProps>) => {
     if (!isOpen) {
@@ -44,9 +47,9 @@ const Modal = ({ children, close, isOpen }: PropsWithChildren<ModalProps>) => {
 
     return (
         <Backdrop>
-            <div className={MODAL_CLASSES}>
-                <div className={INNER_CLASSES}>
-                    <IconButton className={CLOSE_CLASSES} onClick={close}>
+            <div className={classes.modal}>
+                <div className={classes.inner}>
+                    <IconButton className={classes.close} onClick={close}>
                         <Icon color='grey' name='cross' />
                     </IconButton>
                     {children}

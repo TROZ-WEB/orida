@@ -1,13 +1,21 @@
 import classnames from '@utils/classnames';
 import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
-type ButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
+export interface ButtonProps extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
+    secondary?: boolean;
+}
 
-const Button = ({ children, className, type = 'button', ...props }: ButtonProps) => (
+const Button = ({
+    children,
+    className,
+    secondary = false,
+    type = 'button',
+    ...props
+}: ButtonProps) => (
     <button
         className={classnames(
             `
-        bg-primary
+        ${secondary ? 'bg-secondary' : 'bg-primary'}
         border-0
         cursor-pointer
         min-w-[100px]
@@ -22,7 +30,7 @@ const Button = ({ children, className, type = 'button', ...props }: ButtonProps)
         justify-center
         items-center
 
-        hover:bg-primary-hover
+        ${secondary ? 'hover:bg-secondary-hover' : 'hover:bg-primary-hover'}
         `,
             className
         )}

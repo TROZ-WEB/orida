@@ -10,6 +10,7 @@ const errorHandler = (err: any, req: Request, res: Response, next: NextFunction)
     const errorType = err.message;
 
     switch (errorType) {
+        case AuthErrorType.NotLoggedIn:
         case AuthErrorType.Unauthorized:
             return res.status(401).send('Unauthorized');
         default:

@@ -1,11 +1,13 @@
 export type Poll = {
-    typeformId: string;
+    answered: boolean;
+    pollId: string;
 };
 
 export const PollConverter = {
     fromApi(data: any): Poll {
         return {
-            typeformId: data.typeformId,
+            answered: data.answered,
+            pollId: data.externalPollId,
         };
     },
 };

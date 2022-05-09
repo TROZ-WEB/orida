@@ -1,9 +1,8 @@
 import classnames from '@utils/classnames';
-import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
-import Button from './Button';
+import Button, { ButtonProps } from './Button';
 
-type InvisibleButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
+export type InvisibleButtonProps = ButtonProps;
 
 const InvisibleButton = ({
     children,

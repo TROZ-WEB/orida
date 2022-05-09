@@ -3,7 +3,7 @@ import { PollAdapterType } from '../../infrastructure/adapters/pollAdapter';
 import { Poll as PollEntity } from '../../infrastructure/database/entities/Poll';
 import { Post as PostEntity } from '../../infrastructure/database/entities/Post';
 import { Project as ProjectEntity } from '../../infrastructure/database/entities/Project';
-import findProjectById from '../project/findProjectById';
+import findOneById from '../project/findOneById';
 
 interface Arg {
     project: string; // project id
@@ -30,8 +30,9 @@ const createPoll = ({
 }: Context): Promise<boolean> => {
     // create poll
     const pollId = await pollAdapter.create({ question, responses });
+    await pollAdapter.createAnswerWebhook(pollId);
 
-    const projectObject = await findProjectById(project)({ projectRepository });
+    const projectObject = await findOneById(project)({ projectRepository });
     if (!projectObject) {
         throw Error('Project not found');
     }

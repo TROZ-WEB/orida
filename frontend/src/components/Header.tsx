@@ -1,7 +1,7 @@
-import { Role } from '@customTypes/role';
 import { Button, ButtonLink } from '@design/buttons';
 import Icon from '@design/Icon';
 import Logo from '@design/Logo';
+import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
@@ -43,7 +43,7 @@ const Header = () => {
     const dispatch = useThunkDispatch();
     const navigate = useNavigate();
     const isLoggedIn = !!useSelector((state) => state.auth.data.id);
-    const isAdmin = useSelector((state) => state.auth.data.role) === Role.Admin;
+    const { isAdmin } = useRole();
     const { pathname } = useLocation();
 
     const onLogout = useCallback(async () => {

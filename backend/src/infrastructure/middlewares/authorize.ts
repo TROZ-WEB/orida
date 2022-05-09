@@ -7,7 +7,7 @@ const authorize = (roles: Role[]) => (req: Request, res: Response, next: NextFun
     const { user } = req;
 
     if (!user) {
-        throw Error('Not logged in');
+        throw new AuthError(AuthErrorType.NotLoggedIn);
     }
 
     const authorizationGranted = isAuthorized(user, roles);

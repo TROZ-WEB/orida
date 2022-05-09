@@ -1,4 +1,4 @@
-import { Poll as PollType } from '@services/polls';
+import { Poll as PollType, PollConverter } from '@services/polls';
 
 export enum PostType {
     Poll = 'POLL',
@@ -17,7 +17,7 @@ export const PostConverter = {
             id: data.id,
             date: data.date,
             type: data.type,
-            poll: data.poll,
+            poll: PollConverter.fromApi(data.poll),
         };
     },
 };

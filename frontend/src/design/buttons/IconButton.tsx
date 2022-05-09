@@ -1,7 +1,7 @@
 import classnames from '@utils/classnames';
-import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
-import InvisibleButton from './InvisibleButton';
+import Button from './Button';
+import { InvisibleButtonProps } from './InvisibleButton';
 
 const CLASSES = `
 px-1
@@ -17,12 +17,12 @@ justify-center
 group
 `;
 
-type IconButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
+type IconButtonProps = InvisibleButtonProps;
 
-const IconButton = ({ children, className, ...props }: PropsWithChildren<IconButtonProps>) => (
-    <InvisibleButton className={classnames(CLASSES, className)} {...props}>
+const IconButton = ({ children, className, ...props }: IconButtonProps) => (
+    <Button className={classnames(CLASSES, className)} {...props}>
         {children}
-    </InvisibleButton>
+    </Button>
 );
 
 export default IconButton;

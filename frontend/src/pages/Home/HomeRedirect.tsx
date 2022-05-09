@@ -1,11 +1,10 @@
-import { Role } from '@customTypes/role';
-import useSelector from '@hooks/useSelector';
+import useRole from '@hooks/useRole';
 
 import HomeAdmin from './HomeAdmin';
 import HomeCitizenPage from './HomeCitizen';
 
 const HomeRedirect = () => {
-    const isAdmin = useSelector((state) => state.auth.data.role) === Role.Admin;
+    const { isAdmin } = useRole();
 
     return isAdmin ? <HomeAdmin /> : <HomeCitizenPage />;
 };

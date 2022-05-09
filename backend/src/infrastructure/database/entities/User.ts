@@ -1,10 +1,11 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
 import bcrypt from 'bcrypt';
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import Role from '../../../domain/Role';
 import { User as UserDomain } from '../../../domain/User';
 import BaseColumns from './BaseColumns';
+import { PollResponse } from './PollResponse';
 
 @Entity('user')
 class User extends BaseColumns {
@@ -29,6 +30,9 @@ class User extends BaseColumns {
     @Column({ type: 'character varying', default: 'noname' })
         fullname: string;
 
+    @OneToMany(() => PollResponse, (response) => response.user, { cascade: true })
+        pollResponses: PollResponse[];
+
     constructor(
         id: string,
         createdAt: Date,
@@ -39,6 +43,7 @@ class User extends BaseColumns {
         firstname: string,
         lastname: string,
         fullname: string,
+        pollResponses: PollResponse[],
     ) {
         super(id, createdAt, modifiedAt);
         this.email = email;
@@ -48,6 +53,7 @@ class User extends BaseColumns {
         this.isManager = isManager;
         this.lastname = lastname;
         this.passwordHash = '';
+        this.pollResponses = pollResponses;
     }
 
     async updatePassword(password: string): Promise<void> {

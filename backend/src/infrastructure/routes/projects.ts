@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import createProject from '../../useCases/project/createProject';
 import findAllProjets from '../../useCases/project/findAllProjects';
-import findProjectById from '../../useCases/project/findProjectById';
+import findOneById from '../../useCases/project/findOneById';
 import findProjectsBySearch from '../../useCases/project/findProjectsBySearch';
 import asyncRoute from '../../utils/asyncRoute';
 import normalize from '../../utils/normalize';
@@ -19,8 +19,9 @@ router.get(
 );
 
 router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
+    const { user } = req;
     const { id } = req.params;
-    const project = await findProjectById(id)({ projectRepository });
+    const project = await findOneById(id, user)({ projectRepository });
     if (project === null) {
         throw Error(ErrorType.e404);
     }
@@ -34,13 +35,13 @@ router.post(
     asyncRoute(async (req: Request, res: Response) => {
         const project = {
             budget: req.body.budget,
+            categories: req.body.categories,
             description: req.body.description,
+            organizations: req.body.organizations,
             participatoryBudgetYear: req.body.participatoryBudgetYear,
             startDate: req.body.startDate,
-            title: req.body.title,
-            categories: req.body.categories,
-            organizations: req.body.organizations,
             status: req.body.status,
+            title: req.body.title,
         };
         const created = await createProject(project)({ projectRepository, categoryRepository, organizationRepository });
 

@@ -1,12 +1,12 @@
 import { Role } from '@customTypes/role';
-import useSelector from '@hooks/useSelector';
+import useRole from '@hooks/useRole';
 import AppRoutes from '@router/AppRoutes';
 import AuthService from '@services/auth';
 import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const AuthenticatedRoute = () => {
-    const defaultValue = useSelector((state) => state.auth.data.role) === Role.Admin;
+    const { isAdmin: defaultValue } = useRole();
     const [isAdmin, setIsAdmin] = useState<boolean>(defaultValue); // optimistic validation based on state
 
     useEffect(() => {
