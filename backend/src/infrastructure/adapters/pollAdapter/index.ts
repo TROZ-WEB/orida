@@ -1,18 +1,18 @@
-import { POST, PUT } from '../../../utils/http';
-
-interface PollAdapterCreateProps {
-    question: string;
-    responses: string[];
-}
-
-interface PollAdapterCreateResponse {
-    id: string;
-}
+import { GET, POST, PUT } from '../../../utils/http';
+import {
+    PollResults,
+    PollAdapterCreateProps,
+    PollAdapterCreateResponse,
+    TypeformResult,
+    TypeformForm,
+    TypeformSettings,
+} from './types';
 
 export interface PollAdapterType {
     create: (props: PollAdapterCreateProps) => Promise<string>;
     createAnswerWebhook: (pollId: string) => Promise<boolean>;
     getHeaders: () => Record<string, string>;
+    getResults: (formId: string) => Promise<PollResults>;
 }
 
 const PollAdapter: PollAdapterType = {
@@ -22,8 +22,29 @@ const PollAdapter: PollAdapterType = {
         };
     },
 
+    async getResults(formId: string): Promise<PollResults> {
+        const form = await GET<TypeformForm>(
+            `https://api.typeform.com/forms/${formId}`,
+            { headers: this.getHeaders() },
+        );
+        const result = await GET<TypeformResult>(
+            `https://api.typeform.com/forms/${formId}/responses?page_size=1000`,
+            { headers: this.getHeaders() },
+        );
+
+        return {
+            question: form.fields[0].title,
+            choices: form.fields[0].properties.choices,
+            responses: result.items.map((item) => ({
+                id: item.answers[0].choice.id,
+                label: item.answers[0].choice.label,
+            })),
+            total: result.total_items,
+        };
+    },
+
     async create({ question, responses }: PollAdapterCreateProps) {
-        const body = {
+        const body: TypeformSettings = {
             title: question,
             type: 'form',
             hidden: ['userid'],
@@ -63,7 +84,7 @@ const PollAdapter: PollAdapterType = {
         };
 
         const response = await POST<PollAdapterCreateResponse>('https://api.typeform.com/forms', {
-            body,
+            body: body as any,
             headers: this.getHeaders(),
         });
 

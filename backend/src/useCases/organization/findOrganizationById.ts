@@ -6,13 +6,15 @@ interface Context {
     organizationRepository: Repository<OrganizationEntity>;
 }
 
-const findOrganizationById = (id: string) => async ({ organizationRepository }: Context): Promise<Organization | null> => {
-    const entity = await organizationRepository.findOne({
-        where: { id },
-        relations: { projects: true, parentOrganizations: true },
-    });
+const findOrganizationById = (id: string) => (
+    async ({ organizationRepository }: Context): Promise<Organization | null> => {
+        const entity = await organizationRepository.findOne({
+            where: { id },
+            relations: { projects: true, parentOrganizations: true },
+        });
 
-    return entity ? entity.toDomain() : null;
-};
+        return entity ? entity.toDomain() : null;
+    }
+);
 
 export default findOrganizationById;

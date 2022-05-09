@@ -11,6 +11,8 @@ import useRole from '@hooks/useRole';
 import { Project } from '@services/projects';
 import classnames from '@utils/classnames';
 
+import PollResults from './PollResponse';
+
 interface PollSectionProps {
     project: Project;
     posts: Post[];
@@ -47,15 +49,15 @@ const PollSection = ({ posts, project, refresh }: PollSectionProps) => {
                             <div
                                 key={post.id}
                                 className={classnames(
-                                    'pl-2 pr-2',
+                                    'pl-2 pr-2 h-full',
                                     { [styles.firstPoll]: index === 0 },
                                     { [styles.lastPoll]: index === posts.length - 1 }
                                 )}
                             >
                                 {post.poll?.answered ? (
-                                    <span>résultats</span>
+                                    <PollResults key={post.id} poll={post.poll!} />
                                 ) : (
-                                    <Poll key={post.id} pollId={post.poll!.pollId} />
+                                    <Poll key={post.id} poll={post.poll!} />
                                 )}
                             </div>
                         ))}

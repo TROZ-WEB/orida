@@ -18,6 +18,7 @@ import { SIGN_OUT } from './auth/types';
 import categoriesReducer from './categories/reducer';
 import filtersReducer from './filters/reducer';
 import organizationReducer from './organizations/reducer';
+import pollReducer from './polls/reducer';
 import projectReducer from './projects/reducer';
 import statusReducer from './status/reducer';
 
@@ -34,6 +35,7 @@ const appReducer = combineReducers({
     auth: authReducer,
     categories: categoriesReducer,
     filters: filtersReducer,
+    polls: pollReducer,
     projects: projectReducer,
     organizations: organizationReducer,
     status: statusReducer,

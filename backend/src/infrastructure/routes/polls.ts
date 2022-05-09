@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import Role from '../../domain/Role';
 import answerPoll from '../../useCases/polls/answerPoll';
 import createPoll from '../../useCases/polls/createPoll';
+import getResults from '../../useCases/polls/getResults';
 import asyncRoute from '../../utils/asyncRoute';
 import pollAdapter from '../adapters/pollAdapter';
 import { pollRepository, pollResponseRepository, postRepository, projectRepository, userRepository } from '../database';
@@ -30,6 +31,16 @@ router.post(
     }),
 );
 
+router.get(
+    '/:id/results',
+    asyncRoute(async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const results = await getResults(id)({ pollAdapter, pollRepository });
+
+        res.status(200).json(results);
+    }),
+);
+
 router.post(
     '/answer',
     asyncRoute(async (req: Request, res: Response) => {
@@ -38,6 +49,14 @@ router.post(
             formId: formReponse.form_id,
             userId: formReponse.hidden.userid,
         };
+
+        // ignore form that does not carry a userid
+        if (!data.userId) {
+            res.sendStatus(200);
+
+            return;
+        }
+
         await answerPoll(data)({ pollRepository, pollResponseRepository, userRepository });
 
         res.sendStatus(200);
