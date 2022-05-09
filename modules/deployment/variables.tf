@@ -51,6 +51,13 @@ variable "backend_image_tag" {
     type = string
 }
 
+variable "backend_typeform_token" {
+    type = string
+    nullable = false
+    description = "Typeform token associated with a valid account to reach the Typeform API"
+    sensitive = true
+}
+
 variable "frontend_sentry_dsn" {
     type = string
 }

@@ -37,6 +37,8 @@ spec:
                   key: secret
             - name: SENTRY_DSN
               value: {{ .Values.backend.sentry.dsn }}
+            - name: TYPEFORM_TOKEN
+              value: {{ .Values.backend.typeform_token }}
           ports:
             - name: http
               containerPort: 3000

@@ -8,3 +8,9 @@ variable "scw_secret_key" {
     nullable  = false
     sensitive = true
 }
+
+variable "typeform_token" {
+    type      = string
+    nullable  = false
+    sensitive = true
+}

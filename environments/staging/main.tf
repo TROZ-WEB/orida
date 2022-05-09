@@ -70,12 +70,13 @@ module "deployment" {
 
     host        = "orida.thestaging.io"
     certificate = "wildcard-cert"
-    basic_auth  = true
+    basic_auth  = false
 
     rdb_name = "staging"
     registry = "rg.fr-par.scw.cloud/thetribe-staging"
     backend_sentry_dsn = "https://3ac8857ec75d442f8708dffa80f5f875@o132732.ingest.sentry.io/6308941"
     backend_image_tag = "develop"
+    backend_typeform_token = var.typeform_token
     frontend_sentry_dsn = "https://20453e06f46c4c14bfdc09ca863ca183@o132732.ingest.sentry.io/6308943"
     frontend_image_tag = "develop"
     admin_sentry_dsn = "https://587442fa645846698f3d9a92fffa60ee@o132732.ingest.sentry.io/6308946"

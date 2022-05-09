@@ -26,7 +26,7 @@ resource "helm_release" "main" {
 
     set {
         name  = "basic_auth_password"
-        value = var.basic_auth ? random_password.basic_auth.result : null
+        value = var.basic_auth ? random_password.basic_auth.result : "null"
     }
 
     set {
@@ -77,6 +77,11 @@ resource "helm_release" "main" {
     set {
         name  = "backend.database.name"
         value = scaleway_rdb_database.backend.name
+    }
+
+    set {
+        name  = "backend.typeform_token"
+        value = var.backend_typeform_token
     }
 
     set {

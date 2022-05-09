@@ -12,6 +12,7 @@ backend:
         name: ~
     cookie:
         secret: ~
+    typeform_token: ~
 
 frontend:
     image:
