@@ -18,7 +18,6 @@ const Icon = ({ name, color = '#000', size = 20, className }: Props) => (
     <svg
         className={classnames(defaultStyle, className)}
         fill={color}
-        stroke={color}
         style={{ width: `${size}px`, height: `${size}px` }}
     >
         <use xlinkHref={`${Icons}#${name}`} />

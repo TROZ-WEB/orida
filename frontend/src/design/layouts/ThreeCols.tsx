@@ -25,7 +25,6 @@ const classes = {
         h-full
         flex
         flex-col
-        max-w-[50px]
     `,
     right: `
         h-full
@@ -68,7 +67,7 @@ const ThreeColsLayout = ({
                     })}
                     to={item.href}
                 >
-                    <Icon name={item.iconName} />
+                    <Icon color='#fff' name={item.iconName} size={50} />
                 </Link>
             ))}
         </div>
