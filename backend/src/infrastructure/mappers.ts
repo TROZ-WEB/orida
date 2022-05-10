@@ -1,3 +1,4 @@
+/* global NodeJS */
 import { Category } from '../domain/Category';
 import { Organization } from '../domain/Organization';
 import { Poll } from '../domain/Poll';
@@ -74,4 +75,8 @@ export const mapOrganization = (organization: Organization) => ({
     instagram: organization.instagram,
     projects: organization.projects,
     parentOrganizations: organization.parentOrganizations,
+});
+
+export const mapEnvironment = (env: NodeJS.ProcessEnv) => ({
+    googleMapsKey: env.GOOGLE_MAPS_KEY,
 });

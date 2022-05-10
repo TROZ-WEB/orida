@@ -23,6 +23,7 @@ services:
             DATABASE_URL: postgresql://user:password@postgres/backend
             TYPEFORM_ANSWER_WEBHOOK: secret
             TYPEFORM_TOKEN: secret
+            GOOGLE_MAPS_KEY: AIzaSyBV8KWOU6WUtYNZNBosay_xmcusx2Cj8-Y
     frontend:
         build:
             context: frontend/docker

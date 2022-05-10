@@ -5,6 +5,7 @@ import auth from './auth';
 import errorHandler from './middlewares/errorHandler';
 import authRouter from './routes/auth';
 import categoriesRouter from './routes/categories';
+import environmentRouter from './routes/environment';
 import healthRouter from './routes/health';
 import organizationsRouter from './routes/organizations';
 import pollsRouter from './routes/polls';
@@ -17,6 +18,7 @@ const app = express();
 app.use(Sentry.Handlers.requestHandler());
 
 app.use('/health', healthRouter);
+app.use('/environment/', environmentRouter);
 
 // Parse request
 app.use(express.json());
@@ -41,10 +43,10 @@ app.use(auth.session());
 app.use('/auth/', authRouter);
 app.use('/categories/', categoriesRouter);
 app.use('/organizations/', organizationsRouter);
+app.use('/polls/', pollsRouter);
 app.use('/projects/', projectsRouter);
 app.use('/status/', statusRouter);
 app.use('/users/', usersRouter);
-app.use('/polls/', pollsRouter);
 
 app.use(Sentry.Handlers.errorHandler());
 

@@ -55,6 +55,11 @@ resource "helm_release" "main" {
     }
 
     set {
+        name  = "backend.google_maps_key"
+        value = var.backend_google_maps_key
+    }
+
+    set {
         name  = "backend.database.host"
         value = data.scaleway_rdb_instance.main.endpoint_ip
     }

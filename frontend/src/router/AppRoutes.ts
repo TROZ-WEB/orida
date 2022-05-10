@@ -32,4 +32,23 @@ export function goToOrganization(id: string) {
     return `/organization/${id}`;
 }
 
+export enum ExploreTab {
+    list = 'LIST',
+    map = 'MAP',
+}
+
+export function castToExploreTab(value: string): ExploreTab {
+    switch (value) {
+        case 'MAP':
+            return ExploreTab.map;
+        case 'LIST':
+        default:
+            return ExploreTab.list;
+    }
+}
+
+export function goToExplore(tab: ExploreTab = ExploreTab.list) {
+    return `/explore?tab=${tab}`;
+}
+
 export default AppRoutes;

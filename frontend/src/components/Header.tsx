@@ -4,7 +4,7 @@ import Logo from '@design/Logo';
 import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import AppRoutes from '@router/AppRoutes';
+import AppRoutes, { goToExplore } from '@router/AppRoutes';
 import { logout } from '@store/auth/actions';
 import classnames from '@utils/classnames';
 import { useCallback } from 'react';
@@ -65,7 +65,7 @@ const Header = () => {
                     className={classnames(classes.menuItem, {
                         [classes.menuItemActive]: exploreTabIsActive,
                     })}
-                    to={AppRoutes.Explore}
+                    to={goToExplore()}
                 >
                     {t('nav_explore')}
                 </ButtonLink>

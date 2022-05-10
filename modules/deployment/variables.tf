@@ -58,6 +58,10 @@ variable "backend_typeform_token" {
     sensitive = true
 }
 
+variable "backend_google_maps_key" {
+    type = string
+}
+
 variable "frontend_sentry_dsn" {
     type = string
 }

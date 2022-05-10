@@ -39,6 +39,8 @@ spec:
               value: {{ .Values.backend.sentry.dsn }}
             - name: TYPEFORM_TOKEN
               value: {{ .Values.backend.typeform_token }}
+            - name: GOOGLE_MAPS_KEY
+              value: {{ .Values.backend.google_maps_key }}
           ports:
             - name: http
               containerPort: 3000
