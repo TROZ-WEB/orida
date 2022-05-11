@@ -14,3 +14,9 @@ variable "typeform_token" {
     nullable  = false
     sensitive = true
 }
+
+variable "google_maps_key" {
+    type      = string
+    nullable  = false
+    sensitive = true
+}
