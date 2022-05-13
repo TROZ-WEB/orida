@@ -13,6 +13,8 @@ backend:
     cookie:
         secret: ~
     typeform_token: ~
+    typeform_webhook_url: ~
+    typeform_workspace: ~
     google_maps_key: ~
 
 frontend:

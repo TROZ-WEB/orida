@@ -14,7 +14,10 @@ const errorHandler = (err: any, req: Request, res: Response, next: NextFunction)
         case AuthErrorType.Unauthorized:
             return res.status(401).send('Unauthorized');
         default:
-            return res.status(500).send('Internal error');
+            return res.status(500).send({
+                message: 'Internal error',
+                error: err,
+            });
     }
 };
 

@@ -87,8 +87,8 @@ export interface TypeformSettings {
             required: boolean;
         },
     }[],
-    workspace: {
-        href: string;
+    workspace?: {
+        href?: string;
     },
     thankyou_screens: {
         properties: {

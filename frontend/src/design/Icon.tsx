@@ -5,6 +5,7 @@ const defaultStyle = `
   duration-100
   group-hover:duration-100
   group-hover:fill-black
+  w-full
 `;
 
 interface Props {

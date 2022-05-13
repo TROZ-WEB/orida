@@ -78,6 +78,8 @@ module "deployment" {
     backend_sentry_dsn = "https://3ac8857ec75d442f8708dffa80f5f875@o132732.ingest.sentry.io/6308941"
     backend_image_tag = "develop"
     backend_typeform_token = var.typeform_token
+    backend_typeform_webhook_url = "https://orida.thestaging.io/api/polls/answer"
+    backend_typeform_workspace = var.typeform_workspace
     backend_google_maps_key = var.google_maps_key
 
     frontend_sentry_dsn = "https://20453e06f46c4c14bfdc09ca863ca183@o132732.ingest.sentry.io/6308943"

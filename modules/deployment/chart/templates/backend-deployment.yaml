@@ -39,6 +39,10 @@ spec:
               value: {{ .Values.backend.sentry.dsn }}
             - name: TYPEFORM_TOKEN
               value: {{ .Values.backend.typeform_token }}
+            - name: TYPEFORM_ANSWER_WEBHOOK
+              value: {{ .Values.backend.typeform_webhook_url }}
+            - name: TYPEFORM_WORKSPACE
+              value: {{ .Values.backend.typeform_workspace }}
             - name: GOOGLE_MAPS_KEY
               value: {{ .Values.backend.google_maps_key }}
           ports:

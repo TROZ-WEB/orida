@@ -90,6 +90,16 @@ resource "helm_release" "main" {
     }
 
     set {
+        name  = "backend.typeform_webhook_url"
+        value = var.backend_typeform_webhook_url
+    }
+
+    set {
+        name  = "backend.typeform_workspace"
+        value = var.backend_typeform_workspace
+    }
+
+    set {
         name  = "admin.image.digest"
         value = data.docker_registry_image.admin.sha256_digest
     }

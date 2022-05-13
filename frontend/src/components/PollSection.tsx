@@ -39,7 +39,7 @@ const PollSection = ({ posts, project, refresh }: PollSectionProps) => {
                             onClick={() => modalProps.open()}
                             secondary
                         >
-                            <Icon color='#fff' name='plus' />
+                            <Icon className='stroke-white' color='#fff' name='plus' />
                         </IconButton>
                     )}
                 </div>

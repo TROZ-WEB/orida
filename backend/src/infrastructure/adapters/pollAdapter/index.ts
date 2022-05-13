@@ -70,7 +70,7 @@ const PollAdapter: PollAdapterType = {
                 },
             ],
             workspace: {
-                href: 'https://api.typeform.com/workspaces/UG6YAd',
+                href: `https://api.typeform.com/workspaces/${process.env.TYPEFORM_WORKSPACE}`,
             },
             thankyou_screens: [
                 {

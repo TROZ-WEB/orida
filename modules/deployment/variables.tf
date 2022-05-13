@@ -58,6 +58,20 @@ variable "backend_typeform_token" {
     sensitive = true
 }
 
+variable "backend_typeform_webhook_url" {
+    type = string
+    nullable = false
+    description = "Endpoint of the Orida API designed to receive Typeform's events"
+    sensitive = false
+}
+
+variable "backend_typeform_workspace" {
+    type = string
+    nullable = false
+    description = "Id of the typeform workspace that should contain the created polls"
+    sensitive = true
+}
+
 variable "backend_google_maps_key" {
     type = string
 }
