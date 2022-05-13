@@ -38,6 +38,7 @@ const classes = {
         w-[50px]
     `,
     buttonActive: 'bg-secondary-dark',
+    icon: 'h-full w-full',
 };
 
 export interface MenuItem {

@@ -14,7 +14,7 @@ interface Props {
     className?: string;
 }
 
-const Icon = ({ name, color = '#000', size = 20, className }: Props) => (
+const Icon = ({ name, color = '#000', size, className }: Props) => (
     <svg
         className={classnames(defaultStyle, className)}
         fill={color}

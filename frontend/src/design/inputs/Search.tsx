@@ -10,6 +10,7 @@ const SearchInput = ({ className, theme = Theme.Light, ...props }: TextInputProp
             className='absolute pb-2 w-auto'
             color={theme === Theme.Dark ? '#fff' : '#000'}
             name='search'
+            size={35}
         />
         <TextInput className={classnames('pl-9', className)} theme={theme} {...props} />
     </div>

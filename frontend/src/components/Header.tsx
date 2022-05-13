@@ -87,13 +87,12 @@ const Header = () => {
                     })}
                     to={AppRoutes.Search}
                 >
-                    <Icon color='#fff' name='search' />
+                    <Icon color='#fff' name='search' size={20} />
                 </ButtonLink>
-                )
                 {isLoggedIn && (
                     <Button className={classes.menuItem} onClick={onLogout}>
-                        <Icon className='w-auto' color='#fff' name='logout' />
-                        <span className='text-white font-normal'>{t('nav_logout')}</span>
+                        <Icon color='#fff' name='logout' size={20} />
+                        <span className='text-white font-normal mt-2'>{t('nav_logout')}</span>
                     </Button>
                 )}
             </div>
