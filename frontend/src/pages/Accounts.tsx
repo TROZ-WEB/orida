@@ -28,6 +28,7 @@ const AccountsPage = () => {
                 <Thead>
                     <Tr>
                         <Th>Admin</Th>
+                        <Th>Fullname</Th>
                         <Th>Gestionnaire ?</Th>
                     </Tr>
                 </Thead>
@@ -35,6 +36,7 @@ const AccountsPage = () => {
                     {accounts.map((user) => (
                         <Tr key={user.id}>
                             <Td>{user.email}</Td>
+                            <Td>{user.fullname}</Td>
                             <Td>
                                 <ToggleSwitch
                                     checked={[Role.Manager, Role.Admin].includes(user.role)}
