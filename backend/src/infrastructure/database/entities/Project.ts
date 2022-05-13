@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
+import { Point } from 'geojson';
 import { Entity, Column, ManyToMany, JoinTable, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Project as ProjectDomain } from '../../../domain/Project';
 import BaseColumns from './BaseColumns';
@@ -33,12 +34,15 @@ class Project extends BaseColumns {
     @JoinTable()
         categories: Category[];
 
-    @ManyToOne(() => ProjectStatusEntity, (projectStatus) => projectStatus.projects, { eager: true })
+    @ManyToOne(() => ProjectStatusEntity, (projectStatus) => projectStatus.projects, { eager: true, nullable: false })
     @JoinColumn({ name: 'status' })
         status: ProjectStatusEntity;
 
     @OneToMany(() => Post, (post) => post.project, { cascade: true })
         posts: Post[];
+
+    @Column({ type: 'geometry', spatialFeatureType: 'Point', srid: 4326, nullable: true })
+        location?: Point;
 
     constructor(
         id: string,
@@ -53,17 +57,23 @@ class Project extends BaseColumns {
         categories: Category[],
         status: ProjectStatusEntity,
         posts: Post[],
+        longitude?: number,
+        latitude?: number,
     ) {
         super(id, createdAt, modifiedAt);
         this.budget = budget;
-        this.description = description;
-        this.participatoryBudgetYear = participatoryBudgetYear;
-        this.startDate = startDate;
-        this.title = title;
-        this.organizations = organizations;
         this.categories = categories;
-        this.status = status;
+        this.description = description;
+        this.organizations = organizations;
+        this.participatoryBudgetYear = participatoryBudgetYear;
         this.posts = posts;
+        this.startDate = startDate;
+        this.status = status;
+        this.title = title;
+
+        this.location = latitude && longitude
+            ? { type: 'Point', coordinates: [longitude, latitude] }
+            : undefined;
     }
 
     toDomain(): ProjectDomain {
@@ -71,14 +81,17 @@ class Project extends BaseColumns {
             createdAt: this.createdAt,
             id: this.id,
             budget: this.budget,
-            description: this.description,
-            participatoryBudgetYear: this.participatoryBudgetYear,
-            startDate: this.startDate,
-            title: this.title,
-            organizations: this.organizations?.map((o) => o.toDomain()) || [],
             categories: this.categories?.map((c) => c.toDomain()) || [],
-            status: this.status,
+            description: this.description,
+            location: this.location
+                ? { latitude: this.location.coordinates[0], longitude: this.location.coordinates[1] }
+                : undefined,
+            organizations: this.organizations?.map((o) => o.toDomain()) || [],
+            participatoryBudgetYear: this.participatoryBudgetYear,
             posts: this.posts?.map((post) => post.toDomain()) || [],
+            startDate: this.startDate,
+            status: this.status,
+            title: this.title,
         };
     }
 }

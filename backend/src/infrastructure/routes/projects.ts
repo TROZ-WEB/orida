@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import ErrorType from '../../types/Error';
-import createProject from '../../useCases/project/createProject';
+import createProject, { CreateProjectProps } from '../../useCases/project/createProject';
 import findAllProjets from '../../useCases/project/findAllProjects';
 import findOneById from '../../useCases/project/findOneById';
 import findProjectsBySearch from '../../useCases/project/findProjectsBySearch';
@@ -33,12 +33,13 @@ router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
 router.post(
     '/',
     asyncRoute(async (req: Request, res: Response) => {
-        const project = {
+        const project: CreateProjectProps = {
             budget: req.body.budget,
             categories: req.body.categories,
             description: req.body.description,
             organizations: req.body.organizations,
             participatoryBudgetYear: req.body.participatoryBudgetYear,
+            location: req.body.location,
             startDate: req.body.startDate,
             status: req.body.status,
             title: req.body.title,

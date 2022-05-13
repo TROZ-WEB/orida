@@ -27,7 +27,6 @@ const GoogleMaps = ({
     initialZoom = DEFAULT_ZOOM,
     markers,
 }: GoogleMapsProps) => {
-    const [clicks] = useState<google.maps.LatLngLiteral[]>(markers);
     const [zoom] = useState(initialZoom);
     const [center] = useState<google.maps.LatLngLiteral>(initialCenter);
     const env = useEnvironment();
@@ -40,11 +39,15 @@ const GoogleMaps = ({
         return <h1>{status}</h1>;
     };
 
+    if (!env?.googleMapsKey) {
+        return null;
+    }
+
     return (
         <div className='flex h-full'>
             <Wrapper apiKey={env?.googleMapsKey || ''} render={render}>
                 <Map center={center} className='flex-grow h-full' zoom={zoom}>
-                    {clicks.map((latLng) => (
+                    {markers.map((latLng) => (
                         <Marker key={`${latLng.lat}${latLng.lng}`} position={latLng} />
                     ))}
                 </Map>

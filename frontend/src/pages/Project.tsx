@@ -1,4 +1,5 @@
 import PollSection from '@components/PollSection';
+import ProjectLocation from '@components/ProjectLocation';
 import { PostType } from '@customTypes/post';
 import Layout from '@design/layouts/Layout';
 import ThreeColsLayout, { MenuItem } from '@design/layouts/ThreeCols';
@@ -53,7 +54,7 @@ const ProjectPage = () => {
                     {category.label}
                 </Tag>
             ))}
-            <span className='text-sm leading-4 opacity-70'>{project.location}</span>
+            <ProjectLocation location={project.location} />
         </>
     );
 

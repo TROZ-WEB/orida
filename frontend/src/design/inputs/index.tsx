@@ -1,5 +1,6 @@
 export { default as CheckboxInput } from './Checkbox';
 export { default as DateInput } from './Date';
+export { default as LocationInput } from './Location';
 export { default as MultiSelectInput } from './MultiSelect';
 export { default as NumberInput } from './Number';
 export { default as SearchInput } from './Search';

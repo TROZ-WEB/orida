@@ -45,7 +45,7 @@ export const mapProject = (project: Project) => ({
         'https://placekitten.com/177/177?3',
         'https://placekitten.com/177/177?4',
     ], //! MOCK
-    location: '16 Rue Tristan Tzara, 75018 Paris', //! MOCK
+    location: project.location,
     participatoryBudgetYear: project.participatoryBudgetYear,
     startDate: project.startDate,
     status: mapProjectStatus(project.status),

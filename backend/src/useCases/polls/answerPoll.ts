@@ -2,9 +2,7 @@ import { Repository } from 'typeorm';
 import { Poll as PollEntity } from '../../infrastructure/database/entities/Poll';
 import { PollResponse as PollResponseEntity } from '../../infrastructure/database/entities/PollResponse';
 import { User as UserEntity } from '../../infrastructure/database/entities/User';
-import findOneById from '../users/findOneById';
 import UserError, { UserErrorType } from '../users/UserError';
-import findOneByFormId from './findOneByFormId';
 import PollError, { PollErrorType } from './PollError';
 
 interface Arg {
@@ -26,8 +24,12 @@ const answerPoll = ({
     pollResponseRepository,
     userRepository,
 }: Context): Promise<boolean> => {
-    const userData = await findOneById(userId)({ userRepository });
-    const pollData = await findOneByFormId(formId)({ pollRepository });
+    const userData = await userRepository.findOne({ where: { id: userId } });
+    const pollData = await pollRepository.findOne({
+        where: {
+            externalPollId: formId,
+        },
+    });
 
     if (!userData) {
         throw new UserError(UserErrorType.NotFound);

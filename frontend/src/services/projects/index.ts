@@ -2,13 +2,13 @@ import { Category } from '@services/categories';
 import { Status } from '@services/status';
 import { GET, POST } from '@utils/http';
 
-import { CreateProps, fromApi, Project } from './types';
+import { CreateProps, Project, ProjectConverter } from './types';
 
 async function getAll(): Promise<Project[]> {
     try {
         const response = await GET<Project[]>('/api/projects/');
 
-        return response.map(fromApi);
+        return response.map(ProjectConverter.fromApi);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -20,7 +20,7 @@ async function getOne(id: string): Promise<Project | undefined> {
     try {
         const response = await GET<Project>(`/api/projects/${id}`);
 
-        return fromApi(response);
+        return ProjectConverter.fromApi(response);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -30,9 +30,11 @@ async function getOne(id: string): Promise<Project | undefined> {
 
 async function create(props: CreateProps): Promise<Project> {
     try {
-        const response = await POST<Project>('/api/projects/', props);
+        const response = await POST<Project>('/api/projects/', {
+            ...props,
+        });
 
-        return fromApi(response);
+        return ProjectConverter.fromApi(response);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -54,7 +56,7 @@ async function search({ categories, status, search: searchStr }: SearchProps): P
             search: searchStr,
         });
 
-        return response.map(fromApi);
+        return response.map(ProjectConverter.fromApi);
     } catch (error) {
         // TODO::error handling
         console.error(error);

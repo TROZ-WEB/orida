@@ -3,7 +3,6 @@ import { PollAdapterType } from '../../infrastructure/adapters/pollAdapter';
 import { Poll as PollEntity } from '../../infrastructure/database/entities/Poll';
 import { Post as PostEntity } from '../../infrastructure/database/entities/Post';
 import { Project as ProjectEntity } from '../../infrastructure/database/entities/Project';
-import findOneById from '../project/findOneById';
 
 interface Arg {
     project: string; // project id
@@ -32,7 +31,18 @@ const createPoll = ({
     const pollId = await pollAdapter.create({ question, responses });
     await pollAdapter.createAnswerWebhook(pollId);
 
-    const projectObject = await findOneById(project)({ projectRepository });
+    const projectObject = await projectRepository.findOne({
+        where: { id: project },
+        relations: {
+            posts: {
+                poll: {
+                    responses: {
+                        user: true,
+                    },
+                },
+            },
+        },
+    });
     if (!projectObject) {
         throw Error('Project not found');
     }

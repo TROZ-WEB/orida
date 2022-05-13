@@ -16,8 +16,12 @@ export class HttpError extends Error {
     }
 }
 
+interface FactoryOptions {
+    withCredentials: boolean;
+}
+
 const factory =
-    (method: string) =>
+    (method: string, { withCredentials = true }: Partial<FactoryOptions>) =>
     async <T>(url: string, data?: HttpBody): Promise<T> => {
         const options: {
             headers: { [key: string]: string };
@@ -36,11 +40,16 @@ const factory =
             }
         }
 
-        const response = await fetch(url, {
+        const fetchParams: RequestInit = {
             method,
-            credentials: 'include',
             ...options,
-        });
+        };
+
+        if (withCredentials) {
+            fetchParams.credentials = 'include';
+        }
+
+        const response = await fetch(url, fetchParams);
 
         if (!response.ok) {
             const { status } = response;
@@ -57,11 +66,12 @@ const factory =
         return response.json();
     };
 
-export const GET = factory('GET');
-export const PATCH = factory('PATCH');
-export const POST = factory('POST');
-export const PUT = factory('PUT');
-export const DELETE = factory('DELETE');
+export const GET = factory('GET', {});
+export const ParameteredGET = (options: Partial<FactoryOptions>) => factory('GET', options);
+export const PATCH = factory('PATCH', {});
+export const POST = factory('POST', {});
+export const PUT = factory('PUT', {});
+export const DELETE = factory('DELETE', {});
 
 export default {
     GET,
@@ -69,4 +79,5 @@ export default {
     POST,
     PUT,
     DELETE,
+    ParameteredGET,
 };

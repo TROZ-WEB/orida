@@ -1,7 +1,9 @@
 import Option from '@customTypes/Option';
+import Position from '@customTypes/position';
 import { SubmitButton } from '@design/buttons';
 import {
     DateInput,
+    LocationInput,
     MultiSelectInput,
     NumberInput,
     SelectInput,
@@ -22,14 +24,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 type Inputs = {
-    title: string;
     budget: number;
+    categories: string[];
     description: string;
+    location: Position;
+    organizations: string[];
     participatoryBudgetYear: number;
     startDate: Date;
     status: Status;
-    categories: string[];
-    organizations: string[];
+    title: string;
 };
 
 interface CreateProjectFormProps {
@@ -38,7 +41,7 @@ interface CreateProjectFormProps {
 }
 
 const CreateProjectForm = ({ projectStatuses, onCreated }: CreateProjectFormProps) => {
-    const { register, handleSubmit, reset } = useForm<Inputs>();
+    const { control, register, handleSubmit, reset } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
     const [yearsOptions, setYearsOptions] = useState<Option[]>([]);
@@ -115,6 +118,8 @@ const CreateProjectForm = ({ projectStatuses, onCreated }: CreateProjectFormProp
                 register={register}
                 required
             />
+            <Space px={8} />
+            <LocationInput control={control} label='Location' name='location' />
             <Space px={8} />
             <TextAreaInput
                 label={t('project_create_description_label')}

@@ -2,10 +2,12 @@
   "name": "backend",
   "dependencies": {
     "@sentry/node": "^6.19.6",
+    "@types/geojson": "^7946.0.8",
     "@types/node": "^17.0.26",
     "bcrypt": "^5.0.1",
     "express": "^5.0.0-beta.1",
     "express-session": "^1.17.2",
+    "geojson": "^0.5.0",
     "node-fetch": "2.6.7",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
