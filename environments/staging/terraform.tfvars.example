@@ -1,4 +1,5 @@
 scw_access_key = "{your scw_access_key}"
 scw_secret_key = "{your scw_secret_key}"
 typeform_token = "{your typeform_token}"
+typeform_workspace = "{ your typeform_workspace id}"
 google_maps_key = "{secret}"
