@@ -6,6 +6,7 @@ import Layout from '@design/layouts/Layout';
 import Modal from '@design/modals/DefaultModal';
 import Space from '@design/Space';
 import useModal from '@hooks/useModal';
+import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { getAll as getAllProjects } from '@store/projects/actions';
@@ -20,6 +21,7 @@ const HomeCitizenPage = () => {
     const projectStatuses = useSelector((state) => state.status.data);
     const projectModalProps = useModal();
     const { t } = useTranslation();
+    const { isAdmin } = useRole();
 
     useEffect(() => {
         dispatch(getAllProjects());
@@ -38,7 +40,12 @@ const HomeCitizenPage = () => {
             <h1>{`Bienvenue ${auth.fullname} (${auth.email})`}</h1>
             <p>Citizen</p>
             <Space px={40} />
-            <Button onClick={projectModalProps.open}>{t('project_create_modal_button')}</Button>
+
+            {/* if the citizen does not have an admin role he cannot see the button */}
+            {isAdmin && (
+                <Button onClick={projectModalProps.open}>{t('project_create_modal_button')}</Button>
+            )}
+
             <Space px={40} />
             <h1>{t('project_list_title')}</h1>
             <ProjectList projects={projects} theme={Theme.Dark} />
