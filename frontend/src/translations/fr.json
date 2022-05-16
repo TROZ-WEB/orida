@@ -72,6 +72,7 @@
     "project_status_COMPLETE": "Terminé",
     "project_status_DESIGN": "En conception",
     "project_status_RUNNING": "En cours",
+    "poll_results_respondants": "réponses",
     "register_email_label": "Email",
     "register_error_emailAlreadyInUse": "Ce compte existe déjà. Avez-vous essayé de vous connecter ?",
     "register_firstname_label": "Prénom",
