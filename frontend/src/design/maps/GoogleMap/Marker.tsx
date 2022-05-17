@@ -1,8 +1,13 @@
 /* global google */
 import { useEffect, useState } from 'react';
 
-const Marker = (options: google.maps.MarkerOptions) => {
+interface MarkerProps extends google.maps.MarkerOptions {
+    onMarkerClick: (e: any, options: any) => void;
+}
+
+const Marker = (options: MarkerProps) => {
     const [marker, setMarker] = useState<google.maps.Marker>();
+    const { onMarkerClick } = options;
 
     useEffect(() => {
         if (!marker) {
@@ -20,6 +25,7 @@ const Marker = (options: google.maps.MarkerOptions) => {
     useEffect(() => {
         if (marker) {
             marker.setOptions(options);
+            marker.addListener('click', (e: any) => onMarkerClick(e, options));
         }
     }, [marker, options]);
 

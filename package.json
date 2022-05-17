@@ -4,6 +4,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "./script/server",
+    "lint:front:fix": "cd ./frontend && yarn lint:fix",
+    "lint:back:fix": "cd ./backend && yarn lint:fix",
+    "lint:fix": "yarn lint:back:fix && yarn lint:front:fix",
     "deploy:staging": "cd ./environments/staging && terraform apply"
   }
 }
