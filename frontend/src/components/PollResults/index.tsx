@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import PollResultsRow from './PollResponseRow';
 
-const classes = {
+export const classes = {
     card: 'bg-white rounded-lg p-5 pb-3 h-full flex flex-col justify-between',
     question: 'text-lg text-primary-dark leading-6 mb-4 block min-h-[48px]',
     responses: 'text-sm text-neutral-400 mt-2',

@@ -12,12 +12,9 @@ interface CategoryFilterProps {
 }
 
 const classes = {
-    wrapper: `pt-6 pb-5`,
-    title: `mb-3.5`,
-    scroller: `
-        flex
-        overflow-scroll
-    `,
+    wrapper: 'pt-6 pb-5',
+    title: 'mb-3.5',
+    scroller: 'flex overflow-auto',
 };
 
 const CategoryFilter = ({ options, select, unselect, selection, title }: CategoryFilterProps) => (

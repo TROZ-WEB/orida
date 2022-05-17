@@ -17,11 +17,10 @@ import { getAll as getAllProjectStatuses } from '@store/status/actions';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const HomeadminPage = () => {
+const DashboardAdminPage = () => {
     const dispatch = useThunkDispatch();
     const auth = useSelector((state) => state.auth.data);
     const projects = useSelector((state) => state.projects.data);
-    const projectStatuses = useSelector((state) => state.status.data);
     const organizations = useSelector((state) => state.organizations.data);
     const projectModalProps = useModal();
     const organisationModalProps = useModal();
@@ -36,10 +35,7 @@ const HomeadminPage = () => {
     return (
         <Layout>
             <Modal {...projectModalProps}>
-                <ProjectCreateForm
-                    onCreated={() => projectModalProps.close()}
-                    projectStatuses={projectStatuses}
-                />
+                <ProjectCreateForm onCreated={() => projectModalProps.close()} />
             </Modal>
 
             <Modal {...organisationModalProps}>
@@ -68,4 +64,4 @@ const HomeadminPage = () => {
     );
 };
 
-export default HomeadminPage;
+export default DashboardAdminPage;

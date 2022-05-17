@@ -17,7 +17,11 @@ type Inputs = {
     password: string;
 };
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+    redirectTo?: string;
+}
+
+const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
     const { register, handleSubmit } = useForm<Inputs>();
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -27,7 +31,7 @@ const RegisterForm = () => {
         try {
             await dispatch(authRegister(data));
             await dispatch(login(data));
-            navigate(AppRoutes.Home);
+            navigate(redirectTo || AppRoutes.Home);
         } catch (e) {
             notify(NotificationType.Error, t('register_error_emailAlreadyInUse'));
         }

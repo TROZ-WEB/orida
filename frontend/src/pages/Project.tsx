@@ -1,3 +1,4 @@
+import CategoryList from '@components/CategoryList';
 import PollSection from '@components/PollSection';
 import ProjectLocation from '@components/ProjectLocation';
 import { PostType } from '@customTypes/post';
@@ -5,7 +6,6 @@ import Layout from '@design/layouts/Layout';
 import ThreeColsLayout, { MenuItem } from '@design/layouts/ThreeCols';
 import Loader from '@design/Loader';
 import Space from '@design/Space';
-import Tag from '@design/Tag';
 import Paragraph from '@design/texts/Paragraph';
 import { H2 } from '@design/titles';
 import H3 from '@design/titles/H3';
@@ -49,11 +49,7 @@ const ProjectPage = () => {
     const left = (
         <>
             <H2 className='pb-3'>{project.title}</H2>
-            {project.categories.map((category) => (
-                <Tag key={category.id} className='mb-6' color={category.color}>
-                    {category.label}
-                </Tag>
-            ))}
+            <CategoryList categories={project.categories} />
             <ProjectLocation location={project.location} />
         </>
     );

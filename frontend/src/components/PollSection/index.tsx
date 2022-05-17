@@ -10,8 +10,10 @@ import useModal from '@hooks/useModal';
 import useRole from '@hooks/useRole';
 import { Project } from '@services/projects';
 import classnames from '@utils/classnames';
+import { useTranslation } from 'react-i18next';
 
-import PollResults from './PollResponse';
+import PollResults from '../PollResults';
+import PollSectionBlurred from './blurred';
 
 interface PollSectionProps {
     project: Project;
@@ -25,14 +27,21 @@ const styles = {
 };
 
 const PollSection = ({ posts, project, refresh }: PollSectionProps) => {
-    const { isManager } = useRole();
+    const { isAuthenticated, isManager } = useRole();
     const modalProps = useModal();
+    const { t } = useTranslation();
+
+    if (!isAuthenticated) {
+        return <PollSectionBlurred />;
+    }
 
     return (
         <>
             <div className='p-16'>
                 <div className='flex justify-between mb-6'>
-                    <H1>Sondages ({posts.length})</H1>
+                    <H1>
+                        {t('project_polls_title')} ({posts.length})
+                    </H1>
                     {isManager && (
                         <IconButton
                             className='w-[35px] h-[35px]'

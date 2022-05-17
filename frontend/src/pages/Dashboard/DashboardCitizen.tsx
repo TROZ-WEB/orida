@@ -14,11 +14,10 @@ import { getAll as getAllProjectStatuses } from '@store/status/actions';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const HomeCitizenPage = () => {
+const DashboardCitizenPage = () => {
     const dispatch = useThunkDispatch();
     const auth = useSelector((state) => state.auth.data);
     const projects = useSelector((state) => state.projects.data);
-    const projectStatuses = useSelector((state) => state.status.data);
     const projectModalProps = useModal();
     const { t } = useTranslation();
     const { isAdmin } = useRole();
@@ -31,10 +30,7 @@ const HomeCitizenPage = () => {
     return (
         <Layout>
             <Modal {...projectModalProps}>
-                <ProjectCreateForm
-                    onCreated={() => projectModalProps.close()}
-                    projectStatuses={projectStatuses}
-                />
+                <ProjectCreateForm onCreated={() => projectModalProps.close()} />
             </Modal>
 
             <h1>{`Bienvenue ${auth.fullname} (${auth.email})`}</h1>
@@ -53,4 +49,4 @@ const HomeCitizenPage = () => {
     );
 };
 
-export default HomeCitizenPage;
+export default DashboardCitizenPage;

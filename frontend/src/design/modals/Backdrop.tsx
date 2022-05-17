@@ -9,7 +9,7 @@ bg-backdrop
 h-full
 w-full
 inset-0
-z-200
+z-[200]
 fixed
 overflow-auto
 `;

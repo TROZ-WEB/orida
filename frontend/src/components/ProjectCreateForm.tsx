@@ -36,16 +36,15 @@ type Inputs = {
 };
 
 interface CreateProjectFormProps {
-    projectStatuses: Status[];
     onCreated: () => void;
 }
 
-const CreateProjectForm = ({ projectStatuses, onCreated }: CreateProjectFormProps) => {
+const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
     const { control, register, handleSubmit, reset } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
     const [yearsOptions, setYearsOptions] = useState<Option[]>([]);
-
+    const projectStatuses = useSelector((state) => state.status.data);
     const categories = useSelector((state) => state.categories.data);
     const statusesOptions = projectStatuses.map((status) => ({
         value: status.id,

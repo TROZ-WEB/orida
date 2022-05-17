@@ -1,11 +1,12 @@
 import placeholderProjectSrc from '@assets/placeholder-project.jpg';
 import WithTheme, { Theme } from '@customTypes/theme';
-import Tag from '@design/Tag';
 import { goToProject } from '@router/AppRoutes';
 import { Project } from '@services/projects';
 import formatBudget from '@utils/formatBudget';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
+
+import CategoryList from './CategoryList';
 
 interface ProjectCardProps extends WithTheme {
     project: Project;
@@ -26,11 +27,7 @@ const ProjectCard = ({ project, theme = Theme.Light }: ProjectCardProps) => {
         <Link className={classes.wrapper} to={goToProject(project.id)}>
             <img alt='project' className={classes.image} src={placeholderProjectSrc} />
             <div className={classes.content}>
-                {project.categories.map((category) => (
-                    <Tag key={category.id} className={classes.tag} color={category.color}>
-                        {category.label}
-                    </Tag>
-                ))}
+                <CategoryList categories={project.categories} />
                 <span
                     className={classnames(classes.title, {
                         [classes.titleDark]: theme === Theme.Dark,

@@ -1,20 +1,25 @@
 import { Button, ButtonLink } from '@design/buttons';
 import Icon from '@design/Icon';
 import Logo from '@design/Logo';
+import Modal from '@design/modals/DefaultModal';
+import useModal from '@hooks/useModal';
 import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import AppRoutes, { goToExplore } from '@router/AppRoutes';
+import AppRoutes, { goToExplore, goToLogin, LoginTab } from '@router/AppRoutes';
 import { logout } from '@store/auth/actions';
 import classnames from '@utils/classnames';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import ProjectCreateForm from './ProjectCreateForm';
+
 const classes = {
     menuItem: `
         bg-transparent
         flex
+        flex-col
         font-semibold
         h-full
         items-center
@@ -43,8 +48,9 @@ const Header = () => {
     const dispatch = useThunkDispatch();
     const navigate = useNavigate();
     const isLoggedIn = !!useSelector((state) => state.auth.data.id);
-    const { isAdmin } = useRole();
+    const { isAdmin, isAuthenticated, isManager } = useRole();
     const { pathname } = useLocation();
+    const projectModalProps = useModal();
 
     const onLogout = useCallback(async () => {
         await dispatch(logout());
@@ -81,13 +87,20 @@ const Header = () => {
                 )}
             </div>
             <div className='flex flex-row'>
+                {isManager && (
+                    <Button className={classes.menuItem} onClick={() => projectModalProps.open()}>
+                        <Icon className='stroke-white' color='#fff' name='plus' size={20} />
+                        <span className='text-white font-normal mt-2'>Créer un projet</span>
+                    </Button>
+                )}
                 <ButtonLink
-                    className={classnames(classes.menuItem, classes.menuItemIconOnly, {
+                    className={classnames(classes.menuItem, {
                         [classes.menuItemActive]: searchTabIsActive,
                     })}
                     to={AppRoutes.Search}
                 >
                     <Icon color='#fff' name='search' size={20} />
+                    <span className='text-white font-normal mt-2'>Rechercher</span>
                 </ButtonLink>
                 {isLoggedIn && (
                     <Button className={classes.menuItem} onClick={onLogout}>
@@ -95,7 +108,18 @@ const Header = () => {
                         <span className='text-white font-normal mt-2'>{t('nav_logout')}</span>
                     </Button>
                 )}
+                {!isAuthenticated && (
+                    <ButtonLink
+                        className={classes.menuItem}
+                        to={goToLogin(LoginTab.Register, pathname)}
+                    >
+                        {t('project_polls_blurred_button')}
+                    </ButtonLink>
+                )}
             </div>
+            <Modal {...projectModalProps}>
+                <ProjectCreateForm onCreated={() => projectModalProps.close()} />
+            </Modal>
         </div>
     );
 };

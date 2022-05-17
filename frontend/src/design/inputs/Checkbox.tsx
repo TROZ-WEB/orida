@@ -39,6 +39,7 @@ const classes = {
     `,
     icon: `
         group-hover:fill-white
+        h-full
     `,
 };
 
