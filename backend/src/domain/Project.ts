@@ -43,11 +43,11 @@ class Project {
         posts: Post[],
         location?: Position,
     ) {
-        this.createdAt = new Date();
-        this.id = uuidv4();
         this.budget = budget;
         this.categories = categories;
+        this.createdAt = new Date();
         this.description = description;
+        this.id = uuidv4();
         this.location = location;
         this.organizations = organizations;
         this.participatoryBudgetYear = participatoryBudgetYear;

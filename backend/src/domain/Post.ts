@@ -2,8 +2,9 @@
 /* eslint-disable import/prefer-default-export */
 import { Poll } from './Poll';
 import { Project } from './Project';
+import { Thread } from './Thread';
 
-type PostType = 'POLL' | 'EVENT';
+export type PostType = 'POLL' | 'THREAD' | 'NONE';
 
 class Post {
     id: string;
@@ -14,6 +15,8 @@ class Post {
 
     poll?: Poll;
 
+    thread?: Thread;
+
     date: Date;
 
     constructor(
@@ -22,12 +25,14 @@ class Post {
         date: Date,
         project?: Project,
         poll?: Poll,
+        thread?: Thread,
     ) {
-        this.id = id;
-        this.project = project;
         this.date = date;
-        this.type = type;
+        this.id = id;
         this.poll = poll;
+        this.project = project;
+        this.thread = thread;
+        this.type = type;
     }
 }
 

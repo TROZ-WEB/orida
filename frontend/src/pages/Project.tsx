@@ -1,14 +1,14 @@
 import CategoryList from '@components/CategoryList';
 import PollSection from '@components/PollSection';
 import ProjectLocation from '@components/ProjectLocation';
+import ThreadSection from '@components/ThreadSection';
 import { PostType } from '@customTypes/post';
 import Layout from '@design/layouts/Layout';
 import ThreeColsLayout, { MenuItem } from '@design/layouts/ThreeCols';
 import Loader from '@design/Loader';
 import Space from '@design/Space';
 import Paragraph from '@design/texts/Paragraph';
-import { H2 } from '@design/titles';
-import H3 from '@design/titles/H3';
+import { H2, H3 } from '@design/titles';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { castToProjectTab, goToProject, ProjectTab } from '@router/AppRoutes';
@@ -45,6 +45,9 @@ const ProjectPage = () => {
     const postsWithPolls = project.posts
         .filter((post) => post.type === PostType.Poll)
         .filter((post) => post.poll !== undefined);
+    const postsWithThreads = project.posts
+        .filter((post) => post.type === PostType.Thread)
+        .filter((post) => post.thread !== undefined);
 
     const left = (
         <>
@@ -81,6 +84,7 @@ const ProjectPage = () => {
                 </div>
             </div>
             <PollSection posts={postsWithPolls} project={project} refresh={refresh} />
+            <ThreadSection posts={postsWithThreads} project={project} refresh={refresh} />
             <Space px={100} />
         </ThreeColsLayout>
     );

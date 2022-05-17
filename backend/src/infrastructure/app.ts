@@ -11,6 +11,7 @@ import organizationsRouter from './routes/organizations';
 import pollsRouter from './routes/polls';
 import projectsRouter from './routes/projects';
 import statusRouter from './routes/status';
+import threadsRouter from './routes/threads';
 import usersRouter from './routes/users';
 
 const app = express();
@@ -46,6 +47,7 @@ app.use('/organizations/', organizationsRouter);
 app.use('/polls/', pollsRouter);
 app.use('/projects/', projectsRouter);
 app.use('/status/', statusRouter);
+app.use('/threads/', threadsRouter);
 app.use('/users/', usersRouter);
 
 app.use(Sentry.Handlers.errorHandler());

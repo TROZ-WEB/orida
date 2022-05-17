@@ -5,6 +5,7 @@ import { Poll } from '../domain/Poll';
 import { Post } from '../domain/Post';
 import { Project } from '../domain/Project';
 import { ProjectStatus } from '../domain/ProjectStatus';
+import { Thread } from '../domain/Thread';
 import { User } from '../domain/User';
 
 export const mapUser = (user: User) => ({
@@ -27,10 +28,17 @@ export const mapPoll = (poll: Poll) => ({
     answered: poll.responses.length !== 0,
 });
 
+export const mapThread = (thread: Thread) => ({
+    id: thread.id,
+    subject: thread.subject,
+    createdAt: thread.createdAt,
+});
+
 export const mapPost = (post: Post) => ({
     id: post.id,
     type: post.type,
     poll: post.poll ? mapPoll(post.poll) : undefined,
+    thread: post.thread ? mapThread(post.thread) : undefined,
     date: post.date,
 });
 

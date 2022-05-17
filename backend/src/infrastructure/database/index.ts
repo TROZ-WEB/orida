@@ -8,6 +8,7 @@ import { PollResponse as PollResponseEntity } from './entities/PollResponse';
 import { Post as PostEntity } from './entities/Post';
 import { Project as ProjectEntity } from './entities/Project';
 import { ProjectStatusEntity } from './entities/ProjectStatus';
+import { Thread as ThreadEntity } from './entities/Thread';
 import { User as UserEntity } from './entities/User';
 
 const AppDataSource = new DataSource({
@@ -21,12 +22,13 @@ const AppDataSource = new DataSource({
 });
 
 export const categoryRepository = AppDataSource.getRepository<CategoryEntity>(CategoryEntity);
+export const organizationRepository = AppDataSource.getRepository<OrganizationEntity>(OrganizationEntity);
 export const pollRepository = AppDataSource.getRepository<PollEntity>(PollEntity);
 export const pollResponseRepository = AppDataSource.getRepository<PollResponseEntity>(PollResponseEntity);
 export const postRepository = AppDataSource.getRepository<PostEntity>(PostEntity);
 export const projectRepository = AppDataSource.getRepository<ProjectEntity>(ProjectEntity);
 export const projectStatusRepository = AppDataSource.getRepository<ProjectStatusEntity>(ProjectStatusEntity);
+export const threadRepository = AppDataSource.getRepository<ThreadEntity>(ThreadEntity);
 export const userRepository = AppDataSource.getRepository<UserEntity>(UserEntity);
-export const organizationRepository = AppDataSource.getRepository<OrganizationEntity>(OrganizationEntity);
 
 export default AppDataSource;

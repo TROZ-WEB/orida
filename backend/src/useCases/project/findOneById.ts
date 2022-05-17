@@ -17,6 +17,7 @@ const findOneById = (id: string, user?: User) => async ({ projectRepository }: C
                         user: true,
                     },
                 },
+                thread: true,
             },
         },
     });
