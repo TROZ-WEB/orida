@@ -1,5 +1,4 @@
 import classnames from '@utils/classnames';
-import { clamp } from 'ramda';
 
 interface BarChartClasses {
     bar?: string;
@@ -20,15 +19,13 @@ interface BarChartProps {
 }
 
 const BarChart = ({ classes: styleClasses, className, value }: BarChartProps) => {
-    const sanitizedValue = clamp(0, 100, value);
-
     return (
         <div className={className}>
             <div className={classnames(classes.wrapper, styleClasses)}>
                 <div className={classnames(classes.track, styleClasses)} />
                 <div
                     className={classnames(classes.bar, styleClasses)}
-                    style={{ width: `${sanitizedValue}%` }}
+                    style={{ width: `${value}%` }}
                 />
             </div>
         </div>

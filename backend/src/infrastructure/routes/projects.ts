@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import ErrorType from '../../types/Error';
+import addAnswers from '../../useCases/polls/addAnswers';
 import createProject, { CreateProjectProps } from '../../useCases/project/createProject';
 import findAllProjets from '../../useCases/project/findAllProjects';
 import findOneById from '../../useCases/project/findOneById';
@@ -21,9 +22,14 @@ router.get(
 router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
     const { user } = req;
     const { id } = req.params;
-    const project = await findOneById(id, user)({ projectRepository });
+    const project = await findOneById(id)({ projectRepository });
+
     if (project === null) {
         throw Error(ErrorType.e404);
+    }
+
+    if (user) {
+        project.posts = addAnswers({ posts: project.posts, user });
     }
 
     const result = mapProject(project);

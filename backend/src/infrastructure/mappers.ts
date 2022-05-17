@@ -25,7 +25,7 @@ export const mapPoll = (poll: Poll) => ({
     id: poll.id,
     post: poll.post,
     externalPollId: poll.externalPollId,
-    answered: poll.responses.length !== 0,
+    answered: poll.answered || false,
 });
 
 export const mapThread = (thread: Thread) => ({

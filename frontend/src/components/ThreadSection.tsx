@@ -34,7 +34,7 @@ const ThreadSection = ({ posts, project, refresh }: ThreadSectionProps) => {
             <div className='p-16'>
                 <div className='flex justify-between mb-6'>
                     <H1>
-                        ${t('project_thread_section_title')} ({posts.length})
+                        {t('project_thread_section_title')} ({posts.length})
                     </H1>
                     {isManager && (
                         <IconButton
