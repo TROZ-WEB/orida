@@ -1,4 +1,5 @@
 import Loader from '@design/Loader';
+import SmallGrey from '@design/texts/SmallGrey';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { Poll } from '@services/polls';
@@ -9,9 +10,8 @@ import { useTranslation } from 'react-i18next';
 import PollResultsRow from './PollResponseRow';
 
 export const classes = {
-    card: 'bg-white rounded-lg p-5 pb-3 h-full flex flex-col justify-between',
+    card: 'bg-white rounded-lg p-5 pb-3 h-full flex flex-col justify-between shadow-card',
     question: 'text-lg text-primary-dark leading-6 mb-4 block min-h-[48px]',
-    responses: 'text-sm text-neutral-400 mt-2',
 };
 
 interface PollResultsProps {
@@ -44,9 +44,9 @@ const PollResults = ({ poll }: PollResultsProps) => {
                             />
                         ))}
                     </div>
-                    <span className={classes.responses}>
+                    <SmallGrey className='mt-2'>
                         {data.responses.length} {t('poll_results_respondants')}
-                    </span>
+                    </SmallGrey>
                 </>
             ) : (
                 <Loader />

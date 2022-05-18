@@ -1,18 +1,19 @@
 import CategoryList from '@components/CategoryList';
 import PollSection from '@components/PollSection';
 import ProjectLocation from '@components/ProjectLocation';
-import ThreadSection from '@components/ThreadSection';
+import ThreadSection from '@components/Threads/ThreadSection';
 import { PostType } from '@customTypes/post';
 import Layout from '@design/layouts/Layout';
 import ThreeColsLayout, { MenuItem } from '@design/layouts/ThreeCols';
 import Loader from '@design/Loader';
 import Space from '@design/Space';
-import Paragraph from '@design/texts/Paragraph';
+import { Paragraph } from '@design/texts';
 import { H2, H3 } from '@design/titles';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { castToProjectTab, goToProject, ProjectTab } from '@router/AppRoutes';
 import { getOne } from '@store/projects/actions';
+import sortBy from '@utils/sortBy';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -42,17 +43,20 @@ const ProjectPage = () => {
         );
     }
 
-    const postsWithPolls = project.posts
+    const polls = project.posts
         .filter((post) => post.type === PostType.Poll)
-        .filter((post) => post.poll !== undefined);
-    const postsWithThreads = project.posts
+        .filter((post) => post.poll !== undefined)
+        .map((post) => post.poll!);
+    const threads = project.posts
         .filter((post) => post.type === PostType.Thread)
-        .filter((post) => post.thread !== undefined);
+        .filter((post) => post.thread !== undefined)
+        .map((post) => post.thread!);
 
     const left = (
         <>
             <H2 className='pb-3'>{project.title}</H2>
             <CategoryList categories={project.categories} />
+            <Space px={28} />
             <ProjectLocation location={project.location} />
         </>
     );
@@ -83,8 +87,12 @@ const ProjectPage = () => {
                     ))}
                 </div>
             </div>
-            <PollSection posts={postsWithPolls} project={project} refresh={refresh} />
-            <ThreadSection posts={postsWithThreads} project={project} refresh={refresh} />
+            <PollSection polls={polls} project={project} refresh={refresh} />
+            <ThreadSection
+                project={project}
+                refresh={refresh}
+                threads={threads.sort(sortBy('createdAt', 'DESC'))}
+            />
             <Space px={100} />
         </ThreeColsLayout>
     );

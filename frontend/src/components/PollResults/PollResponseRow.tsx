@@ -1,4 +1,5 @@
 import { BarChart } from '@design/charts';
+import { SmallGreyText } from '@design/texts';
 import classnames from '@utils/classnames';
 import { clamp } from 'ramda';
 
@@ -15,7 +16,7 @@ const PollResultsRow = ({ className, label, value }: PollResultsRowProps) => {
         <div className={classnames('flex flex-col', className)}>
             <div className='flex justify-between mb-1'>
                 <span className='text-sm'>{label}</span>
-                <span className='text-sm text-neutral-400'>{sanitizedValue} %</span>
+                <SmallGreyText>{sanitizedValue} %</SmallGreyText>
             </div>
             <BarChart value={sanitizedValue} />
         </div>

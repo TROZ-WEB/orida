@@ -1,6 +1,5 @@
 import Poll from '@components/Poll';
 import PollCreateForm from '@components/PollCreateForm';
-import Post from '@customTypes/post';
 import { IconButton } from '@design/buttons';
 import Carousel from '@design/Carousel';
 import Icon from '@design/Icon';
@@ -8,6 +7,7 @@ import Modal from '@design/modals/DefaultModal';
 import { H1 } from '@design/titles';
 import useModal from '@hooks/useModal';
 import useRole from '@hooks/useRole';
+import { Poll as PollType } from '@services/polls';
 import { Project } from '@services/projects';
 import classnames from '@utils/classnames';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +17,7 @@ import PollSectionBlurred from './blurred';
 
 interface PollSectionProps {
     project: Project;
-    posts: Post[];
+    polls: PollType[];
     refresh: () => void;
 }
 
@@ -26,7 +26,7 @@ const styles = {
     lastPoll: 'pr-0',
 };
 
-const PollSection = ({ posts, project, refresh }: PollSectionProps) => {
+const PollSection = ({ polls, project, refresh }: PollSectionProps) => {
     const { isAuthenticated, isManager } = useRole();
     const modalProps = useModal();
     const { t } = useTranslation();
@@ -40,7 +40,7 @@ const PollSection = ({ posts, project, refresh }: PollSectionProps) => {
             <div className='p-16'>
                 <div className='flex justify-between mb-6'>
                     <H1>
-                        {t('project_polls_title')} ({posts.length})
+                        {t('project_polls_title')} ({polls.length})
                     </H1>
                     {isManager && (
                         <IconButton
@@ -54,19 +54,19 @@ const PollSection = ({ posts, project, refresh }: PollSectionProps) => {
                 </div>
                 <div className='relative w-full'>
                     <Carousel>
-                        {posts.map((post, index) => (
+                        {polls.map((poll, index) => (
                             <div
-                                key={post.id}
+                                key={poll.id}
                                 className={classnames(
                                     'pl-2 pr-2 h-full',
                                     { [styles.firstPoll]: index === 0 },
-                                    { [styles.lastPoll]: index === posts.length - 1 }
+                                    { [styles.lastPoll]: index === polls.length - 1 }
                                 )}
                             >
-                                {post.poll?.answered ? (
-                                    <PollResults key={post.id} poll={post.poll!} />
+                                {poll.answered ? (
+                                    <PollResults key={poll.id} poll={poll} />
                                 ) : (
-                                    <Poll key={post.id} poll={post.poll!} />
+                                    <Poll key={poll.id} poll={poll} />
                                 )}
                             </div>
                         ))}

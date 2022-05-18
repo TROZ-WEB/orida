@@ -1,4 +1,3 @@
-import Post from '@customTypes/post';
 import { IconButton } from '@design/buttons';
 import Carousel from '@design/Carousel';
 import Icon from '@design/Icon';
@@ -7,24 +6,25 @@ import { H1 } from '@design/titles';
 import useModal from '@hooks/useModal';
 import useRole from '@hooks/useRole';
 import { Project } from '@services/projects';
+import { Thread } from '@services/threads';
 import classnames from '@utils/classnames';
 import { useTranslation } from 'react-i18next';
 
+import ThreadCard from './ThreadCard';
 import ThreadCreateForm from './ThreadCreateForm';
 
 interface ThreadSectionProps {
     project: Project;
-    posts: Post[];
+    threads: Thread[];
     refresh: () => void;
 }
 
 const styles = {
-    card: 'bg-white rounded-lg p-5 pb-3 h-full flex flex-col justify-between',
     firstPoll: 'pl-0',
     lastPoll: 'pr-0',
 };
 
-const ThreadSection = ({ posts, project, refresh }: ThreadSectionProps) => {
+const ThreadSection = ({ threads, project, refresh }: ThreadSectionProps) => {
     const { isManager } = useRole();
     const modalProps = useModal();
     const { t } = useTranslation();
@@ -34,7 +34,7 @@ const ThreadSection = ({ posts, project, refresh }: ThreadSectionProps) => {
             <div className='p-16'>
                 <div className='flex justify-between mb-6'>
                     <H1>
-                        {t('project_thread_section_title')} ({posts.length})
+                        {t('project_thread_section_title')} ({threads.length})
                     </H1>
                     {isManager && (
                         <IconButton
@@ -48,18 +48,16 @@ const ThreadSection = ({ posts, project, refresh }: ThreadSectionProps) => {
                 </div>
                 <div className='relative w-full'>
                     <Carousel>
-                        {posts.map((post, index) => (
+                        {threads.map((thread, index) => (
                             <div
-                                key={post.id}
+                                key={thread.id}
                                 className={classnames(
                                     'pl-2 pr-2 h-full',
                                     { [styles.firstPoll]: index === 0 },
-                                    { [styles.lastPoll]: index === posts.length - 1 }
+                                    { [styles.lastPoll]: index === threads.length - 1 }
                                 )}
                             >
-                                <div className={styles.card}>
-                                    <span>{post.thread?.id}</span>
-                                </div>
+                                <ThreadCard thread={thread!} />
                             </div>
                         ))}
                     </Carousel>

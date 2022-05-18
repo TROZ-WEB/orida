@@ -8,6 +8,7 @@
     "parser": "@typescript-eslint/parser",
     "extends": [
         "@thetribe/eslint-config-react-typescript",
+        "plugin:import/recommended",
         "plugin:prettier/recommended"
     ],
     "plugins": ["simple-import-sort"],

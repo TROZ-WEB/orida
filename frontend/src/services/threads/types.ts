@@ -9,7 +9,7 @@ export const ThreadConverter = {
         return {
             id: data.id,
             subject: data.subject,
-            createdAt: data.createdAt,
+            createdAt: new Date(data.createdAt),
         };
     },
 };

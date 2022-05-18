@@ -29,6 +29,9 @@ module.exports = {
             borderRadius: {
                 "50%": "50%",
             },
+            boxShadow: {
+                'card': '0px 0px 10px rgba(0, 0, 0, 0.05)',
+            },
         },
     },
     plugins: [],
