@@ -12,8 +12,9 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthState =
                     ...state.data,
                     id: action.id,
                     email: action.email,
-                    role: action.role,
+                    isAdmin: action.isAdmin,
                     fullname: action.fullname,
+                    organizationMemberships: action.organizationMemberships,
                 },
             };
         }

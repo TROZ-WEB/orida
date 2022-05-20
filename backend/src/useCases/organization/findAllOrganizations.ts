@@ -8,7 +8,7 @@ interface Context {
 }
 
 const findAllOrganizations = () => async ({ organizationRepository }: Context): Promise<Organization[]> => {
-    const entities = await organizationRepository.find({ relations: { parentOrganizations: true } });
+    const entities = await organizationRepository.find({ relations: { parentOrganizations: true, members: true } });
 
     return entities.map((entity) => entity.toDomain());
 };

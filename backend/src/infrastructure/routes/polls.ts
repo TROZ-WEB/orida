@@ -1,12 +1,11 @@
 import { Request, Response, Router } from 'express';
-import Role from '../../domain/Role';
 import answerPoll from '../../useCases/polls/answerPoll';
 import createPoll from '../../useCases/polls/createPoll';
 import getResults from '../../useCases/polls/getResults';
 import asyncRoute from '../../utils/asyncRoute';
 import pollAdapter from '../adapters/pollAdapter';
 import { pollRepository, pollResponseRepository, postRepository, projectRepository, userRepository } from '../database';
-import authorize from '../middlewares/authorize';
+import authorizeAdmin from '../middlewares/authorizeAdmin';
 
 const router = Router();
 
@@ -17,7 +16,7 @@ interface CreateBodyProps {
 }
 router.post(
     '/',
-    authorize([Role.Manager]),
+    authorizeAdmin(), // TODO::AUTHORIZE MANAGER ONLY
     asyncRoute(async (req: Request, res: Response) => {
         const { project, question, responses } = req.body as CreateBodyProps;
         await createPoll({ project, question, responses })({

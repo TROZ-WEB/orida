@@ -1,4 +1,6 @@
+import AddMemberToOrganizationForm from '@components/AddMemberToOrganizationForm';
 import OrganizationForm from '@components/OrganizationForm';
+import MemberTile from '@components/organizations/MemberTile';
 import FormActions from '@customTypes/FormActions';
 import IconButton from '@design/buttons/IconButton';
 import Icon from '@design/Icon';
@@ -9,6 +11,7 @@ import Space from '@design/Space';
 import Tag from '@design/Tag';
 import { H1, H3 } from '@design/titles';
 import useModal from '@hooks/useModal';
+import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { getOne } from '@store/organizations/actions';
@@ -18,37 +21,37 @@ import { useParams } from 'react-router-dom';
 
 const OrganizationPage = () => {
     const organisationModalProps = useModal();
+    const addMemberToOrgaModalProps = useModal();
     const dispatch = useThunkDispatch();
     const { t } = useTranslation();
     const organizationId = useParams().organizationId ?? '';
     const organization = useSelector((state) =>
         state.organizations.data.find((p) => p.id === organizationId)
     );
+    const { isOrganizationAdmin } = useRole({ organization });
+
+    const refresh = () => {
+        dispatch(getOne(organizationId));
+    };
 
     useEffect(() => {
-        dispatch(getOne(organizationId));
+        refresh();
     }, [organizationId]);
 
     return (
         <Layout className='flex-row'>
             {organization ? (
                 <>
-                    <Modal {...organisationModalProps}>
-                        <OrganizationForm
-                            action={FormActions.Update}
-                            onCreated={() => organisationModalProps.close()}
-                            organization={organization}
-                        />
-                    </Modal>
-
-                    <main className='px-5 py-14'>
+                    <main className='px-5 py-14 w-full'>
                         <div className='flex items-center pb-3'>
-                            <IconButton
-                                className='bg-transparent hover:bg-background-hover mr-2'
-                                onClick={organisationModalProps.open}
-                            >
-                                <Icon name='edit' size={15} />
-                            </IconButton>
+                            {isOrganizationAdmin && (
+                                <IconButton
+                                    className='bg-transparent hover:bg-background-hover mr-2'
+                                    onClick={organisationModalProps.open}
+                                >
+                                    <Icon color='#fea733' name='edit' size={15} />
+                                </IconButton>
+                            )}
                             <H1>{organization.name}</H1>
                         </div>
                         {organization.parentOrganizations.map((po) => (
@@ -143,13 +146,38 @@ const OrganizationPage = () => {
                             </a>
                         )}
 
-                        <H3>{t('organization_details_members')}</H3>
+                        <H3 className='flex'>
+                            {isOrganizationAdmin && (
+                                <IconButton onClick={() => addMemberToOrgaModalProps.open()}>
+                                    <Icon className='stroke-secondary mr-2' name='plus' />
+                                </IconButton>
+                            )}
+                            {t('organization_details_members')}
+                        </H3>
                         <ul>
                             {organization.members.map((member) => (
-                                <li className={member.id}>- {member.fullname}</li>
+                                <li key={member.user.id}>
+                                    <MemberTile
+                                        isAdmin={isOrganizationAdmin}
+                                        onRemoveMember={() => refresh()}
+                                        organization={member.organization}
+                                        role={member.role}
+                                        user={member.user}
+                                    />
+                                </li>
                             ))}
                         </ul>
                     </main>
+                    <Modal {...organisationModalProps}>
+                        <OrganizationForm
+                            action={FormActions.Update}
+                            onCreated={() => organisationModalProps.close()}
+                            organization={organization}
+                        />
+                    </Modal>
+                    <Modal {...addMemberToOrgaModalProps}>
+                        <AddMemberToOrganizationForm organization={organization} />
+                    </Modal>
                 </>
             ) : (
                 <Loader />

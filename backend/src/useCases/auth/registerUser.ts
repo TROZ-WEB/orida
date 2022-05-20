@@ -29,7 +29,6 @@ const registerUser = ({
     const user = userRepository.create({
         email,
         isAdmin: false,
-        isManager: false,
         firstname,
         lastname,
         fullname: `${firstname} ${lastname}`,

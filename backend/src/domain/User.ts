@@ -1,16 +1,18 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import Role from './Role';
+import { OrganizationMembership } from './OrganizationMembership';
 
 interface UserConstructorProps {
     id: string;
     email: string;
-    role?: Role;
     passwordHash: string | null;
-    lastname: string,
-    firstname: string,
-    fullname: string,
+    lastname: string;
+    firstname: string;
+    fullname: string;
+    isAdmin: boolean;
+    organizationMemberships: OrganizationMembership[];
 }
 
 class User {
@@ -20,7 +22,7 @@ class User {
 
     passwordHash: string | null = null;
 
-    role?: Role;
+    isAdmin: boolean;
 
     lastname: string;
 
@@ -28,22 +30,26 @@ class User {
 
     fullname: string;
 
+    organizationMemberships: OrganizationMembership[];
+
     constructor({
         id,
         email,
-        role,
         passwordHash,
         lastname,
         fullname,
         firstname,
+        isAdmin,
+        organizationMemberships,
     }: UserConstructorProps) {
         this.id = id ?? uuidv4();
         this.email = email;
-        this.role = role;
         this.passwordHash = passwordHash;
         this.firstname = firstname;
         this.lastname = lastname;
         this.fullname = fullname;
+        this.isAdmin = isAdmin;
+        this.organizationMemberships = organizationMemberships;
     }
 
     async updatePassword(password: string): Promise<void> {

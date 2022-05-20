@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { v4 as uuidv4 } from 'uuid';
+import { OrganizationMembership } from './OrganizationMembership';
 import { Project } from './Project';
-import { User } from './User';
 
 enum OrganizationType {
     collectivity = 'COLLECTIVITY',
@@ -36,7 +36,7 @@ class Organization {
 
     parentOrganizations: Organization[];
 
-    members: User[];
+    members: OrganizationMembership[];
 
     // TO ADD : lieu, image
 
@@ -53,7 +53,7 @@ class Organization {
         instagram: string | null,
         projects: Project[],
         parentOrganizations: Organization[],
-        members: User[],
+        members: OrganizationMembership[],
     ) {
         this.id = uuidv4();
         this.name = name;

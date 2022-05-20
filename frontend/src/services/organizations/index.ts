@@ -1,12 +1,20 @@
-import { GET, POST } from '@utils/http';
+/* eslint-disable import/no-cycle */
+import { GET, PATCH, POST } from '@utils/http';
 
-import { AddMemberProps, CreateProps, fromApi, Organization, UpdateProps } from './types';
+import {
+    AddMemberProps,
+    CreateProps,
+    Organization,
+    OrganizationConverter,
+    RemoveMemberProps,
+    UpdateProps,
+} from './types';
 
 async function getAll(): Promise<Organization[]> {
     try {
         const response = await GET<Organization[]>('/api/organizations/');
 
-        return response.map(fromApi);
+        return response.map(OrganizationConverter.fromApi);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -18,7 +26,7 @@ async function getOne(id: string): Promise<Organization | undefined> {
     try {
         const response = await GET<Organization>(`/api/organizations/${id}`);
 
-        return fromApi(response);
+        return OrganizationConverter.fromApi(response);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -30,7 +38,7 @@ async function create(props: CreateProps): Promise<Organization> {
     try {
         const response = await POST<Organization>('/api/organizations/', props);
 
-        return fromApi(response);
+        return OrganizationConverter.fromApi(response);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -40,9 +48,12 @@ async function create(props: CreateProps): Promise<Organization> {
 
 async function update(props: UpdateProps): Promise<Organization> {
     try {
-        const response = await POST<Organization>('/api/organizations/update', props);
+        const response = await PATCH<Organization>(`/api/organizations/${props.id}`, {
+            ...props,
+            organizationId: props.id, // mandatory for middleware
+        });
 
-        return fromApi(response);
+        return OrganizationConverter.fromApi(response);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -50,18 +61,34 @@ async function update(props: UpdateProps): Promise<Organization> {
     }
 }
 
-async function addMember({ userId, organizationId }: AddMemberProps): Promise<Organization> {
+async function addMember({ userId, organizationId, roleId }: AddMemberProps): Promise<boolean> {
     try {
-        const response = await POST<Organization>('/api/organizations/add-member', {
+        await POST<Organization>('/api/organizations/add-member', {
             user: userId,
             organization: organizationId,
+            role: roleId,
         });
 
-        return fromApi(response);
+        return true;
     } catch (error) {
         // TODO::error handling
         console.error(error);
         throw Error('OrganizationService::addMember Unhandled error');
+    }
+}
+
+async function removeMember({ userId, organizationId }: RemoveMemberProps): Promise<boolean> {
+    try {
+        await POST<Organization>('/api/organizations/remove-member', {
+            user: userId,
+            organization: organizationId,
+        });
+
+        return true;
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('OrganizationService::removeMember Unhandled error');
     }
 }
 
@@ -71,6 +98,7 @@ const OrganizationService = {
     update,
     getAll,
     getOne,
+    removeMember,
 };
 
 export default OrganizationService;

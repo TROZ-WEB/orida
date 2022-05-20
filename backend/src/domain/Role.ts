@@ -1,21 +1,17 @@
-enum Role {
-    Admin = 'ADMIN',
-    Manager = 'MANAGER',
-    None = 'NONE',
+/* eslint-disable import/no-cycle */
+/* eslint-disable import/prefer-default-export */
+class Role {
+    id: string;
+
+    label: string;
+
+    constructor(
+        id: string,
+        label: string,
+    ) {
+        this.id = id;
+        this.label = label;
+    }
 }
 
-export const RoleConverter = {
-    fromString(value: string) {
-        switch (value) {
-            case 'ADMIN':
-                return Role.Admin;
-            case 'MANAGER':
-                return Role.Manager;
-            case 'NONE':
-            default:
-                return Role.None;
-        }
-    },
-};
-
-export default Role;
+export { Role };

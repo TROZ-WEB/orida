@@ -1,4 +1,4 @@
-import { RoleConverter } from '@customTypes/role';
+import { OrganizationMembershipConverter } from '@services/organizations';
 import { User } from '@services/users';
 
 export interface Auth extends User {}
@@ -22,8 +22,11 @@ export const AuthConverter = {
         return {
             id: data.id,
             email: data.email,
-            role: RoleConverter.fromApi(data.role),
+            isAdmin: data.isAdmin || false,
             fullname: data.fullname,
+            organizationMemberships: data.organizationMemberships
+                ? data.organizationMemberships.map(OrganizationMembershipConverter.fromApi)
+                : [],
         };
     },
 };

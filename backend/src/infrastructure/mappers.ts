@@ -1,10 +1,12 @@
 /* global NodeJS */
 import { Category } from '../domain/Category';
 import { Organization } from '../domain/Organization';
+import { OrganizationMembership } from '../domain/OrganizationMembership';
 import { Poll } from '../domain/Poll';
 import { Post } from '../domain/Post';
 import { Project } from '../domain/Project';
 import { ProjectStatus } from '../domain/ProjectStatus';
+import { Role } from '../domain/Role';
 import { Thread } from '../domain/Thread';
 import { User } from '../domain/User';
 
@@ -13,7 +15,10 @@ export const mapUser = (user: User) => ({
     fullname: user.fullname,
     id: user.id,
     lastname: user.lastname,
-    role: user.role,
+    isAdmin: user.isAdmin,
+    // disable rule as the function is exported
+    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
+    organizationMemberships: user.organizationMemberships.map(mapOrganizationMembership),
 });
 
 export const mapProjectStatus = (status: ProjectStatus) => ({
@@ -69,7 +74,20 @@ export const mapCategory = (category: Category) => ({
     projects: category.projects,
 });
 
-export const mapOrganization = (organization: Organization) => ({
+export const mapRole = (role: Role) => ({
+    id: role.id,
+    label: role.label,
+});
+
+export const mapOrganizationMembership = (membership: OrganizationMembership): any => ({
+    user: mapUser(membership.user),
+    // disable rule as the function is exported
+    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
+    organization: mapOrganization(membership.organization),
+    role: mapRole(membership.role),
+});
+
+export const mapOrganization = (organization: Organization): any => ({
     id: organization.id,
     name: organization.name,
     type: organization.type,
@@ -83,7 +101,7 @@ export const mapOrganization = (organization: Organization) => ({
     instagram: organization.instagram,
     projects: organization.projects,
     parentOrganizations: organization.parentOrganizations,
-    members: organization.members.map(mapUser),
+    members: organization.members.map(mapOrganizationMembership),
 });
 
 export const mapEnvironment = (env: NodeJS.ProcessEnv) => ({

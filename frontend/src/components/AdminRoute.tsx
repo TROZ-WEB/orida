@@ -1,4 +1,3 @@
-import { Role } from '@customTypes/role';
 import useRole from '@hooks/useRole';
 import AppRoutes from '@router/AppRoutes';
 import AuthService from '@services/auth';
@@ -14,7 +13,7 @@ const AuthenticatedRoute = () => {
             try {
                 const result = await AuthService.me();
 
-                if (!(result?.role === Role.Admin)) {
+                if (!result?.isAdmin) {
                     throw Error('Unauthorized');
                 }
 

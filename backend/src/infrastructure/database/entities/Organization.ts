@@ -101,7 +101,7 @@ class Organization extends BaseColumns {
             instagram: this.instagram,
             projects: this.projects?.map((p) => p.toDomain()) || [],
             parentOrganizations: this.parentOrganizations?.map((o) => o.toDomain()) || [],
-            members: this.members ? this.members.map((member) => member.user?.toDomain()) : [],
+            members: this.members ? this.members.map((member) => member.toDomain()) : [],
         };
     }
 }

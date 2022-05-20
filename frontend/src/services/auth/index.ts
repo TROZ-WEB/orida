@@ -1,12 +1,13 @@
+import { User, UserConverter } from '@services/users';
 import { GET, POST } from '@utils/http';
 
 import { Auth, AuthConverter, AuthError, LoginProps, RegisterProps } from './types';
 
-async function login({ email, password }: LoginProps): Promise<Auth> {
+async function login({ email, password }: LoginProps): Promise<User> {
     try {
-        const response = await POST<Auth>('/api/auth/login', { email, password });
+        const response = await POST<User>('/api/auth/login', { email, password });
 
-        return AuthConverter.fromApi(response);
+        return UserConverter.fromApi(response);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -41,11 +42,11 @@ async function logout() {
     }
 }
 
-async function me() {
+async function me(): Promise<User | null> {
     try {
-        const result = await GET<Auth>('/api/auth/me');
+        const result = await GET<User>('/api/auth/me');
 
-        return AuthConverter.fromApi(result);
+        return UserConverter.fromApi(result);
     } catch (error: any) {
         if (error.status === 404) {
             return null;

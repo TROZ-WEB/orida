@@ -29,6 +29,9 @@ COPY tailwind.config.js ./tailwind.config.js
 ARG VERSION
 RUN echo "export default '$VERSION';" > src/version.ts
 
+# disable lint on build as it is supposed to be already check by a previous step of the CI
+ENV DISABLE_ESLINT_PLUGIN=true
+
 RUN yarn build
 RUN cp --recursive build build-final && rm build-final/static/*/*.map
 

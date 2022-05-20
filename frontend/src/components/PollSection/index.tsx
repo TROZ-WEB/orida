@@ -27,7 +27,7 @@ const styles = {
 };
 
 const PollSection = ({ polls, project, refresh }: PollSectionProps) => {
-    const { isAuthenticated, isManager } = useRole();
+    const { isAuthenticated, isAdmin } = useRole();
     const modalProps = useModal();
     const { t } = useTranslation();
 
@@ -42,7 +42,7 @@ const PollSection = ({ polls, project, refresh }: PollSectionProps) => {
                     <H1>
                         {t('project_polls_title')} ({polls.length})
                     </H1>
-                    {isManager && (
+                    {isAdmin && (
                         <IconButton
                             className='w-[35px] h-[35px]'
                             onClick={() => modalProps.open()}

@@ -1,10 +1,9 @@
 import { Request, Response, Router } from 'express';
-import Role from '../../domain/Role';
 import createThread from '../../useCases/threads/createThread';
 import asyncRoute from '../../utils/asyncRoute';
 import { postRepository, projectRepository, threadRepository } from '../database';
 import { mapThread } from '../mappers';
-import authorize from '../middlewares/authorize';
+import authorizeAdmin from '../middlewares/authorizeAdmin';
 
 const router = Router();
 
@@ -14,7 +13,7 @@ interface CreateBodyProps {
 }
 router.post(
     '/',
-    authorize([Role.Manager]),
+    authorizeAdmin(), // TODO::AUTHORIZE MANAGER ONLY
     asyncRoute(async (req: Request, res: Response) => {
         const { project, subject } = req.body as CreateBodyProps;
         const thread = await createThread({ project, subject })({

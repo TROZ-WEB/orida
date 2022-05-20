@@ -2,6 +2,7 @@ import { Repository, In } from 'typeorm';
 import { Organization, OrganizationType } from '../../domain/Organization';
 import { Organization as OrganizationEntity } from '../../infrastructure/database/entities/Organization';
 import ErrorType from '../../types/Error';
+import findOrganizationById from './findOrganizationById';
 
 interface Arg {
     id:string;
@@ -62,9 +63,15 @@ const updateOrganization = ({
         parentOrganizations: parentOrganizationsData,
     });
 
-    const entity = await organizationRepository.save(organization);
+    await organizationRepository.save(organization);
 
-    return entity.toDomain();
+    const entity = await findOrganizationById(organization.id)({ organizationRepository });
+
+    if (!entity) {
+        throw Error('Not found');
+    }
+
+    return entity;
 };
 
 export default updateOrganization;

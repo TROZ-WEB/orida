@@ -1,15 +1,16 @@
 import { Request, Response, Router } from 'express';
-import Role from '../../domain/Role';
 import ErrorType from '../../types/Error';
 import addMember from '../../useCases/organization/addMember';
 import createOrganization from '../../useCases/organization/createOrganization';
 import findAllOrganizations from '../../useCases/organization/findAllOrganizations';
 import findOrganizationById from '../../useCases/organization/findOrganizationById';
+import removeMember from '../../useCases/organization/removeMember';
 import updateOrganization from '../../useCases/organization/updateOrganization';
 import asyncRoute from '../../utils/asyncRoute';
-import { organizationMembershipRepository, organizationRepository, userRepository } from '../database';
+import { organizationMembershipRepository, organizationRepository, roleRepository, userRepository } from '../database';
 import { mapOrganization } from '../mappers';
-import authorize from '../middlewares/authorize';
+import authorizeAdmin from '../middlewares/authorizeAdmin';
+import authorizeOrganizationAdmin from '../middlewares/authorizeOrganisationAdmin';
 
 const router = Router();
 
@@ -33,7 +34,7 @@ router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
 
 router.post(
     '/',
-    authorize([Role.Admin]),
+    authorizeAdmin(),
     asyncRoute(async (req: Request, res: Response) => {
         const organization = {
             name: req.body.name,
@@ -55,9 +56,9 @@ router.post(
     }),
 );
 
-router.post(
-    '/update',
-    authorize([Role.Admin]),
+router.patch(
+    '/:id',
+    authorizeOrganizationAdmin(),
     asyncRoute(async (req: Request, res: Response) => {
         const organization = {
             id: req.body.id,
@@ -79,19 +80,38 @@ router.post(
     }),
 );
 
+interface AddMemberBody {
+    organization: string;
+    role: string;
+    user: string;
+}
+
 router.post(
     '/add-member',
-    authorize([Role.Admin]),
+    authorizeAdmin(),
     asyncRoute(async (req: Request, res: Response) => {
-        const { user, organization } = req.body;
+        const { user, organization, role } = req.body as AddMemberBody;
         await addMember({
             userId: user,
             organizationId: organization,
+            roleId: role,
         })({
-            organizationRepository,
-            userRepository,
             organizationMembershipRepository,
+            organizationRepository,
+            roleRepository,
+            userRepository,
         });
+
+        res.status(200).json({ success: true });
+    }),
+);
+
+router.post(
+    '/remove-member',
+    authorizeAdmin(),
+    asyncRoute(async (req: Request, res: Response) => {
+        const { user, organization } = req.body;
+        await removeMember({ userId: user, organizationId: organization })({ organizationMembershipRepository });
 
         res.status(200).json({ success: true });
     }),

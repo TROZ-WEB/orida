@@ -48,7 +48,7 @@ const Header = () => {
     const dispatch = useThunkDispatch();
     const navigate = useNavigate();
     const isLoggedIn = !!useSelector((state) => state.auth.data.id);
-    const { isAdmin, isAuthenticated, isManager } = useRole();
+    const { isAdmin, isAuthenticated } = useRole();
     const { pathname } = useLocation();
     const projectModalProps = useModal();
 
@@ -64,7 +64,7 @@ const Header = () => {
     return (
         <div className={classes.wrapper}>
             <div className='flex flex-row'>
-                <ButtonLink className={classes.menuItem} to={AppRoutes.Home}>
+                <ButtonLink className={classes.menuItem} to={AppRoutes.Dashboard}>
                     <Logo />
                 </ButtonLink>
                 <ButtonLink
@@ -87,7 +87,7 @@ const Header = () => {
                 )}
             </div>
             <div className='flex flex-row'>
-                {isManager && (
+                {isAdmin && (
                     <Button className={classes.menuItem} onClick={() => projectModalProps.open()}>
                         <Icon className='stroke-white' color='#fff' name='plus' size={20} />
                         <span className='text-white font-normal mt-2'>Créer un projet</span>

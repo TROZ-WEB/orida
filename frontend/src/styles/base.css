@@ -83,6 +83,7 @@ textarea {
 
 ul {
     margin: 0;
+    width: 100%;
 }
 
 input[type='search']::-webkit-search-cancel-button {

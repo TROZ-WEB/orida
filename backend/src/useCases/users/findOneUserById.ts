@@ -6,10 +6,13 @@ interface Context {
     userRepository: Repository<UserEntity>;
 }
 
-const findOneById = (id: string) => async ({ userRepository }: Context): Promise<User | null> => {
-    const entity = await userRepository.findOne({ where: { id } });
+const findOneUserById = (id: string) => async ({ userRepository }: Context): Promise<User | null> => {
+    const entity = await userRepository.findOne({
+        where: { id },
+        relations: { organizations: true },
+    });
 
     return entity ? entity.toDomain() : null;
 };
 
-export default findOneById;
+export default findOneUserById;

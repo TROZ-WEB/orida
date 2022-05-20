@@ -25,7 +25,7 @@ const styles = {
 };
 
 const ThreadSection = ({ threads, project, refresh }: ThreadSectionProps) => {
-    const { isManager } = useRole();
+    const { isAdmin } = useRole();
     const modalProps = useModal();
     const { t } = useTranslation();
 
@@ -36,7 +36,7 @@ const ThreadSection = ({ threads, project, refresh }: ThreadSectionProps) => {
                     <H1>
                         {t('project_thread_section_title')} ({threads.length})
                     </H1>
-                    {isManager && (
+                    {isAdmin && (
                         <IconButton
                             className='w-[35px] h-[35px]'
                             onClick={() => modalProps.open()}

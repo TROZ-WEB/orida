@@ -4,27 +4,33 @@ import { Organization as OrganizationEntity } from '../../infrastructure/databas
 import {
     OrganizationMembership as OrganizationMembershipEntity,
 } from '../../infrastructure/database/entities/OrganizationMembership';
+import { Role as RoleEntity } from '../../infrastructure/database/entities/Role';
 import { User as UserEntity } from '../../infrastructure/database/entities/User';
+import RoleError, { RoleErrorType } from '../roles/roleError';
 import UserError, { UserErrorType } from '../users/UserError';
 import OrganizationError, { OrganizationErrorType } from './organizationError';
 
 interface Arg {
     userId: string;
     organizationId: string;
+    roleId?: string;
 }
 
 interface Context {
     organizationMembershipRepository: Repository<OrganizationMembershipEntity>;
     organizationRepository: Repository<OrganizationEntity>;
+    roleRepository: Repository<RoleEntity>;
     userRepository: Repository<UserEntity>;
 }
 
 const addMember = ({
     userId,
     organizationId,
+    roleId,
 }: Arg) => async ({
     organizationMembershipRepository,
     organizationRepository,
+    roleRepository,
     userRepository,
 }: Context): Promise<OrganizationMembership> => {
     const userData = await userRepository.findOne({
@@ -45,9 +51,17 @@ const addMember = ({
         throw new OrganizationError(OrganizationErrorType.NotFound);
     }
 
+    const roleData = roleId
+        ? await roleRepository.findOne({ where: { id: roleId } })
+        : await roleRepository.findOne({ where: { label: 'CONTRIBUTOR' } }); // by default, contributor
+    if (!roleData) {
+        throw new RoleError(RoleErrorType.NotFound);
+    }
+
     const membershipEntity = organizationMembershipRepository.create({
-        user: userData,
         organization: organizationData,
+        role: roleData,
+        user: userData,
     });
     const savedEntity = await organizationMembershipRepository.save(membershipEntity);
 

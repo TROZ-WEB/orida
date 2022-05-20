@@ -1,12 +1,13 @@
+/* eslint-disable import/no-cycle */
 import { GET, PATCH } from '@utils/http';
 
-import { fromApi, User } from './types';
+import { User, UserConverter } from './types';
 
 async function getAll(): Promise<User[]> {
     try {
         const response = await GET<User[]>('/api/users/');
 
-        return response.map(fromApi);
+        return response.map(UserConverter.fromApi);
     } catch (error) {
         // TODO::error handling
         console.error(error);
@@ -22,7 +23,7 @@ async function update(updated: UpdateProps): Promise<User> {
     try {
         const response = await PATCH<User>(`/api/users/${updated.id}`, { user: updated });
 
-        return fromApi(response);
+        return UserConverter.fromApi(response);
     } catch (error) {
         // TODO::error handling
         console.error(error);

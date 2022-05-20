@@ -2,7 +2,6 @@
 /* eslint-disable import/prefer-default-export */
 import bcrypt from 'bcrypt';
 import { Entity, Column, OneToMany } from 'typeorm';
-import Role from '../../../domain/Role';
 import { User as UserDomain } from '../../../domain/User';
 import BaseColumns from './BaseColumns';
 import { OrganizationMembership } from './OrganizationMembership';
@@ -18,9 +17,6 @@ class User extends BaseColumns {
 
     @Column({ type: 'boolean', name: 'is-admin' })
         isAdmin: boolean;
-
-    @Column({ type: 'boolean', name: 'is-manager', default: false })
-        isManager: boolean;
 
     @Column({ type: 'character varying', default: 'noname' })
         lastname: string;
@@ -39,7 +35,7 @@ class User extends BaseColumns {
         (organizationMembership) => organizationMembership.user,
         { cascade: true },
     )
-        organizations: OrganizationMembership[];
+        organizations?: OrganizationMembership[];
 
     constructor(
         id: string,
@@ -47,7 +43,6 @@ class User extends BaseColumns {
         modifiedAt: Date,
         email: string,
         isAdmin: boolean,
-        isManager: boolean,
         firstname: string,
         lastname: string,
         fullname: string,
@@ -59,7 +54,6 @@ class User extends BaseColumns {
         this.firstname = firstname;
         this.fullname = fullname;
         this.isAdmin = isAdmin;
-        this.isManager = isManager;
         this.lastname = lastname;
         this.passwordHash = '';
         this.pollResponses = pollResponses;
@@ -78,13 +72,6 @@ class User extends BaseColumns {
         return bcrypt.compare(password, this.passwordHash);
     }
 
-    computeRole() {
-        if (this.isAdmin) { return Role.Admin; }
-        if (this.isManager) { return Role.Manager; }
-
-        return Role.None;
-    }
-
     toDomain(): UserDomain {
         return new UserDomain({
             email: this.email,
@@ -93,7 +80,8 @@ class User extends BaseColumns {
             id: this.id,
             lastname: this.lastname,
             passwordHash: this.passwordHash,
-            role: this.computeRole(),
+            isAdmin: this.isAdmin,
+            organizationMemberships: this.organizations?.map((membership) => membership.toDomain()) ?? [],
         });
     }
 }

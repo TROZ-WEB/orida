@@ -1,16 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
-import Role from '../../domain/Role';
 import AuthError, { AuthErrorType } from '../../useCases/auth/AuthError';
-import isAuthorized from '../../useCases/auth/isAuthorized';
+import isAdmin from '../../useCases/auth/isAdmin';
 
-const authorize = (roles: Role[]) => (req: Request, res: Response, next: NextFunction) => {
+const authorizeAdmin = () => (req: Request, res: Response, next: NextFunction) => {
     const { user } = req;
 
     if (!user) {
         throw new AuthError(AuthErrorType.NotLoggedIn);
     }
 
-    const authorizationGranted = isAuthorized(user, roles);
+    const authorizationGranted = isAdmin(user);
 
     if (authorizationGranted) {
         next();
@@ -21,4 +20,4 @@ const authorize = (roles: Role[]) => (req: Request, res: Response, next: NextFun
     throw new AuthError(AuthErrorType.Unauthorized);
 };
 
-export default authorize;
+export default authorizeAdmin;

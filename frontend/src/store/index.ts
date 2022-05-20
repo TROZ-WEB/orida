@@ -20,6 +20,7 @@ import filtersReducer from './filters/reducer';
 import organizationReducer from './organizations/reducer';
 import pollReducer from './polls/reducer';
 import projectReducer from './projects/reducer';
+import rolesReducer from './roles/reducer';
 import statusReducer from './status/reducer';
 
 // import logger from 'redux-logger';
@@ -35,9 +36,10 @@ const appReducer = combineReducers({
     auth: authReducer,
     categories: categoriesReducer,
     filters: filtersReducer,
+    organizations: organizationReducer,
     polls: pollReducer,
     projects: projectReducer,
-    organizations: organizationReducer,
+    roles: rolesReducer,
     status: statusReducer,
 });
 

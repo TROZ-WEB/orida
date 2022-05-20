@@ -1,4 +1,3 @@
-import { Role } from '@customTypes/role';
 import { User } from '@services/users';
 import { GlobalActionTypes } from '@store/_global/types';
 
@@ -17,12 +16,7 @@ interface Logout {
 export type AuthActionTypes = GlobalActionTypes | Logout | Login;
 
 export interface AuthState {
-    data: {
-        email: string;
-        id: string;
-        role: Role;
-        fullname: string;
-    };
+    data: User;
 }
 
 export const initialState: AuthState = {
@@ -30,6 +24,7 @@ export const initialState: AuthState = {
         email: '',
         id: '',
         fullname: '',
-        role: Role.None,
+        isAdmin: false,
+        organizationMemberships: [],
     },
 };
