@@ -1,12 +1,13 @@
 import { Request, Response, Router } from 'express';
 import Role from '../../domain/Role';
 import ErrorType from '../../types/Error';
+import addMember from '../../useCases/organization/addMember';
 import createOrganization from '../../useCases/organization/createOrganization';
 import findAllOrganizations from '../../useCases/organization/findAllOrganizations';
 import findOrganizationById from '../../useCases/organization/findOrganizationById';
 import updateOrganization from '../../useCases/organization/updateOrganization';
 import asyncRoute from '../../utils/asyncRoute';
-import { organizationRepository } from '../database';
+import { organizationMembershipRepository, organizationRepository, userRepository } from '../database';
 import { mapOrganization } from '../mappers';
 import authorize from '../middlewares/authorize';
 
@@ -75,6 +76,24 @@ router.post(
         const updated = await updateOrganization(organization)({ organizationRepository });
 
         res.status(200).json(mapOrganization(updated));
+    }),
+);
+
+router.post(
+    '/add-member',
+    authorize([Role.Admin]),
+    asyncRoute(async (req: Request, res: Response) => {
+        const { user, organization } = req.body;
+        await addMember({
+            userId: user,
+            organizationId: organization,
+        })({
+            organizationRepository,
+            userRepository,
+            organizationMembershipRepository,
+        });
+
+        res.status(200).json({ success: true });
     }),
 );
 

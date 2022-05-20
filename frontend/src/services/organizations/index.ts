@@ -1,6 +1,6 @@
 import { GET, POST } from '@utils/http';
 
-import { CreateProps, fromApi, Organization, UpdateProps } from './types';
+import { AddMemberProps, CreateProps, fromApi, Organization, UpdateProps } from './types';
 
 async function getAll(): Promise<Organization[]> {
     try {
@@ -50,7 +50,23 @@ async function update(props: UpdateProps): Promise<Organization> {
     }
 }
 
+async function addMember({ userId, organizationId }: AddMemberProps): Promise<Organization> {
+    try {
+        const response = await POST<Organization>('/api/organizations/add-member', {
+            user: userId,
+            organization: organizationId,
+        });
+
+        return fromApi(response);
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('OrganizationService::addMember Unhandled error');
+    }
+}
+
 const OrganizationService = {
+    addMember,
     create,
     update,
     getAll,

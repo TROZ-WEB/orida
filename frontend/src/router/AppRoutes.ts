@@ -17,7 +17,7 @@ export function goToProject(id: string, tab: ProjectTab = ProjectTab.general) {
 }
 
 export function goToOrganization(id: string) {
-    return `${AppRoutes.Organization}/${id}`;
+    return `/organization/${id}`;
 }
 
 export function goToExplore(tab: ExploreTab = ExploreTab.list) {

@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { v4 as uuidv4 } from 'uuid';
 import { Project } from './Project';
+import { User } from './User';
 
 enum OrganizationType {
     collectivity = 'COLLECTIVITY',
@@ -35,6 +36,8 @@ class Organization {
 
     parentOrganizations: Organization[];
 
+    members: User[];
+
     // TO ADD : lieu, image
 
     constructor(
@@ -50,6 +53,7 @@ class Organization {
         instagram: string | null,
         projects: Project[],
         parentOrganizations: Organization[],
+        members: User[],
     ) {
         this.id = uuidv4();
         this.name = name;
@@ -64,6 +68,7 @@ class Organization {
         this.instagram = instagram;
         this.projects = projects;
         this.parentOrganizations = parentOrganizations;
+        this.members = members;
     }
 }
 

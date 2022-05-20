@@ -83,6 +83,7 @@ export const mapOrganization = (organization: Organization) => ({
     instagram: organization.instagram,
     projects: organization.projects,
     parentOrganizations: organization.parentOrganizations,
+    members: organization.members.map(mapUser),
 });
 
 export const mapEnvironment = (env: NodeJS.ProcessEnv) => ({

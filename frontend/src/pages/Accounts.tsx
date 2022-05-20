@@ -1,57 +1,35 @@
-import { Role } from '@customTypes/role';
-import { ToggleSwitch } from '@design/inputs';
+import AddMemberToOrganizationForm from '@components/AddMemberToOrganizationForm';
+import { Button } from '@design/buttons';
 import Layout from '@design/layouts/Layout';
-import { Table, Tbody, Td, Th, Thead, Tr } from '@design/table';
+import Modal from '@design/modals/DefaultModal';
+import Space from '@design/Space';
+import useModal from '@hooks/useModal';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import { User } from '@services/users';
-import { getAllUsers, updateRole } from '@store/admin/actions';
+import { getAllUsers } from '@store/admin/actions';
+import { getAll as getAllOrganizations } from '@store/organizations/actions';
 import { useEffect } from 'react';
 
 const AccountsPage = () => {
     const dispatch = useThunkDispatch();
-    const accounts = useSelector((state) => state.admin.users);
-    const me = useSelector((state) => state.auth.data);
+    const addMemberToOrgaModalProps = useModal();
+    const users = useSelector((state) => state.admin.users);
+    const organizations = useSelector((state) => state.organizations.data);
 
     useEffect(() => {
         dispatch(getAllUsers());
+        dispatch(getAllOrganizations());
     }, []);
-
-    const onRoleChange = (user: User, value: boolean) => {
-        const newRole = value ? Role.Manager : Role.None;
-        dispatch(updateRole(user, newRole));
-    };
 
     return (
         <Layout>
-            <Table className='mt-2'>
-                <Thead>
-                    <Tr>
-                        <Th>Admin</Th>
-                        <Th>Fullname</Th>
-                        <Th>Gestionnaire ?</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {accounts.map((user) => (
-                        <Tr key={user.id}>
-                            <Td>{user.email}</Td>
-                            <Td>{user.fullname}</Td>
-                            <Td>
-                                <ToggleSwitch
-                                    checked={[Role.Manager, Role.Admin].includes(user.role)}
-                                    disabled={user.id === me.id}
-                                    id={user.id}
-                                    name='toggle'
-                                    onChange={(newValue) => onRoleChange(user, newValue)}
-                                    optionLabels={['oui', 'non']}
-                                    small
-                                />
-                            </Td>
-                        </Tr>
-                    ))}
-                </Tbody>
-            </Table>
+            <Space px={60} />
+            <Button onClick={() => addMemberToOrgaModalProps.open()}>
+                Ajouter un utilisateur à une organisation
+            </Button>
+            <Modal {...addMemberToOrgaModalProps}>
+                <AddMemberToOrganizationForm organizations={organizations} users={users} />
+            </Modal>
         </Layout>
     );
 };

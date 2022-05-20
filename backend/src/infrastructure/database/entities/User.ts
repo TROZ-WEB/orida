@@ -5,6 +5,7 @@ import { Entity, Column, OneToMany } from 'typeorm';
 import Role from '../../../domain/Role';
 import { User as UserDomain } from '../../../domain/User';
 import BaseColumns from './BaseColumns';
+import { OrganizationMembership } from './OrganizationMembership';
 import { PollResponse } from './PollResponse';
 
 @Entity('user')
@@ -33,6 +34,13 @@ class User extends BaseColumns {
     @OneToMany(() => PollResponse, (response) => response.user, { cascade: true })
         pollResponses: PollResponse[];
 
+    @OneToMany(
+        () => OrganizationMembership,
+        (organizationMembership) => organizationMembership.user,
+        { cascade: true },
+    )
+        organizations: OrganizationMembership[];
+
     constructor(
         id: string,
         createdAt: Date,
@@ -44,6 +52,7 @@ class User extends BaseColumns {
         lastname: string,
         fullname: string,
         pollResponses: PollResponse[],
+        organizations: OrganizationMembership[],
     ) {
         super(id, createdAt, modifiedAt);
         this.email = email;
@@ -54,6 +63,7 @@ class User extends BaseColumns {
         this.lastname = lastname;
         this.passwordHash = '';
         this.pollResponses = pollResponses;
+        this.organizations = organizations;
     }
 
     async updatePassword(password: string): Promise<void> {

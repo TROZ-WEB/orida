@@ -1,4 +1,7 @@
 {
+    "addUserToOrga_organization": "Organisation",
+    "addUserToOrga_submit": "Ajouter cet utilisateur à l'organisation",
+    "addUserToOrga_user": "Utilisateur",
     "categories_cleanliness": "Propreté",
     "categories_culture": "Culture et patrimoine",
     "categories_economy": "Économie, emploi et attractivité",
@@ -43,6 +46,7 @@
     "organization_create_site_placeholder": "Mairie de Paris",
     "organization_create_twitter_label": "URL Twitter",
     "organization_create_type_label": "Type d'organisation",
+    "organization_details_members": "Membres",
     "organization_details_title": "L'organisation",
     "organization_list_title": "Organisations",
     "organization_type_association": "Association",

@@ -10,7 +10,13 @@ const findOrganizationById = (id: string) => (
     async ({ organizationRepository }: Context): Promise<Organization | null> => {
         const entity = await organizationRepository.findOne({
             where: { id },
-            relations: { projects: true, parentOrganizations: true },
+            relations: {
+                projects: true,
+                parentOrganizations: true,
+                members: {
+                    user: true,
+                },
+            },
         });
 
         return entity ? entity.toDomain() : null;

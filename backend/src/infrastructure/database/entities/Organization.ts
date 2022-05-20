@@ -1,8 +1,9 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
-import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { OrganizationType, Organization as OrganizationDomain } from '../../../domain/Organization';
 import BaseColumns from './BaseColumns';
+import { OrganizationMembership } from './OrganizationMembership';
 import { Project } from './Project';
 
 @Entity('organization')
@@ -44,6 +45,13 @@ class Organization extends BaseColumns {
     @JoinTable({ name: 'parent-organizations' })
         parentOrganizations: Organization[];
 
+    @OneToMany(
+        () => OrganizationMembership,
+        (organizationMembership) => organizationMembership.organization,
+        { cascade: true },
+    )
+        members: OrganizationMembership[];
+
     constructor(
         id: string,
         createdAt: Date,
@@ -60,6 +68,7 @@ class Organization extends BaseColumns {
         instagram: string | null,
         projects: Project[],
         parentOrganizations: Organization[],
+        members: OrganizationMembership[],
     ) {
         super(id, createdAt, modifiedAt);
         this.name = name;
@@ -74,6 +83,7 @@ class Organization extends BaseColumns {
         this.instagram = instagram;
         this.projects = projects;
         this.parentOrganizations = parentOrganizations;
+        this.members = members;
     }
 
     toDomain(): OrganizationDomain {
@@ -91,6 +101,7 @@ class Organization extends BaseColumns {
             instagram: this.instagram,
             projects: this.projects?.map((p) => p.toDomain()) || [],
             parentOrganizations: this.parentOrganizations?.map((o) => o.toDomain()) || [],
+            members: this.members ? this.members.map((member) => member.user?.toDomain()) : [],
         };
     }
 }

@@ -23,7 +23,7 @@ const LoginForm = () => {
     const onLogin: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
             await dispatch(login(data));
-            navigate(AppRoutes.Home);
+            navigate(AppRoutes.Dashboard);
         } catch (e) {
             // temporary error handling
             // eslint-disable-next-line

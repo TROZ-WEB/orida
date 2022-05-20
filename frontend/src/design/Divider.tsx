@@ -5,7 +5,7 @@ interface DividerProps {
 }
 
 const Divider = ({ className }: DividerProps) => (
-    <hr className={classnames('border-border', className)} />
+    <hr className={classnames('border-border w-full', className)} />
 );
 
 export default Divider;

@@ -43,7 +43,10 @@ const OrganizationPage = () => {
 
                     <main className='px-5 py-14'>
                         <div className='flex items-center pb-3'>
-                            <IconButton onClick={organisationModalProps.open}>
+                            <IconButton
+                                className='bg-transparent hover:bg-background-hover mr-2'
+                                onClick={organisationModalProps.open}
+                            >
                                 <Icon name='edit' size={15} />
                             </IconButton>
                             <H1>{organization.name}</H1>
@@ -139,6 +142,13 @@ const OrganizationPage = () => {
                                 {organization.linkedin}
                             </a>
                         )}
+
+                        <H3>{t('organization_details_members')}</H3>
+                        <ul>
+                            {organization.members.map((member) => (
+                                <li className={member.id}>- {member.fullname}</li>
+                            ))}
+                        </ul>
                     </main>
                 </>
             ) : (

@@ -1,4 +1,6 @@
+import { AuthConverter } from '@services/auth';
 import { Project } from '@services/projects';
+import { User } from '@services/users';
 
 export enum OrganizationType {
     collectivity = 'COLLECTIVITY',
@@ -22,6 +24,7 @@ export type Organization = {
     instagram: string;
     projects: Project[];
     parentOrganizations: Organization[];
+    members: User[];
 };
 
 export function fromApi(data: any): Organization {
@@ -41,6 +44,7 @@ export function fromApi(data: any): Organization {
         instagram: data.instagram,
         projects: data.projects ?? [],
         parentOrganizations: data.parentOrganizations ?? [],
+        members: data.members.map(AuthConverter.fromApi),
     };
 }
 
@@ -61,4 +65,9 @@ export type CreateProps = {
 
 export type UpdateProps = CreateProps & {
     id: string;
+};
+
+export type AddMemberProps = {
+    organizationId: string;
+    userId: string;
 };

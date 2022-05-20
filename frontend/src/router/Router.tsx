@@ -21,7 +21,7 @@ const Router = () => (
         <Route element={<Project />} path={AppRoutes.Project} />
         <Route element={<Explore />} path={AppRoutes.Explore} />
         <Route element={<AuthenticatedRoute />}>
-            <Route element={<DashboardRedirect />} path={AppRoutes.Home} />
+            <Route element={<DashboardRedirect />} path={AppRoutes.Dashboard} />
             <Route element={<AdminRoute />}>
                 <Route element={<Accounts />} path={AppRoutes.Accounts} />
             </Route>

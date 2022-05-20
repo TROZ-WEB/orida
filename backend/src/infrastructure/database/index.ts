@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { Category as CategoryEntity } from './entities/Category';
 import { Organization as OrganizationEntity } from './entities/Organization';
+import { OrganizationMembership as OrganizationMembershipEntity } from './entities/OrganizationMembership';
 import { Poll as PollEntity } from './entities/Poll';
 import { PollResponse as PollResponseEntity } from './entities/PollResponse';
 import { Post as PostEntity } from './entities/Post';
@@ -23,6 +24,9 @@ const AppDataSource = new DataSource({
 
 export const categoryRepository = AppDataSource.getRepository<CategoryEntity>(CategoryEntity);
 export const organizationRepository = AppDataSource.getRepository<OrganizationEntity>(OrganizationEntity);
+export const organizationMembershipRepository = (
+    AppDataSource.getRepository<OrganizationMembershipEntity>(OrganizationMembershipEntity)
+);
 export const pollRepository = AppDataSource.getRepository<PollEntity>(PollEntity);
 export const pollResponseRepository = AppDataSource.getRepository<PollResponseEntity>(PollResponseEntity);
 export const postRepository = AppDataSource.getRepository<PostEntity>(PostEntity);
