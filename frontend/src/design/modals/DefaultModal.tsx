@@ -1,4 +1,5 @@
 import IconButton from '@design/buttons/IconButton';
+import Portal from '@design/Portal';
 import { PropsWithChildren } from 'react';
 
 import Icon from '../Icon';
@@ -46,16 +47,18 @@ const Modal = ({ children, close, isOpen }: PropsWithChildren<ModalProps>) => {
     }
 
     return (
-        <Backdrop>
-            <div className={classes.modal}>
-                <div className={classes.inner}>
-                    <IconButton className={classes.close} onClick={close}>
-                        <Icon color='grey' name='cross' />
-                    </IconButton>
-                    {children}
+        <Portal id='modal-root'>
+            <Backdrop>
+                <div className={classes.modal}>
+                    <div className={classes.inner}>
+                        <IconButton className={classes.close} onClick={close}>
+                            <Icon color='grey' name='cross' />
+                        </IconButton>
+                        {children}
+                    </div>
                 </div>
-            </div>
-        </Backdrop>
+            </Backdrop>
+        </Portal>
     );
 };
 

@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { Entity, Column, OneToMany } from 'typeorm';
 import { User as UserDomain } from '../../../domain/User';
 import BaseColumns from './BaseColumns';
+import { Message } from './Message';
 import { OrganizationMembership } from './OrganizationMembership';
 import { PollResponse } from './PollResponse';
 
@@ -27,7 +28,7 @@ class User extends BaseColumns {
     @Column({ type: 'character varying', default: 'noname' })
         fullname: string;
 
-    @OneToMany(() => PollResponse, (response) => response.user, { cascade: true })
+    @OneToMany(() => PollResponse, (response: PollResponse) => response.user, { cascade: true })
         pollResponses: PollResponse[];
 
     @OneToMany(
@@ -36,6 +37,9 @@ class User extends BaseColumns {
         { cascade: true },
     )
         organizations?: OrganizationMembership[];
+
+    @OneToMany(() => Message, (message: Message) => message.author, { cascade: true })
+        messages: Message[];
 
     constructor(
         id: string,
@@ -48,6 +52,7 @@ class User extends BaseColumns {
         fullname: string,
         pollResponses: PollResponse[],
         organizations: OrganizationMembership[],
+        messages: Message[],
     ) {
         super(id, createdAt, modifiedAt);
         this.email = email;
@@ -58,6 +63,7 @@ class User extends BaseColumns {
         this.passwordHash = '';
         this.pollResponses = pollResponses;
         this.organizations = organizations;
+        this.messages = messages;
     }
 
     async updatePassword(password: string): Promise<void> {

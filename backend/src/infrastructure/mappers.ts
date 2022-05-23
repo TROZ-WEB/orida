@@ -1,5 +1,6 @@
 /* global NodeJS */
 import { Category } from '../domain/Category';
+import { Message } from '../domain/Message';
 import { Organization } from '../domain/Organization';
 import { OrganizationMembership } from '../domain/OrganizationMembership';
 import { Poll } from '../domain/Poll';
@@ -33,10 +34,19 @@ export const mapPoll = (poll: Poll) => ({
     answered: poll.answered || false,
 });
 
+export const mapMessage = (message: Message) => ({
+    id: message.id,
+    createdAt: message.createdAt,
+    thread: message.thread,
+    author: message.author,
+    content: message.content,
+});
+
 export const mapThread = (thread: Thread) => ({
     id: thread.id,
     subject: thread.subject,
     createdAt: thread.createdAt,
+    message: thread.messages?.map((message) => mapMessage(message)),
 });
 
 export const mapPost = (post: Post) => ({
