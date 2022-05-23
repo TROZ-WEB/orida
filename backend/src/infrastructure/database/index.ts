@@ -8,6 +8,7 @@ import { Poll as PollEntity } from './entities/Poll';
 import { PollResponse as PollResponseEntity } from './entities/PollResponse';
 import { Post as PostEntity } from './entities/Post';
 import { Project as ProjectEntity } from './entities/Project';
+import { ProjectContribution as ProjectContributionEntity } from './entities/ProjectContribution';
 import { ProjectStatusEntity } from './entities/ProjectStatus';
 import { Role as RoleEntity } from './entities/Role';
 import { Thread as ThreadEntity } from './entities/Thread';
@@ -32,6 +33,9 @@ export const pollRepository = AppDataSource.getRepository<PollEntity>(PollEntity
 export const pollResponseRepository = AppDataSource.getRepository<PollResponseEntity>(PollResponseEntity);
 export const postRepository = AppDataSource.getRepository<PostEntity>(PostEntity);
 export const projectRepository = AppDataSource.getRepository<ProjectEntity>(ProjectEntity);
+export const projectContributionRepository = (
+    AppDataSource.getRepository<ProjectContributionEntity>(ProjectContributionEntity)
+);
 export const projectStatusRepository = AppDataSource.getRepository<ProjectStatusEntity>(ProjectStatusEntity);
 export const roleRepository = AppDataSource.getRepository<RoleEntity>(RoleEntity);
 export const threadRepository = AppDataSource.getRepository<ThreadEntity>(ThreadEntity);

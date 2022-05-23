@@ -6,7 +6,7 @@
 function getInitials(input: string) {
     const names = input.split(' ');
 
-    return names.map((name) => name[0]).join('');
+    return names.map((name) => name[0].toUpperCase()).join('');
 }
 
 export default getInitials;

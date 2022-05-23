@@ -6,6 +6,7 @@ import { OrganizationMembership } from '../domain/OrganizationMembership';
 import { Poll } from '../domain/Poll';
 import { Post } from '../domain/Post';
 import { Project } from '../domain/Project';
+import { ProjectContribution } from '../domain/ProjectContribution';
 import { ProjectStatus } from '../domain/ProjectStatus';
 import { Role } from '../domain/Role';
 import { Thread } from '../domain/Thread';
@@ -57,6 +58,16 @@ export const mapPost = (post: Post) => ({
     date: post.date,
 });
 
+export const mapProjectContribution = (contribution: ProjectContribution): any => ({
+    user: mapUser(contribution.user),
+    // disable rule as the function is exported
+    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
+    project: mapProject(contribution.project),
+    // disable rule as the function is exported
+    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
+    role: mapRole(contribution.role),
+});
+
 export const mapCategory = (category: Category) => ({
     id: category.id,
     label: category.label,
@@ -95,8 +106,10 @@ export const mapOrganization = (organization: Organization): any => ({
 });
 
 export const mapProject = (project: Project) => ({
-    createdAt: project.createdAt,
     budget: project.budget,
+    categories: project.categories,
+    contributors: project.contributors.map(mapProjectContribution),
+    createdAt: project.createdAt,
     description: project.description,
     id: project.id,
     images: [
@@ -106,13 +119,12 @@ export const mapProject = (project: Project) => ({
         'https://placekitten.com/177/177?4',
     ], //! MOCK
     location: project.location,
+    organizations: project.organizations.map(mapOrganization),
     participatoryBudgetYear: project.participatoryBudgetYear,
+    posts: project.posts.map(mapPost),
     startDate: project.startDate,
     status: mapProjectStatus(project.status),
     title: project.title,
-    categories: project.categories,
-    posts: project.posts.map(mapPost),
-    organizations: project.organizations.map(mapOrganization),
 });
 
 export const mapEnvironment = (env: NodeJS.ProcessEnv) => ({

@@ -4,6 +4,7 @@ import { Entity, Column, OneToMany } from 'typeorm';
 import { Role as RoleDomain } from '../../../domain/Role';
 import BaseColumns from './BaseColumns';
 import { OrganizationMembership } from './OrganizationMembership';
+import { ProjectContribution } from './ProjectContribution';
 
 @Entity('role')
 class Role extends BaseColumns {
@@ -12,6 +13,9 @@ class Role extends BaseColumns {
 
     @OneToMany(() => OrganizationMembership, (organizationMembership) => organizationMembership.role)
         organizationMemberships: OrganizationMembership[];
+
+    @OneToMany(() => ProjectContribution, (projectContribution) => projectContribution.role)
+        projectContributions: ProjectContribution[];
 
     constructor(
         id: string,
@@ -22,6 +26,7 @@ class Role extends BaseColumns {
         super(id, createdAt, modifiedAt);
         this.label = label;
         this.organizationMemberships = [];
+        this.projectContributions = [];
     }
 
     toDomain(): RoleDomain {

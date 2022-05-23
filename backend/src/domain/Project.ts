@@ -4,6 +4,7 @@ import Position from '../types/position';
 import { Category } from './Category';
 import { Organization } from './Organization';
 import { Post } from './Post';
+import { ProjectContribution } from './ProjectContribution';
 import { ProjectStatus } from './ProjectStatus';
 
 class Project {
@@ -31,6 +32,8 @@ class Project {
 
     location?: Position;
 
+    contributors: ProjectContribution[];
+
     constructor(
         budget: Number,
         description: string | null,
@@ -41,10 +44,12 @@ class Project {
         organizations: Organization[],
         categories: Category[],
         posts: Post[],
+        contributors: ProjectContribution[],
         location?: Position,
     ) {
         this.budget = budget;
         this.categories = categories;
+        this.contributors = contributors;
         this.createdAt = new Date();
         this.description = description;
         this.id = uuidv4();

@@ -65,7 +65,33 @@ async function search({ categories, status, search: searchStr }: SearchProps): P
     }
 }
 
+interface AddContributorProps {
+    projectId: string;
+    roleId: string;
+    userId: string;
+}
+async function addContributor({
+    projectId,
+    roleId,
+    userId,
+}: AddContributorProps): Promise<boolean> {
+    try {
+        await POST<Project[]>('/api/projects/add-contributor', {
+            project: projectId,
+            role: roleId,
+            user: userId,
+        });
+
+        return true;
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('ProjectService::addContributor Unhandled error');
+    }
+}
+
 const ProjectService = {
+    addContributor,
     create,
     getAll,
     getOne,

@@ -1,14 +1,23 @@
 import { Request, Response, Router } from 'express';
 import ErrorType from '../../types/Error';
 import addAnswers from '../../useCases/polls/addAnswers';
+import addContributor from '../../useCases/project/addContributor';
 import createProject, { CreateProjectProps } from '../../useCases/project/createProject';
 import findAllProjets from '../../useCases/project/findAllProjects';
 import findOneById from '../../useCases/project/findOneById';
 import findProjectsBySearch from '../../useCases/project/findProjectsBySearch';
 import asyncRoute from '../../utils/asyncRoute';
 import normalize from '../../utils/normalize';
-import { categoryRepository, projectRepository, organizationRepository } from '../database';
+import {
+    categoryRepository,
+    organizationRepository,
+    projectContributionRepository,
+    projectRepository,
+    roleRepository,
+    userRepository,
+} from '../database';
 import { mapProject } from '../mappers';
+import authorizeAdmin from '../middlewares/authorizeAdmin';
 
 const router = Router();
 
@@ -75,6 +84,27 @@ router.post(
         })({ projectRepository });
 
         res.status(200).json(results.map(mapProject));
+    }),
+);
+
+interface AddContributorBody {
+    project: string;
+    role: string;
+    user: string;
+}
+router.post(
+    '/add-contributor',
+    authorizeAdmin(),
+    asyncRoute(async (req: Request, res: Response) => {
+        const { project, role, user } = req.body as AddContributorBody;
+        await addContributor({ projectId: project, roleId: role, userId: user })({
+            projectContributionRepository,
+            projectRepository,
+            roleRepository,
+            userRepository,
+        });
+
+        res.status(200).json({ success: true });
     }),
 );
 

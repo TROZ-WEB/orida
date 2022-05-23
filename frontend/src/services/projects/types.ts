@@ -1,6 +1,10 @@
 /* eslint-disable import/no-cycle */
 import Position, { PositionConverter } from '@customTypes/position';
 import Post, { PostConverter } from '@customTypes/post';
+import {
+    ProjectContribution,
+    ProjectContributionConverter,
+} from '@customTypes/projectContribution';
 import { Category, CategoryConverter } from '@services/categories';
 import { Organization } from '@services/organizations';
 import { Status, StatusConverter } from '@services/status';
@@ -8,6 +12,7 @@ import { Status, StatusConverter } from '@services/status';
 export type Project = {
     budget: number;
     categories: Category[];
+    contributors: ProjectContribution[];
     createdAt: Date;
     description: string;
     id: string;
@@ -29,6 +34,7 @@ export const ProjectConverter = {
             categories:
                 data.categories.map((category: Category) => CategoryConverter.fromApi(category)) ??
                 [],
+            contributors: data.contributors.map(ProjectContributionConverter.fromApi),
             createdAt: data.createdAt,
             description: data.description,
             id: data.id,

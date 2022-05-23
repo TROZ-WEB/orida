@@ -1,4 +1,8 @@
 {
+    "addContributorToProject_project": "Projet",
+    "addContributorToProject_role": "Rôle",
+    "addContributorToProject_submit": "Ajouter cet utilisateur au projet",
+    "addContributorToProject_user": "Utilisateur",
     "addUserToOrga_organization": "Organisation",
     "addUserToOrga_role": "Rôle",
     "addUserToOrga_submit": "Ajouter cet utilisateur à l'organisation",

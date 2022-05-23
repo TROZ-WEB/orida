@@ -7,6 +7,7 @@ import BaseColumns from './BaseColumns';
 import { Message } from './Message';
 import { OrganizationMembership } from './OrganizationMembership';
 import { PollResponse } from './PollResponse';
+import { ProjectContribution } from './ProjectContribution';
 
 @Entity('user')
 class User extends BaseColumns {
@@ -41,6 +42,12 @@ class User extends BaseColumns {
     @OneToMany(() => Message, (message: Message) => message.author, { cascade: true })
         messages: Message[];
 
+    @OneToMany(
+        () => ProjectContribution,
+        (projectContribution) => projectContribution.user,
+    )
+        projects?: ProjectContribution[];
+
     constructor(
         id: string,
         createdAt: Date,
@@ -53,6 +60,7 @@ class User extends BaseColumns {
         pollResponses: PollResponse[],
         organizations: OrganizationMembership[],
         messages: Message[],
+        projects: ProjectContribution[],
     ) {
         super(id, createdAt, modifiedAt);
         this.email = email;
@@ -64,6 +72,7 @@ class User extends BaseColumns {
         this.pollResponses = pollResponses;
         this.organizations = organizations;
         this.messages = messages;
+        this.projects = projects;
     }
 
     async updatePassword(password: string): Promise<void> {
@@ -88,6 +97,7 @@ class User extends BaseColumns {
             passwordHash: this.passwordHash,
             isAdmin: this.isAdmin,
             organizationMemberships: this.organizations?.map((membership) => membership.toDomain()) ?? [],
+            projectContributions: [],
         });
     }
 }

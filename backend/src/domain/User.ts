@@ -3,6 +3,7 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { OrganizationMembership } from './OrganizationMembership';
+import { ProjectContribution } from './ProjectContribution';
 
 interface UserConstructorProps {
     id: string;
@@ -13,6 +14,7 @@ interface UserConstructorProps {
     fullname: string;
     isAdmin: boolean;
     organizationMemberships: OrganizationMembership[];
+    projectContributions: ProjectContribution[];
 }
 
 class User {
@@ -32,6 +34,8 @@ class User {
 
     organizationMemberships: OrganizationMembership[];
 
+    projectContributions: ProjectContribution[];
+
     constructor({
         id,
         email,
@@ -41,6 +45,7 @@ class User {
         firstname,
         isAdmin,
         organizationMemberships,
+        projectContributions,
     }: UserConstructorProps) {
         this.id = id ?? uuidv4();
         this.email = email;
@@ -50,6 +55,7 @@ class User {
         this.fullname = fullname;
         this.isAdmin = isAdmin;
         this.organizationMemberships = organizationMemberships;
+        this.projectContributions = projectContributions;
     }
 
     async updatePassword(password: string): Promise<void> {

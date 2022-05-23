@@ -11,31 +11,33 @@ interface Props extends InputHTMLAttributes<HTMLInputElement>, WithTheme {
     register: any;
     required?: boolean;
     options: Option[];
+    emptyChoice?: boolean;
 }
 
 const classes = {
     input: `
-    w-full
-    bg-transparent
-    border-0
-    border-b-2
-    rounded-none
-    border-b-grey
-    outline-none
-    text-black
-    duration-300
+        w-full
+        bg-transparent
+        border-0
+        border-b-2
+        rounded-none
+        border-b-grey
+        outline-none
+        text-black
+        duration-300
 
-    focus:border-b-secondary
+        focus:border-b-secondary
 
-    hover:border-b-secondary
-    hover:cursor-text
+        hover:border-b-secondary
+        hover:cursor-text
     `,
+    inputDisabled: 'hover:cursor-not-allowed',
     inputDarkTheme: `
-    border-b-white
-    text-white
+        border-b-white
+        text-white
     `,
     labelDarkTheme: `
-    text-white
+        text-white
     `,
 };
 
@@ -47,6 +49,8 @@ const SelectInput = ({
     required = false,
     theme = Theme.Light,
     options,
+    emptyChoice = false,
+    disabled,
     ...props
 }: Props) => (
     <div className='w-full'>
@@ -64,13 +68,21 @@ const SelectInput = ({
         <select
             className={classnames(
                 classes.input,
+                { [classes.inputDisabled]: disabled },
                 theme === Theme.Dark ? classes.inputDarkTheme : undefined,
                 className
             )}
+            defaultValue={emptyChoice ? '' : undefined}
+            disabled={disabled}
             id={name}
             {...register(name, { required })}
             {...props}
         >
+            {emptyChoice && (
+                <option value='' disabled hidden>
+                    Choisir
+                </option>
+            )}
             {options?.map((option) => (
                 <option key={option.value?.toString()} value={option.value}>
                     {option.label}

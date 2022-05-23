@@ -7,6 +7,7 @@ import BaseColumns from './BaseColumns';
 import { Category } from './Category';
 import { Organization } from './Organization';
 import { Post } from './Post';
+import { ProjectContribution } from './ProjectContribution';
 import { ProjectStatusEntity } from './ProjectStatus';
 
 @Entity('project')
@@ -44,6 +45,12 @@ class Project extends BaseColumns {
     @Column({ type: 'geometry', spatialFeatureType: 'Point', srid: 4326, nullable: true })
         location?: Point;
 
+    @OneToMany(
+        () => ProjectContribution,
+        (projectContribution) => projectContribution.project,
+    )
+        contributors: ProjectContribution[];
+
     constructor(
         id: string,
         createdAt: Date,
@@ -57,12 +64,14 @@ class Project extends BaseColumns {
         categories: Category[],
         status: ProjectStatusEntity,
         posts: Post[],
+        contributors: ProjectContribution[],
         longitude?: number,
         latitude?: number,
     ) {
         super(id, createdAt, modifiedAt);
         this.budget = budget;
         this.categories = categories;
+        this.contributors = contributors;
         this.description = description;
         this.organizations = organizations;
         this.participatoryBudgetYear = participatoryBudgetYear;
@@ -82,6 +91,7 @@ class Project extends BaseColumns {
             id: this.id,
             budget: this.budget,
             categories: this.categories?.map((c) => c.toDomain()) || [],
+            contributors: this.contributors?.map((contributor) => contributor.toDomain()) || [],
             description: this.description,
             location: this.location
                 ? { latitude: this.location.coordinates[0], longitude: this.location.coordinates[1] }

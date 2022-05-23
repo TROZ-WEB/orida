@@ -1,6 +1,7 @@
 import CategoryList from '@components/CategoryList';
 import OrganizationTileList from '@components/organizations/OrganizationTileList';
 import PollSection from '@components/PollSection';
+import ContributorSection from '@components/project/ContributorSection';
 import ProjectLocation from '@components/ProjectLocation';
 import ThreadSection from '@components/Threads/ThreadSection';
 import { PostType } from '@customTypes/post';
@@ -62,6 +63,12 @@ const ProjectPage = () => {
             <ProjectLocation location={project.location} />
             <Divider className='my-6' />
             <OrganizationTileList organizations={project.organizations} />
+            <Divider className='my-6' />
+            <ContributorSection
+                contributors={project.contributors}
+                onAddContributor={() => refresh()}
+                project={project}
+            />
         </>
     );
 
