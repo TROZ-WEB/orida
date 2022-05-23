@@ -18,6 +18,7 @@ const findOneById = (id: string) => async ({ projectRepository }: Context): Prom
                 },
                 thread: true,
             },
+            organizations: true,
         },
     });
 

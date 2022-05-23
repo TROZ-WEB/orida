@@ -1,8 +1,10 @@
 import CategoryList from '@components/CategoryList';
+import OrganizationTileList from '@components/organizations/OrganizationTileList';
 import PollSection from '@components/PollSection';
 import ProjectLocation from '@components/ProjectLocation';
 import ThreadSection from '@components/Threads/ThreadSection';
 import { PostType } from '@customTypes/post';
+import Divider from '@design/Divider';
 import Layout from '@design/layouts/Layout';
 import ThreeColsLayout, { MenuItem } from '@design/layouts/ThreeCols';
 import Loader from '@design/Loader';
@@ -58,6 +60,8 @@ const ProjectPage = () => {
             <CategoryList categories={project.categories} />
             <Space px={28} />
             <ProjectLocation location={project.location} />
+            <Divider className='my-6' />
+            <OrganizationTileList organizations={project.organizations} />
         </>
     );
 

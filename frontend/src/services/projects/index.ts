@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Category } from '@services/categories';
 import { Status } from '@services/status';
 import { GET, POST } from '@utils/http';

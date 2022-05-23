@@ -57,26 +57,6 @@ export const mapPost = (post: Post) => ({
     date: post.date,
 });
 
-export const mapProject = (project: Project) => ({
-    createdAt: project.createdAt,
-    budget: project.budget,
-    description: project.description,
-    id: project.id,
-    images: [
-        'https://placekitten.com/177/177?1',
-        'https://placekitten.com/177/177?2',
-        'https://placekitten.com/177/177?3',
-        'https://placekitten.com/177/177?4',
-    ], //! MOCK
-    location: project.location,
-    participatoryBudgetYear: project.participatoryBudgetYear,
-    startDate: project.startDate,
-    status: mapProjectStatus(project.status),
-    title: project.title,
-    categories: project.categories,
-    posts: project.posts.map((post) => mapPost(post)),
-});
-
 export const mapCategory = (category: Category) => ({
     id: category.id,
     label: category.label,
@@ -112,6 +92,27 @@ export const mapOrganization = (organization: Organization): any => ({
     projects: organization.projects,
     parentOrganizations: organization.parentOrganizations,
     members: organization.members.map(mapOrganizationMembership),
+});
+
+export const mapProject = (project: Project) => ({
+    createdAt: project.createdAt,
+    budget: project.budget,
+    description: project.description,
+    id: project.id,
+    images: [
+        'https://placekitten.com/177/177?1',
+        'https://placekitten.com/177/177?2',
+        'https://placekitten.com/177/177?3',
+        'https://placekitten.com/177/177?4',
+    ], //! MOCK
+    location: project.location,
+    participatoryBudgetYear: project.participatoryBudgetYear,
+    startDate: project.startDate,
+    status: mapProjectStatus(project.status),
+    title: project.title,
+    categories: project.categories,
+    posts: project.posts.map(mapPost),
+    organizations: project.organizations.map(mapOrganization),
 });
 
 export const mapEnvironment = (env: NodeJS.ProcessEnv) => ({

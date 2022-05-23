@@ -1,6 +1,8 @@
+/* eslint-disable import/no-cycle */
 import Position, { PositionConverter } from '@customTypes/position';
 import Post, { PostConverter } from '@customTypes/post';
 import { Category, CategoryConverter } from '@services/categories';
+import { Organization } from '@services/organizations';
 import { Status, StatusConverter } from '@services/status';
 
 export type Project = {
@@ -12,6 +14,7 @@ export type Project = {
     images: string[];
     location?: Position;
     modifiedAt: Date;
+    organizations: Organization[];
     participatoryBudgetYear: number;
     posts: Post[];
     startDate: Date;
@@ -32,6 +35,7 @@ export const ProjectConverter = {
             images: data.images,
             location: data.location ? PositionConverter.fromApi(data.location) : undefined,
             modifiedAt: data.modifiedAt,
+            organizations: data.organizations,
             participatoryBudgetYear: data.participatoryBudgetYear,
             posts: data.posts.map((post: any) => PostConverter.fromApi(post)),
             startDate: data.startDate,
