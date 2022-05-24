@@ -18,6 +18,7 @@ const classes = {
         bg-background
     `,
     image: `
+        bg-[#718391]
         max-w-[45px]
         mb-2.5
         rounded-50%

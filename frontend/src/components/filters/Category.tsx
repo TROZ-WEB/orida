@@ -1,9 +1,14 @@
-import { Button } from '@design/buttons';
 import H3 from '@design/titles/H3';
 import { Category } from '@services/categories';
 import { useState } from 'react';
 
 import CategoryTile from './CategoryTile';
+
+const FAKE_CATEGORY_PLUS_BUTTON: Category = {
+    color: '#718391',
+    id: 'three-dots',
+    label: 'Plus',
+};
 
 interface CategoryFilterProps {
     title: string;
@@ -48,7 +53,13 @@ const CategoryFilter = ({ options, select, unselect, selection, title }: Categor
                         />
                     );
                 })}
-                {!displayAll && <Button onClick={handleClick}>+</Button>}
+                {!displayAll && (
+                    <CategoryTile
+                        key='fake-category'
+                        category={FAKE_CATEGORY_PLUS_BUTTON}
+                        onClick={handleClick}
+                    />
+                )}
             </div>
         </div>
     );
