@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import Budget from '@customTypes/budget';
 import { Category } from '@services/categories';
 import { Status } from '@services/status';
 import { GET, POST } from '@utils/http';
@@ -47,14 +48,21 @@ interface SearchProps {
     status?: Status[];
     search?: string;
     categories?: Category[];
+    budgets?: Budget[];
 }
 
-async function search({ categories, status, search: searchStr }: SearchProps): Promise<Project[]> {
+async function search({
+    categories,
+    status,
+    search: searchStr,
+    budgets,
+}: SearchProps): Promise<Project[]> {
     try {
         const response = await POST<Project[]>('/api/projects/search', {
             status: status?.map((s) => s.id),
             categories: categories?.map((c) => c.id),
             search: searchStr,
+            budgets,
         });
 
         return response.map(ProjectConverter.fromApi);

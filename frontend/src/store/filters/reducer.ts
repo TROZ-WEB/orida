@@ -7,8 +7,10 @@ import {
     FiltersActionTypes,
     FiltersState,
     initialState,
+    SELECT_BUDGET,
     SELECT_CATEGORY,
     SELECT_STATUS,
+    UNSELECT_BUDGET,
     UNSELECT_CATEGORY,
     UNSELECT_STATUS,
 } from './types';
@@ -36,6 +38,17 @@ const filtersReducer = (state = initialState, action: FiltersActionTypes): Filte
                 ...state,
                 status: state.status.filter((cat) => cat.id !== action.status.id),
             };
+        case SELECT_BUDGET:
+            return {
+                ...state,
+                budgets: [...state.budgets, action.budget],
+            };
+        case UNSELECT_BUDGET:
+            return {
+                ...state,
+                budgets: state.budgets.filter((cat) => cat.min !== action.budget.min),
+            };
+
         case RESET_STORE:
             return initialState;
         default:

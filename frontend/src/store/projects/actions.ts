@@ -1,3 +1,4 @@
+import Budget from '@customTypes/budget';
 import { ReduxDispatch } from '@hooks/useThunkDispatch';
 import { Category } from '@services/categories';
 import ProjectService, { CreateProps, Project } from '@services/projects';
@@ -55,11 +56,12 @@ export const search =
 interface FilterFiltersProps {
     status: Status[];
     categories: Category[];
+    budgets: Budget[];
 }
 
-export const filter = ({ status, categories }: FilterFiltersProps) => {
+export const filter = ({ status, categories, budgets }: FilterFiltersProps) => {
     return async (dispatch: ReduxDispatch): Promise<void> => {
-        const result = await ProjectService.search({ status, categories });
+        const result = await ProjectService.search({ status, categories, budgets });
         dispatch(filterAction(result));
     };
 };

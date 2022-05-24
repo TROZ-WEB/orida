@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import Budget from '../../types/Budget';
 import ErrorType from '../../types/Error';
 import addAnswers from '../../useCases/polls/addAnswers';
 import addContributor from '../../useCases/project/addContributor';
@@ -69,18 +70,20 @@ interface SearchProps {
     search?: string;
     status?: string[]; // ids only
     categories?: string[]; // ids only
+    budgets?: Budget[];
 }
 
 router.post(
     '/search',
     asyncRoute(async (req: Request, res: Response) => {
-        const { search, status, categories } = req.body as SearchProps;
+        const { search, status, categories, budgets } = req.body as SearchProps;
         const normalizedSearch = search ? normalize(search) : undefined;
 
         const results = await findProjectsBySearch({
             search: normalizedSearch,
             status,
             categories,
+            budgets,
         })({ projectRepository });
 
         res.status(200).json(results.map(mapProject));

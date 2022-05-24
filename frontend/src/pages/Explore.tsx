@@ -23,7 +23,13 @@ const ExplorePage = () => {
     const tab = query.get('tab') ? castToExploreTab(query.get('tab')!) : ExploreTab.list;
 
     useEffect(() => {
-        dispatch(filter({ status: filters.status, categories: filters.categories }));
+        dispatch(
+            filter({
+                status: filters.status,
+                categories: filters.categories,
+                budgets: filters.budgets,
+            })
+        );
     }, [filters]);
 
     const left = (
