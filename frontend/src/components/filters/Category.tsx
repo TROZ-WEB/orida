@@ -1,5 +1,7 @@
+import { Button } from '@design/buttons';
 import H3 from '@design/titles/H3';
 import { Category } from '@services/categories';
+import { useState } from 'react';
 
 import CategoryTile from './CategoryTile';
 
@@ -17,29 +19,39 @@ const classes = {
     scroller: 'flex overflow-auto',
 };
 
-const CategoryFilter = ({ options, select, unselect, selection, title }: CategoryFilterProps) => (
-    <div className={classes.wrapper}>
-        <H3 className={classes.title}>{title}</H3>
-        <div className={classes.scroller}>
-            {options.map((category) => {
-                const isActive = selection.map((element) => element.id).includes(category.id);
+const CategoryFilter = ({ options, select, unselect, selection, title }: CategoryFilterProps) => {
+    const [displayAll, setDisplayAll] = useState(false);
+    const handleClick = () => {
+        setDisplayAll(!displayAll);
+    };
 
-                const toggleCategory = (clickedCategory: Category) => {
-                    const toCall = isActive ? unselect : select;
-                    toCall(clickedCategory);
-                };
+    const showCategories = displayAll ? options : options.slice(0, 3);
 
-                return (
-                    <CategoryTile
-                        key={category.id}
-                        active={isActive}
-                        category={category}
-                        onClick={toggleCategory}
-                    />
-                );
-            })}
+    return (
+        <div className={classes.wrapper}>
+            <H3 className={classes.title}>{title}</H3>
+            <div className={classes.scroller}>
+                {showCategories.map((category) => {
+                    const isActive = selection.map((element) => element.id).includes(category.id);
+
+                    const toggleCategory = (clickedCategory: Category) => {
+                        const toCall = isActive ? unselect : select;
+                        toCall(clickedCategory);
+                    };
+
+                    return (
+                        <CategoryTile
+                            key={category.id}
+                            active={isActive}
+                            category={category}
+                            onClick={toggleCategory}
+                        />
+                    );
+                })}
+                {!displayAll && <Button onClick={handleClick}>+</Button>}
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 export default CategoryFilter;
