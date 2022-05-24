@@ -22,6 +22,7 @@ import pollReducer from './polls/reducer';
 import projectReducer from './projects/reducer';
 import rolesReducer from './roles/reducer';
 import statusReducer from './status/reducer';
+import threadReducer from './threads/reducer';
 
 // import logger from 'redux-logger';
 
@@ -41,6 +42,7 @@ const appReducer = combineReducers({
     projects: projectReducer,
     roles: rolesReducer,
     status: statusReducer,
+    threads: threadReducer,
 });
 
 export type AppState = ReturnType<typeof appReducer>;

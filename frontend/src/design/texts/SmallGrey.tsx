@@ -6,7 +6,7 @@ interface SmallGreyProps {
 }
 
 const SmallGrey = ({ children, className }: PropsWithChildren<SmallGreyProps>) => (
-    <span className={classnames('text-sm text-neutral-400', className)}>{children}</span>
+    <span className={classnames('text-xs text-neutral-400', className)}>{children}</span>
 );
 
 export default SmallGrey;

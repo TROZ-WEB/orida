@@ -1,7 +1,11 @@
 import classnames from '@utils/classnames';
 import { ButtonHTMLAttributes } from 'react';
 
-const SubmitButton = ({ className, ...props }: ButtonHTMLAttributes<HTMLInputElement>) => (
+const SubmitButton = ({
+    className,
+    disabled,
+    ...props
+}: ButtonHTMLAttributes<HTMLInputElement>) => (
     <input
         className={classnames(
             `
@@ -22,6 +26,7 @@ const SubmitButton = ({ className, ...props }: ButtonHTMLAttributes<HTMLInputEle
             className
         )}
         {...props}
+        disabled={disabled}
         type='submit'
     />
 );

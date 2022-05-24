@@ -37,7 +37,7 @@ const ThreadCard = ({ thread }: ThreadCardProps) => {
                 </div>
             </InvisibleButton>
             <Modal {...modalProps}>
-                <ThreadDetails thread={thread} />
+                <ThreadDetails threadId={thread.id} />
             </Modal>
         </>
     );

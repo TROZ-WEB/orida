@@ -2,6 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
+import { Message } from './Message';
 import { OrganizationMembership } from './OrganizationMembership';
 import { ProjectContribution } from './ProjectContribution';
 
@@ -15,6 +16,7 @@ interface UserConstructorProps {
     isAdmin: boolean;
     organizationMemberships: OrganizationMembership[];
     projectContributions: ProjectContribution[];
+    messages: Message[],
 }
 
 class User {
@@ -36,6 +38,8 @@ class User {
 
     projectContributions: ProjectContribution[];
 
+    messages: Message[];
+
     constructor({
         id,
         email,
@@ -46,6 +50,7 @@ class User {
         isAdmin,
         organizationMemberships,
         projectContributions,
+        messages,
     }: UserConstructorProps) {
         this.id = id ?? uuidv4();
         this.email = email;
@@ -56,6 +61,7 @@ class User {
         this.isAdmin = isAdmin;
         this.organizationMemberships = organizationMemberships;
         this.projectContributions = projectContributions;
+        this.messages = messages;
     }
 
     async updatePassword(password: string): Promise<void> {

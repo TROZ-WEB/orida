@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { Project } from '@services/projects';
 import { Role, RoleConverter } from '@services/roles/types';
 import { User, UserConverter } from '@services/users';

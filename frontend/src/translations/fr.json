@@ -19,6 +19,8 @@
     "categories_solidarity": "Solidarité et cohésion sociale",
     "categories_sport": "Sport",
     "categories_transportation": "Transport et mobilité",
+    "CTA_button": "Créer un compte",
+    "CTA_phrase": "Envie de participer ?",
     "explore_title": "Explorer",
     "filters_categories_title": "Catégories",
     "filters_status_title": "Statut",
@@ -81,8 +83,6 @@
     "project_details_address_unknown": "Adresse inconnue",
     "project_details_title": "Le projet",
     "project_list_title": "Projets",
-    "project_polls_blurred_button": "Créer un compte",
-    "project_polls_blurred_phrase": "Envie de participer ?",
     "project_polls_title": "Sondages",
     "project_status_COMPLETE": "Terminé",
     "project_status_DESIGN": "En conception",
@@ -100,6 +100,9 @@
     "register_title": "S'inscrire",
     "register_toLogin": "Déjà un compte ? Je me connecte",
     "register_type_label": "Vous êtes...",
+    "thread_message_content_label": "Votre message",
+    "thread_message_content_placeholder": "...",
+    "thread_message_button": "Envoyer",
     "type_userType_citizen": "Citoyen",
     "type_userType_community": "Collectivité"
 }

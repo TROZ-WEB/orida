@@ -39,7 +39,7 @@ export const mapMessage = (message: Message) => ({
     id: message.id,
     createdAt: message.createdAt,
     thread: message.thread,
-    author: message.author,
+    author: message.author ? mapUser(message.author) : undefined,
     content: message.content,
 });
 
@@ -47,7 +47,7 @@ export const mapThread = (thread: Thread) => ({
     id: thread.id,
     subject: thread.subject,
     createdAt: thread.createdAt,
-    message: thread.messages?.map((message) => mapMessage(message)),
+    messages: thread.messages?.map((message) => mapMessage(message)) || [],
 });
 
 export const mapPost = (post: Post) => ({

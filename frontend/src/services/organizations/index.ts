@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { GET, PATCH, POST } from '@utils/http';
 
 import {

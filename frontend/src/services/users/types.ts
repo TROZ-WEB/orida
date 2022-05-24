@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { OrganizationMembership, OrganizationMembershipConverter } from '@services/organizations';
 
 export interface User {

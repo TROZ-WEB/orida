@@ -29,6 +29,7 @@
     ],
     "rules": {
         "import/order": "off", // collision with simple-import-sort as specified here: https://github.com/lydell/eslint-plugin-simple-import-sort
+        "import/no-cycle": "off", // subject to bug, poorly handled
         "react/button-has-type": "off", // subject to bug, poorly handled
         "react/react-in-jsx-scope": "off", // Not necessary in React 17
         "simple-import-sort/exports": "error",

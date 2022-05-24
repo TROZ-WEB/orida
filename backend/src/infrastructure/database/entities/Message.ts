@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
 import { Message as MessageDomain } from '../../../domain/Message';
 import BaseColumns from './BaseColumns';
 import { Thread } from './Thread';
@@ -8,11 +8,12 @@ import { User } from './User';
 
 @Entity('messages')
 class Message extends BaseColumns {
-    @ManyToOne(() => Thread, (thread: Thread) => thread.messages)
+    @ManyToOne(() => Thread, (thread: Thread) => thread.messages, { cascade: ['insert', 'update'] })
+    @JoinColumn({ name: 'thread' })
         thread: Thread;
 
-    @ManyToOne(() => User, (user: User) => user.messages)
-    @JoinColumn({ name: 'user' })
+    @ManyToOne(() => User, (user: User) => user.messages, { cascade: ['insert', 'update'], eager: true })
+    @JoinColumn({ name: 'author' })
         author: User;
 
     @Column({ type: 'character varying', nullable: false })

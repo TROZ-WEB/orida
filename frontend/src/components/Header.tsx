@@ -113,7 +113,7 @@ const Header = () => {
                         className={classes.menuItem}
                         to={goToLogin(LoginTab.Register, pathname)}
                     >
-                        {t('project_polls_blurred_button')}
+                        {t('CTA_button')}
                     </ButtonLink>
                 )}
             </div>

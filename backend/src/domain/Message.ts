@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
+/* eslint-disable import/prefer-default-export */
 import { Thread } from './Thread';
 import { User } from './User';
 
-/* eslint-disable import/prefer-default-export */
 class Message {
     id: string;
 

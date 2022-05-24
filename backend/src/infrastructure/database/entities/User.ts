@@ -29,7 +29,7 @@ class User extends BaseColumns {
     @Column({ type: 'character varying', default: 'noname' })
         fullname: string;
 
-    @OneToMany(() => PollResponse, (response: PollResponse) => response.user, { cascade: true })
+    @OneToMany(() => PollResponse, (response) => response.user, { cascade: true })
         pollResponses: PollResponse[];
 
     @OneToMany(
@@ -97,6 +97,7 @@ class User extends BaseColumns {
             passwordHash: this.passwordHash,
             isAdmin: this.isAdmin,
             organizationMemberships: this.organizations?.map((membership) => membership.toDomain()) ?? [],
+            messages: this.messages?.map((m) => m.toDomain()) ?? [],
             projectContributions: [],
         });
     }

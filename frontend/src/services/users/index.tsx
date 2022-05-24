@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { GET, PATCH } from '@utils/http';
 
 import { User, UserConverter } from './types';

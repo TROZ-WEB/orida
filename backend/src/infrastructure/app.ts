@@ -7,6 +7,7 @@ import authRouter from './routes/auth';
 import categoriesRouter from './routes/categories';
 import environmentRouter from './routes/environment';
 import healthRouter from './routes/health';
+import messagesRouter from './routes/messages';
 import organizationsRouter from './routes/organizations';
 import pollsRouter from './routes/polls';
 import projectsRouter from './routes/projects';
@@ -44,6 +45,7 @@ app.use(auth.session());
 
 app.use('/auth/', authRouter);
 app.use('/categories/', categoriesRouter);
+app.use('/messages/', messagesRouter);
 app.use('/organizations/', organizationsRouter);
 app.use('/polls/', pollsRouter);
 app.use('/projects/', projectsRouter);

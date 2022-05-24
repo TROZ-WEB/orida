@@ -12,8 +12,7 @@ class Thread extends BaseColumns {
     @JoinColumn({ name: 'post' })
         post?: Post;
 
-    @OneToMany(() => Message, (message: Message) => message.thread, { cascade: true })
-    @JoinColumn({ name: 'messages' })
+    @OneToMany(() => Message, (message: Message) => message.thread, { eager: true, cascade: true })
         messages: Message[];
 
     @Column({ type: 'character varying', nullable: false })
@@ -39,7 +38,7 @@ class Thread extends BaseColumns {
             post: this.post?.toDomain(),
             createdAt: this.createdAt,
             subject: this.subject,
-            messages: this.messages?.map((m) => m.toDomain()),
+            messages: this.messages?.map((m) => m.toDomain()) || [],
         });
     }
 }
