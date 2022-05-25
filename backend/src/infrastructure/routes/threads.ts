@@ -5,7 +5,7 @@ import { ThreadErrorType } from '../../useCases/threads/ThreadError';
 import asyncRoute from '../../utils/asyncRoute';
 import { postRepository, projectRepository, threadRepository } from '../database';
 import { mapThread } from '../mappers';
-import authorizeAdmin from '../middlewares/authorizeAdmin';
+import authorizeProjectAdmin from '../middlewares/authorizeProjectAdmin';
 
 const router = Router();
 
@@ -15,7 +15,7 @@ interface CreateBodyProps {
 }
 router.post(
     '/',
-    authorizeAdmin(), // TODO::AUTHORIZE MANAGER ONLY
+    authorizeProjectAdmin(),
     asyncRoute(async (req: Request, res: Response) => {
         const { project, subject } = req.body as CreateBodyProps;
         const thread = await createThread({ project, subject })({

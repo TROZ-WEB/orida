@@ -5,7 +5,7 @@ import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
 import ProjectService, { Project } from '@services/projects';
-import { getAllUsers } from '@store/admin/actions';
+import { User } from '@services/users';
 import { getAll as getAllRoles } from '@store/roles/actions';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -26,11 +26,23 @@ const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToPro
     const { register, handleSubmit, setValue } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
-    const users = useSelector((state) => state.admin.users);
     const roles = useSelector((state) => state.roles.data);
+    // Users options
+    const auth = useSelector((state) => state.auth.data);
+    const users = project.organizations.reduce(
+        (acc: User[], organization) =>
+            acc.concat(organization.members.map((member) => member.user)),
+        []
+    ); // get all users of project organizations
+    const uniqueUsers = Array.from(new Map(users.map((u) => [u.id, u])).values()).filter(
+        (user) => user.id !== auth.id
+    ); // get unique users from array, and remove auth from array
+    const usersOptions = uniqueUsers.map((user) => ({
+        label: `${user.fullname} (${user.email})`,
+        value: user.id,
+    }));
 
     useEffect(() => {
-        dispatch(getAllUsers());
         dispatch(getAllRoles());
         setValue('projectId', project.id);
     }, []);
@@ -62,10 +74,7 @@ const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToPro
             <SelectInput
                 label={t('addContributorToProject_user')}
                 name='userId'
-                options={users.map((user) => ({
-                    label: `${user.fullname} (${user.email})`,
-                    value: user.id,
-                }))}
+                options={usersOptions}
                 register={register}
                 emptyChoice
                 required

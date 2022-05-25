@@ -8,6 +8,8 @@ import { Category as CategoryEntity } from '../../infrastructure/database/entiti
 import { Organization as OrganizationEntity } from '../../infrastructure/database/entities/Organization';
 import { Project as ProjectEntity } from '../../infrastructure/database/entities/Project';
 import Position from '../../types/position';
+import AuthError, { AuthErrorType } from '../auth/AuthError';
+import isAdmin from '../auth/isAdmin';
 import addContributor from './addContributor';
 
 export interface CreateProjectProps {
@@ -42,6 +44,11 @@ const createProject = ({
     title,
 }: CreateProjectProps) => (
     async ({ projectRepository, categoryRepository, organizationRepository }: Context): Promise<Project> => {
+        // Verify if auth is in all the organizations linked to the project, or is Orida
+        const organisationsOfAuth = auth.organizationMemberships.map((o) => o.organization.id);
+        const isAuthAuthorized = organizations.reduce((acc, val) => (organisationsOfAuth.includes(val) ? acc : false), true);
+        if (!isAuthAuthorized && !isAdmin(auth)) { throw new AuthError(AuthErrorType.Unauthorized); }
+
         const categoriesData = await categoryRepository.findBy({
             id: In(categories),
         }); // Will execute the query: SELECT * FROM "categories" WHERE "id" IN <categories-ids-array>

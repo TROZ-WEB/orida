@@ -28,7 +28,7 @@ const ContributorSection = ({
     contributors,
     project,
 }: ContributorSectionProps) => {
-    const { isAdmin } = useRole();
+    const { isProjectAdmin } = useRole({ project });
     const addContributorModalProps = useModal();
     const showContributorModalProps = useModal();
 
@@ -45,7 +45,7 @@ const ContributorSection = ({
                     </InvisibleButton>
                     {contributors.length === 0 && <span>Aucun</span>}
                 </div>
-                {isAdmin && (
+                {isProjectAdmin && (
                     <div className={classes.invite}>
                         <TertiaryButton
                             className={classes.inviteButton}

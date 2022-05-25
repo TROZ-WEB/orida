@@ -5,7 +5,7 @@ import getResults from '../../useCases/polls/getResults';
 import asyncRoute from '../../utils/asyncRoute';
 import pollAdapter from '../adapters/pollAdapter';
 import { pollRepository, pollResponseRepository, postRepository, projectRepository, userRepository } from '../database';
-import authorizeAdmin from '../middlewares/authorizeAdmin';
+import authorizeProjectAdmin from '../middlewares/authorizeProjectAdmin';
 
 const router = Router();
 
@@ -16,7 +16,7 @@ interface CreateBodyProps {
 }
 router.post(
     '/',
-    authorizeAdmin(), // TODO::AUTHORIZE MANAGER ONLY
+    authorizeProjectAdmin(),
     asyncRoute(async (req: Request, res: Response) => {
         const { project, question, responses } = req.body as CreateBodyProps;
         await createPoll({ project, question, responses })({

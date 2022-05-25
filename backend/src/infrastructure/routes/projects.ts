@@ -18,8 +18,8 @@ import {
     userRepository,
 } from '../database';
 import { mapProject } from '../mappers';
-import authorizeAdmin from '../middlewares/authorizeAdmin';
 import authorizeAdminOfAllProjectOrganizations from '../middlewares/authorizeAdminOfAllProjectOrganizations';
+import authorizeProjectAdmin from '../middlewares/authorizeProjectAdmin';
 
 const router = Router();
 
@@ -100,7 +100,7 @@ interface AddContributorBody {
 }
 router.post(
     '/add-contributor',
-    authorizeAdmin(),
+    authorizeProjectAdmin(),
     asyncRoute(async (req: Request, res: Response) => {
         const { project, role, user } = req.body as AddContributorBody;
         await addContributor({ projectId: project, roleId: role, userId: user })({

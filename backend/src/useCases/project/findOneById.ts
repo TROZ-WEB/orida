@@ -20,7 +20,11 @@ const findOneById = (id: string) => async ({ projectRepository }: Context): Prom
                     messages: false,
                 },
             },
-            organizations: true,
+            organizations: {
+                members: {
+                    user: true,
+                },
+            },
             contributors: {
                 project: {
                     status: true,
