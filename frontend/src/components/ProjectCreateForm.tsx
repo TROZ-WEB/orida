@@ -11,6 +11,7 @@ import {
     TextInput,
 } from '@design/inputs';
 import Space from '@design/Space';
+import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
@@ -42,6 +43,7 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
     const { control, register, handleSubmit, reset } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
+    const { isAdmin } = useRole();
 
     // Years options
     const [yearsOptions, setYearsOptions] = useState<Option[]>([]);
@@ -74,6 +76,15 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
         return { label: category.label, value: category.id };
     });
 
+    // Admin organizations options
+    const adminOrganizationOptions = useSelector((state) => state.organizations.data).map(
+        (organization) => {
+            return {
+                label: organization.name,
+                value: organization.id,
+            };
+        }
+    );
     // Organizations options
     const auth = useSelector((state) => state.auth.data);
     const organizationsOptions = auth.organizationMemberships.map((organizationMembership) => {
@@ -161,12 +172,23 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
                 options={statusesOptions}
                 register={register}
             />
+            <Space px={8} />
             <MultiSelectInput
                 label={t('project_create_startdate_label')}
                 name='categories'
                 options={categoriesOptions}
                 register={register}
             />
+            <Space px={8} />
+            {isAdmin && (
+                <MultiSelectInput
+                    label={t('project_create_organizations_label')}
+                    name='organizations'
+                    options={adminOrganizationOptions}
+                    register={register}
+                    required
+                />
+            )}
             {organizationsOptions.length > 1 && (
                 <MultiSelectInput
                     label={t('project_create_organizations_label')}
