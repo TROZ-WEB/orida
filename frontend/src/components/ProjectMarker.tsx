@@ -1,4 +1,5 @@
 import { H3 } from '@design/titles';
+import { goToProject } from '@router/AppRoutes';
 import { Project } from '@services/projects';
 
 interface ProjectMarkerProps {
@@ -6,10 +7,13 @@ interface ProjectMarkerProps {
 }
 
 const ProjectMarker = ({ project }: ProjectMarkerProps) => (
-    <div>
-        <img alt='' src={project.images[0]} />
-        <H3>{project.title}</H3>
-    </div>
+    // Note: a <Link> element cannot be used as the marker is not in a <Route> context
+    <a href={goToProject(project.id)}>
+        <div>
+            <img alt='' src={project.images[0]} />
+            <H3>{project.title}</H3>
+        </div>
+    </a>
 );
 
 export default ProjectMarker;
