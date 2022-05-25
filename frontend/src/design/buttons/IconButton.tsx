@@ -13,7 +13,6 @@ h-[30px]
 flex
 items-center
 justify-center
-bg-transparent
 
 hover:bg-background-hover
 

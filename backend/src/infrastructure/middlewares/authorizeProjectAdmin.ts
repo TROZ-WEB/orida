@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import AuthError, { AuthErrorType } from '../../useCases/auth/AuthError';
+import isAdmin from '../../useCases/auth/isAdmin';
 import isAdminOfProject from '../../useCases/auth/isAdminOfProject';
 
 const authorizeProjectAdmin = () => (req: Request, res: Response, next: NextFunction) => {
@@ -16,7 +17,7 @@ const authorizeProjectAdmin = () => (req: Request, res: Response, next: NextFunc
 
     const authorizationGranted = isAdminOfProject(user, projectId);
 
-    if (authorizationGranted) {
+    if (authorizationGranted || isAdmin(user)) {
         next();
 
         return;
