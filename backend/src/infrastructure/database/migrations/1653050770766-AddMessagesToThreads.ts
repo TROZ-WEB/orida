@@ -2,8 +2,8 @@
 /* eslint-disable import/prefer-default-export */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddMessagesTable1653379031502 implements MigrationInterface {
-    name = 'AddMessagesTable1653379031502';
+export class AddMessagesToThreads1653050770766 implements MigrationInterface {
+    name = 'AddMessagesToThreads1653050770766';
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query('CREATE TABLE "messages" ("created-at" TIMESTAMP NOT NULL DEFAULT now(), "modified-at" TIMESTAMP NOT NULL DEFAULT now(), "id" uuid NOT NULL DEFAULT uuid_generate_v4(), "content" character varying NOT NULL, "thread" uuid, "author" uuid, CONSTRAINT "PK_18325f38ae6de43878487eff986" PRIMARY KEY ("id"))');
