@@ -1,4 +1,5 @@
 import { OrganizationMembership, OrganizationMembershipConverter } from '@services/organizations';
+import { projectContributions, projectContributionsConverter } from '@services/projects';
 
 export interface User {
     email: string;
@@ -6,6 +7,7 @@ export interface User {
     id: string;
     isAdmin: boolean;
     organizationMemberships: OrganizationMembership[];
+    projectContributions: projectContributions[];
 }
 
 export const UserConverter = {
@@ -17,6 +19,9 @@ export const UserConverter = {
             isAdmin: data.isAdmin,
             organizationMemberships: data.organizationMemberships
                 ? data.organizationMemberships.map(OrganizationMembershipConverter.fromApi)
+                : [],
+            projectContributions: data.projectContributions
+                ? data.projectContributions.map(projectContributionsConverter.fromApi)
                 : [],
         };
     },

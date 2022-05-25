@@ -23,7 +23,7 @@ interface AddMemberToOrganizationFormProps {
 }
 
 const AddMemberToOrganizationForm = ({ organization }: AddMemberToOrganizationFormProps) => {
-    const { register, handleSubmit } = useForm<Inputs>();
+    const { setValue, register, handleSubmit } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
     const users = useSelector((state) => state.admin.users);
@@ -33,7 +33,11 @@ const AddMemberToOrganizationForm = ({ organization }: AddMemberToOrganizationFo
     useEffect(() => {
         dispatch(getAllUsers());
         dispatch(getAllRoles());
-        if (!organization) dispatch(getAllOrganizations());
+        if (organization) {
+            setValue('organizationId', organization.id);
+        } else {
+            dispatch(getAllOrganizations());
+        }
     }, []);
 
     const addMember: SubmitHandler<Inputs> = async (data: Inputs) => {

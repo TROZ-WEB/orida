@@ -21,11 +21,14 @@ export const mapUser = (user: User) => ({
     // disable rule as the function is exported
     /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     organizationMemberships: user.organizationMemberships.map(mapOrganizationMembership),
+    // disable rule as the function is exported
+    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
+    projectContributions: user.projectContributions.map(mapProjectContribution),
 });
 
 export const mapProjectStatus = (status: ProjectStatus) => ({
-    id: status.id,
-    label: status.label,
+    id: status?.id,
+    label: status?.label,
 });
 
 export const mapPoll = (poll: Poll) => ({

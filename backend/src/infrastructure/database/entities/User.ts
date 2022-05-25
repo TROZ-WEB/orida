@@ -45,6 +45,7 @@ class User extends BaseColumns {
     @OneToMany(
         () => ProjectContribution,
         (projectContribution) => projectContribution.user,
+        { cascade: true },
     )
         projects?: ProjectContribution[];
 
@@ -98,7 +99,7 @@ class User extends BaseColumns {
             isAdmin: this.isAdmin,
             organizationMemberships: this.organizations?.map((membership) => membership.toDomain()) ?? [],
             messages: this.messages?.map((m) => m.toDomain()) ?? [],
-            projectContributions: [],
+            projectContributions: this.projects?.map((membership) => membership.toDomain()) ?? [],
         });
     }
 }

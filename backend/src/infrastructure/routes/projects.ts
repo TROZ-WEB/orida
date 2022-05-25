@@ -19,6 +19,7 @@ import {
 } from '../database';
 import { mapProject } from '../mappers';
 import authorizeAdmin from '../middlewares/authorizeAdmin';
+import authorizeAdminOfAllProjectOrganizations from '../middlewares/authorizeAdminOfAllProjectOrganizations';
 
 const router = Router();
 
@@ -48,8 +49,10 @@ router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
 
 router.post(
     '/',
+    authorizeAdminOfAllProjectOrganizations(),
     asyncRoute(async (req: Request, res: Response) => {
         const project: CreateProjectProps = {
+            auth: req.user!,
             budget: req.body.budget,
             categories: req.body.categories,
             description: req.body.description,

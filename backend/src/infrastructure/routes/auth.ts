@@ -39,7 +39,7 @@ router.post('/logout', (req: Request, res: Response) => {
     res.status(200).json({ success: true });
 });
 
-router.get('/me', (req: Request, res: Response) => {
+router.get('/getAuth', (req: Request, res: Response) => {
     if (req.user) {
         res.json(mapUser(req.user));
     } else {

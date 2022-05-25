@@ -27,9 +27,10 @@ const styles = {
 };
 
 const PollSection = ({ polls, project, refresh }: PollSectionProps) => {
-    const { isAuthenticated, isAdmin } = useRole();
     const modalProps = useModal();
     const { t } = useTranslation();
+    const { isAuthenticated } = useRole();
+    const { isProjectAdmin } = useRole({ project });
 
     if (!isAuthenticated) {
         return <PollSectionBlurred />;
@@ -42,7 +43,7 @@ const PollSection = ({ polls, project, refresh }: PollSectionProps) => {
                     <H1>
                         {t('project_polls_title')} ({polls.length})
                     </H1>
-                    {isAdmin && (
+                    {isProjectAdmin && (
                         <IconButton
                             className='w-[35px] h-[35px]'
                             onClick={() => modalProps.open()}

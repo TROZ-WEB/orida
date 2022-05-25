@@ -14,10 +14,9 @@ import Space from '@design/Space';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
-import { Organization } from '@services/organizations/types';
 import { Status } from '@services/status';
+import { getAuth } from '@store/auth/actions';
 import { getAll as getAllCategories } from '@store/categories/actions';
-import { getAll as getAllOrganizations } from '@store/organizations/actions';
 import { create } from '@store/projects/actions';
 import { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -43,57 +42,10 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
     const { control, register, handleSubmit, reset } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
+
+    // Years options
     const [yearsOptions, setYearsOptions] = useState<Option[]>([]);
-    const projectStatuses = useSelector((state) => state.status.data);
-    const categories = useSelector((state) => state.categories.data);
-    const statusesOptions = projectStatuses.map((status) => ({
-        value: status.id,
-        label: status.label,
-    }));
-    const organizations = useSelector((state) => state.organizations.data);
-
-    useEffect(() => {
-        if (categories.length === 0) {
-            dispatch(getAllCategories());
-        }
-        if (organizations.length === 0) {
-            dispatch(getAllOrganizations());
-        }
-    }, []);
-
-    const categoriesOptions = categories.map((category) => {
-        return { label: category.label, value: category.id };
-    });
-
-    const organizationsOptions = organizations.map((organization: Organization) => {
-        return { label: organization.name, value: organization.id };
-    });
-
-    const onCreate: SubmitHandler<Inputs> = async (data: Inputs) => {
-        try {
-            const cleanBudget = data.budget || 0;
-            const cleanParticipatoryBudgetYear = data.participatoryBudgetYear || 0;
-            const cleanCategories = data.categories || [];
-            const cleanOrganizations = data.organizations || [];
-            await dispatch(
-                create({
-                    ...data,
-                    budget: cleanBudget,
-                    participatoryBudgetYear: cleanParticipatoryBudgetYear,
-                    categories: cleanCategories,
-                    statusId: data.status.id,
-                    organizations: cleanOrganizations,
-                })
-            );
-            reset();
-            onCreated();
-        } catch (e: any) {
-            notify(NotificationType.Error, e.message);
-        }
-    };
-
     const currentYear = new Date().getFullYear();
-
     useMemo(() => {
         const years: Option[] = [];
 
@@ -105,8 +57,64 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
             label: t('project_create_participatorybudgetyear_placeholder'),
             value: '',
         });
+
         setYearsOptions(years);
     }, []);
+
+    // Statuses options
+    const projectStatuses = useSelector((state) => state.status.data);
+    const statusesOptions = projectStatuses.map((status) => ({
+        value: status.id,
+        label: status.label,
+    }));
+
+    // Categories options
+    const categories = useSelector((state) => state.categories.data);
+    const categoriesOptions = categories.map((category) => {
+        return { label: category.label, value: category.id };
+    });
+
+    // Organizations options
+    const auth = useSelector((state) => state.auth.data);
+    const organizationsOptions = auth.organizationMemberships.map((organizationMembership) => {
+        return {
+            label: organizationMembership.organization.name,
+            value: organizationMembership.organization.id,
+        };
+    });
+
+    useEffect(() => {
+        if (categories.length === 0) {
+            dispatch(getAllCategories());
+        }
+    }, []);
+
+    const onCreate: SubmitHandler<Inputs> = async (data: Inputs) => {
+        try {
+            const cleanBudget = data.budget || 0;
+            const cleanParticipatoryBudgetYear = data.participatoryBudgetYear || 0;
+            const cleanCategories = data.categories || [];
+            const cleanOrganizations =
+                organizationsOptions.length === 1
+                    ? [organizationsOptions[0].value]
+                    : data.organizations;
+            await dispatch(
+                create({
+                    ...data,
+                    budget: cleanBudget,
+                    participatoryBudgetYear: cleanParticipatoryBudgetYear,
+                    categories: cleanCategories,
+                    statusId: data.status.id,
+                    organizations: cleanOrganizations,
+                })
+            );
+            dispatch(getAuth());
+            reset();
+            onCreated();
+        } catch (e: any) {
+            notify(NotificationType.Error, e.message);
+        }
+    };
 
     return (
         <form className='max-w-[500px]' onSubmit={handleSubmit(onCreate)}>
@@ -159,12 +167,15 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
                 options={categoriesOptions}
                 register={register}
             />
-            <MultiSelectInput
-                label={t('project_create_organizations_label')}
-                name='organizations'
-                options={organizationsOptions}
-                register={register}
-            />
+            {organizationsOptions.length > 1 && (
+                <MultiSelectInput
+                    label={t('project_create_organizations_label')}
+                    name='organizations'
+                    options={organizationsOptions}
+                    register={register}
+                    required
+                />
+            )}
             <Space px={8} />
             <SubmitButton
                 className='bg-secondary hover:bg-secondary-hover'

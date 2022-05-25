@@ -1,13 +1,17 @@
+/* eslint-disable max-len */
 import { Repository, In } from 'typeorm';
 import { Category } from '../../domain/Category';
 import { Project } from '../../domain/Project';
-import { projectStatusRepository } from '../../infrastructure/database';
+import { User } from '../../domain/User';
+import { projectStatusRepository, projectContributionRepository, roleRepository, userRepository } from '../../infrastructure/database';
 import { Category as CategoryEntity } from '../../infrastructure/database/entities/Category';
 import { Organization as OrganizationEntity } from '../../infrastructure/database/entities/Organization';
 import { Project as ProjectEntity } from '../../infrastructure/database/entities/Project';
 import Position from '../../types/position';
+import addContributor from './addContributor';
 
 export interface CreateProjectProps {
+    auth: User;
     budget?: Number;
     categories: Category[];
     description?: string;
@@ -26,6 +30,7 @@ interface Context {
 }
 
 const createProject = ({
+    auth,
     budget,
     categories,
     description,
@@ -72,6 +77,17 @@ const createProject = ({
         });
 
         const entity = await projectRepository.save(project);
+
+        addContributor({
+            userId: auth.id,
+            projectId: entity.id,
+            roleId: '00000000-0000-0000-0000-000000000001',
+        })({
+            projectContributionRepository,
+            projectRepository,
+            roleRepository,
+            userRepository,
+        });
 
         return entity.toDomain();
     }

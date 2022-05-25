@@ -7,7 +7,27 @@ import {
 } from '@customTypes/projectContribution';
 import { Category, CategoryConverter } from '@services/categories';
 import { Organization } from '@services/organizations';
+import { Role, RoleConverter } from '@services/roles';
 import { Status, StatusConverter } from '@services/status';
+import { User, UserConverter } from '@services/users';
+
+export type projectContributions = {
+    project: Project;
+    user: User;
+    role: Role;
+};
+
+export const projectContributionsConverter = {
+    fromApi(data: any): projectContributions {
+        return {
+            // remove rule because functions are exported
+            /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
+            project: ProjectConverter.fromApi(data.project),
+            user: UserConverter.fromApi(data.user),
+            role: RoleConverter.fromApi(data.role),
+        };
+    },
+};
 
 export type Project = {
     budget: number;

@@ -1,4 +1,5 @@
 import { OrganizationMembershipConverter } from '@services/organizations';
+import { projectContributionsConverter } from '@services/projects';
 import { User } from '@services/users';
 
 export interface Auth extends User {}
@@ -26,6 +27,9 @@ export const AuthConverter = {
             fullname: data.fullname,
             organizationMemberships: data.organizationMemberships
                 ? data.organizationMemberships.map(OrganizationMembershipConverter.fromApi)
+                : [],
+            projectContributions: data.projectContributions
+                ? data.projectContributions.map(projectContributionsConverter.fromApi)
                 : [],
         };
     },

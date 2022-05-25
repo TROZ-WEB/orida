@@ -48,7 +48,7 @@ const Header = () => {
     const dispatch = useThunkDispatch();
     const navigate = useNavigate();
     const isLoggedIn = !!useSelector((state) => state.auth.data.id);
-    const { isAdmin, isAuthenticated } = useRole();
+    const { isAdmin, isAuthenticated, isAdminOfAtLeastOneOrganization } = useRole();
     const { pathname } = useLocation();
     const projectModalProps = useModal();
 
@@ -87,7 +87,7 @@ const Header = () => {
                 )}
             </div>
             <div className='flex flex-row'>
-                {isAdmin && (
+                {isAdminOfAtLeastOneOrganization && (
                     <Button className={classes.menuItem} onClick={() => projectModalProps.open()}>
                         <Icon className='stroke-white' color='#fff' name='plus' size={20} />
                         <span className='text-white font-normal mt-2'>Créer un projet</span>

@@ -42,9 +42,9 @@ async function logout() {
     }
 }
 
-async function me(): Promise<User | null> {
+async function getAuth(): Promise<User | null> {
     try {
-        const result = await GET<User>('/api/auth/me');
+        const result = await GET<User>('/api/auth/getAuth');
 
         return UserConverter.fromApi(result);
     } catch (error: any) {
@@ -53,14 +53,14 @@ async function me(): Promise<User | null> {
         }
         // TODO::error handling
         console.error(error);
-        throw Error('AuthService::me  Unhandled error');
+        throw Error('AuthService::getAuth  Unhandled error');
     }
 }
 
 const AuthService = {
     login,
     logout,
-    me,
+    getAuth,
     register,
 };
 

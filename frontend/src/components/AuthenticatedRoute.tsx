@@ -19,7 +19,7 @@ const AuthenticatedRoute = () => {
     useEffect(() => {
         async function checkToken() {
             try {
-                const result = await AuthService.me();
+                const result = await AuthService.getAuth();
 
                 if (result === null) {
                     setIsLoggedIn(false);

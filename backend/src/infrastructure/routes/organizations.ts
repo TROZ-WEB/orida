@@ -10,7 +10,7 @@ import asyncRoute from '../../utils/asyncRoute';
 import { organizationMembershipRepository, organizationRepository, roleRepository, userRepository } from '../database';
 import { mapOrganization } from '../mappers';
 import authorizeAdmin from '../middlewares/authorizeAdmin';
-import authorizeOrganizationAdmin from '../middlewares/authorizeOrganisationAdmin';
+import authorizeOrganizationAdmin from '../middlewares/authorizeOrganizationAdmin';
 
 const router = Router();
 

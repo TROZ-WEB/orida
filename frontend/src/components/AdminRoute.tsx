@@ -11,7 +11,7 @@ const AuthenticatedRoute = () => {
     useEffect(() => {
         async function checkToken() {
             try {
-                const result = await AuthService.me();
+                const result = await AuthService.getAuth();
 
                 if (!result?.isAdmin) {
                     throw Error('Unauthorized');

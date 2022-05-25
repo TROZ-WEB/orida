@@ -9,7 +9,14 @@ interface Context {
 const findOneUserById = (id: string) => async ({ userRepository }: Context): Promise<User | null> => {
     const entity = await userRepository.findOne({
         where: { id },
-        relations: { organizations: true },
+        relations: {
+            organizations: true,
+            projects: {
+                project: {
+                    status: true,
+                },
+            },
+        },
     });
 
     return entity ? entity.toDomain() : null;
