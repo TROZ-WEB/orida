@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { AuthErrorType } from '../../useCases/auth/AuthError';
-import { OrganizationErrorType } from '../../useCases/organization/organizationError';
+import { OrganizationMembershipErrorType } from '../../useCases/organization/organizationMembershipError';
+import { ProjectContributionErrorType } from '../../useCases/project/projectContributionError';
 
 // eslint-disable required because all 4 parameters need to be explicit in order for Express to detect
 // it as error handler
@@ -11,7 +12,8 @@ const errorHandler = (err: any, req: Request, res: Response, next: NextFunction)
     const errorType = err.message;
 
     switch (errorType) {
-        case OrganizationErrorType.AlreadyExists:
+        case ProjectContributionErrorType.AlreadyExists:
+        case OrganizationMembershipErrorType.AlreadyExists:
             return res.status(409).send({
                 message: 'Conflict: Already exist',
                 error: 'Already exist',

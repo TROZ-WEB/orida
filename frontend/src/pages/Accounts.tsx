@@ -1,3 +1,4 @@
+import AddContributorToProject from '@components/AddContributorToProject';
 import AddMemberToOrganizationForm from '@components/AddMemberToOrganizationForm';
 import { ProjectContribution } from '@customTypes/projectContribution';
 import { Button, DeleteButton } from '@design/buttons';
@@ -20,6 +21,7 @@ const classes = {
 
 const AccountsPage = () => {
     const addMemberToOrgaModalProps = useModal();
+    const addContributorToProjectModalProps = useModal();
     const [projectContributors, setProjectContributors] = useState<ProjectContribution[]>([]);
     const [organizationMembers, setOrganizationMembers] = useState<OrganizationMembership[]>([]);
 
@@ -68,6 +70,10 @@ const AccountsPage = () => {
             <Space px={60} />
             <div className='flex w-full'>
                 <div className='w-full'>
+                    <Button onClick={() => addContributorToProjectModalProps.open()}>
+                        Ajouter un utilisateur à un projet
+                    </Button>
+                    <Space px={8} />
                     <H2>Droits projets</H2>
                     <Table>
                         <Thead>
@@ -142,6 +148,14 @@ const AccountsPage = () => {
             </div>
             <Modal {...addMemberToOrgaModalProps}>
                 <AddMemberToOrganizationForm />
+            </Modal>
+            <Modal {...addContributorToProjectModalProps}>
+                <AddContributorToProject
+                    onSuccess={() => {
+                        notify(NotificationType.Success, 'Utilisateur ajouté au projet');
+                        refresh();
+                    }}
+                />
             </Modal>
         </Layout>
     );

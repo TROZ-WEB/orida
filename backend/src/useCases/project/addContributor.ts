@@ -8,6 +8,7 @@ import { Role as RoleEntity } from '../../infrastructure/database/entities/Role'
 import { User as UserEntity } from '../../infrastructure/database/entities/User';
 import RoleError, { RoleErrorType } from '../roles/roleError';
 import UserError, { UserErrorType } from '../users/UserError';
+import ProjectContributionError, { ProjectContributionErrorType } from './projectContributionError';
 import ProjectError, { ProjectErrorType } from './projectError';
 
 interface Arg {
@@ -33,6 +34,18 @@ const addContributor = ({
     roleRepository,
     userRepository,
 }: Context): Promise<ProjectContribution> => {
+    // check for existing contribution
+    const existingEntity = await projectContributionRepository.findOne({
+        where: {
+            user: { id: userId },
+            project: { id: projectId },
+        },
+    });
+    if (existingEntity) {
+        throw new ProjectContributionError(ProjectContributionErrorType.AlreadyExists);
+    }
+
+    // otherwise, continue with creation
     const userData = await userRepository.findOne({
         where: {
             id: userId,

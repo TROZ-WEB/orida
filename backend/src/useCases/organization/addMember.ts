@@ -9,6 +9,7 @@ import { User as UserEntity } from '../../infrastructure/database/entities/User'
 import RoleError, { RoleErrorType } from '../roles/roleError';
 import UserError, { UserErrorType } from '../users/UserError';
 import OrganizationError, { OrganizationErrorType } from './organizationError';
+import OrganizationMembershipError, { OrganizationMembershipErrorType } from './organizationMembershipError';
 
 interface Arg {
     userId: string;
@@ -41,7 +42,7 @@ const addMember = ({
         },
     });
     if (existingEntity) {
-        throw new OrganizationError(OrganizationErrorType.AlreadyExists);
+        throw new OrganizationMembershipError(OrganizationMembershipErrorType.AlreadyExists);
     }
 
     // gather data

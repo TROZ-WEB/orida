@@ -6,6 +6,8 @@ import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
 import ProjectService, { Project } from '@services/projects';
 import { User } from '@services/users';
+import { getAllUsers } from '@store/admin/actions';
+import { getAll as getAllProjects } from '@store/projects/actions';
 import { getAll as getAllRoles } from '@store/roles/actions';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -19,7 +21,7 @@ type Inputs = {
 
 interface AddContributorToProjectFormProps {
     onSuccess?: () => void;
-    project: Project;
+    project?: Project;
 }
 
 const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToProjectFormProps) => {
@@ -29,11 +31,13 @@ const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToPro
     const roles = useSelector((state) => state.roles.data);
     // Users options
     const auth = useSelector((state) => state.auth.data);
-    const users = project.organizations.reduce(
-        (acc: User[], organization) =>
-            acc.concat(organization.members.map((member) => member.user)),
-        []
-    ); // get all users of project organizations
+    const users = project
+        ? project.organizations.reduce(
+              (acc: User[], organization) =>
+                  acc.concat(organization.members.map((member) => member.user)),
+              []
+          ) // get all users of project organizations
+        : useSelector((state) => state.admin.users); // get all users
     const uniqueUsers = Array.from(new Map(users.map((u) => [u.id, u])).values()).filter(
         (user) => user.id !== auth.id
     ); // get unique users from array, and remove auth from array
@@ -41,16 +45,25 @@ const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToPro
         label: `${user.fullname} (${user.email})`,
         value: user.id,
     }));
+    const allProjects = useSelector((state) => state.projects.data);
+    const projectOptions = (project ? [project] : allProjects).map((proj) => ({
+        label: proj.title,
+        value: proj.id,
+    }));
 
     useEffect(() => {
         dispatch(getAllRoles());
-        setValue('projectId', project.id);
+        if (project) {
+            setValue('projectId', project.id);
+        } else {
+            dispatch(getAllUsers());
+            dispatch(getAllProjects());
+        }
     }, []);
 
     const addContributor: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
             await ProjectService.addContributor(data);
-            notify(NotificationType.Success, 'success');
             if (onSuccess) {
                 onSuccess();
             }
@@ -63,11 +76,11 @@ const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToPro
     return (
         <form onSubmit={handleSubmit(addContributor)}>
             <SelectInput
+                disabled={!!project}
                 label={t('addContributorToProject_project')}
                 name='projectId'
-                options={[project].map((proj) => ({ label: proj.title, value: proj.id }))}
-                register={register} // disabled if an organization is already selected
-                disabled
+                options={projectOptions}
+                register={register}
                 required
             />
             <Space px={8} />
