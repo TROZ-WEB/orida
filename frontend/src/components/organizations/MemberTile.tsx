@@ -35,7 +35,7 @@ const MemberTile = ({ isAdmin, onRemoveMember, organization, role, user }: Membe
             {isAdmin && (
                 <div className='ml-2'>
                     <IconButton
-                        className='inline-block'
+                        className='inline-block bg-transparent'
                         onClick={() => removeUserFromOrganization()}
                     >
                         <Icon name='trash' size={16} />

@@ -7,10 +7,16 @@ import Space from '@design/Space';
 import { Table, Tbody, Td, Th, Thead, Tr } from '@design/table';
 import { H2 } from '@design/titles';
 import useModal from '@hooks/useModal';
+import { goToOrganization, goToProject } from '@router/AppRoutes';
 import notify, { NotificationType } from '@services/notifications';
 import OrganizationService, { OrganizationMembership } from '@services/organizations';
 import ProjectService from '@services/projects';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+const classes = {
+    link: 'text-blue-500 underline',
+};
 
 const AccountsPage = () => {
     const addMemberToOrgaModalProps = useModal();
@@ -76,7 +82,11 @@ const AccountsPage = () => {
                             {projectContributors.map(({ user, project, role }) => (
                                 <Tr key={`${user.id}${project.title}`}>
                                     <Td>{user.fullname}</Td>
-                                    <Td>{project.title}</Td>
+                                    <Td>
+                                        <Link className={classes.link} to={goToProject(project.id)}>
+                                            {project.title}
+                                        </Link>
+                                    </Td>
                                     <Td>{role.label}</Td>
                                     <Td>
                                         <DeleteButton
@@ -108,7 +118,14 @@ const AccountsPage = () => {
                             {organizationMembers.map(({ user, organization, role }) => (
                                 <Tr key={`${user.id}${organization.name}`}>
                                     <Td>{user.fullname}</Td>
-                                    <Td>{organization.name}</Td>
+                                    <Td>
+                                        <Link
+                                            className={classes.link}
+                                            to={goToOrganization(organization.id)}
+                                        >
+                                            {organization.name}
+                                        </Link>
+                                    </Td>
                                     <Td>{role.label}</Td>
                                     <Td>
                                         <DeleteButton

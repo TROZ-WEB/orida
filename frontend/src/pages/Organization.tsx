@@ -148,12 +148,16 @@ const OrganizationPage = () => {
 
                         <H3 className='flex'>
                             {isOrganizationAdmin && (
-                                <IconButton onClick={() => addMemberToOrgaModalProps.open()}>
+                                <IconButton
+                                    className='bg-transparent'
+                                    onClick={() => addMemberToOrgaModalProps.open()}
+                                >
                                     <Icon className='stroke-secondary mr-2' name='plus' />
                                 </IconButton>
                             )}
                             {t('organization_details_members')}
                         </H3>
+                        <Space px={8} />
                         <ul>
                             {organization.members.map((member) => (
                                 <li key={member.user.id}>
