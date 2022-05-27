@@ -33,6 +33,18 @@ const addMember = ({
     roleRepository,
     userRepository,
 }: Context): Promise<OrganizationMembership> => {
+    // check if the user is already member of this organization
+    const existingEntity = await organizationMembershipRepository.findOne({
+        where: {
+            user: { id: userId },
+            organization: { id: organizationId },
+        },
+    });
+    if (existingEntity) {
+        throw new OrganizationError(OrganizationErrorType.AlreadyExists);
+    }
+
+    // gather data
     const userData = await userRepository.findOne({
         where: {
             id: userId,
@@ -58,6 +70,7 @@ const addMember = ({
         throw new RoleError(RoleErrorType.NotFound);
     }
 
+    // create membership
     const membershipEntity = organizationMembershipRepository.create({
         organization: organizationData,
         role: roleData,
