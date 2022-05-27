@@ -6,7 +6,7 @@ import {
 } from '@customTypes/projectContribution';
 import { Category } from '@services/categories';
 import { Status } from '@services/status';
-import { GET, POST } from '@utils/http';
+import { DELETE, GET, POST } from '@utils/http';
 
 import { CreateProps, Project, ProjectConverter } from './types';
 
@@ -102,6 +102,25 @@ async function addContributor({
     }
 }
 
+interface RemoveContributorProps {
+    projectId: string;
+    userId: string;
+}
+async function removeContributor({ projectId, userId }: RemoveContributorProps): Promise<boolean> {
+    try {
+        await DELETE<Project[]>('/api/projects/contributor', {
+            project: projectId,
+            user: userId,
+        });
+
+        return true;
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('ProjectService::addContributor Unhandled error');
+    }
+}
+
 async function getContributors(): Promise<ProjectContribution[]> {
     try {
         const result = await GET<ProjectContribution[]>('/api/projects/contributors');
@@ -120,6 +139,7 @@ const ProjectService = {
     getAll,
     getContributors,
     getOne,
+    removeContributor,
     search,
 };
 

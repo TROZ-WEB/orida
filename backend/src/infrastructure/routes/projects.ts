@@ -8,6 +8,7 @@ import findAllContributors from '../../useCases/project/findAllContributors';
 import findAllProjets from '../../useCases/project/findAllProjects';
 import findOneById from '../../useCases/project/findOneById';
 import findProjectsBySearch from '../../useCases/project/findProjectsBySearch';
+import removeContributor from '../../useCases/project/removeContributor';
 import asyncRoute from '../../utils/asyncRoute';
 import normalize from '../../utils/normalize';
 import {
@@ -121,6 +122,21 @@ router.post(
             roleRepository,
             userRepository,
         });
+
+        res.status(200).json({ success: true });
+    }),
+);
+
+interface RemoveContributorBody {
+    project: string;
+    user: string;
+}
+router.delete(
+    '/contributor',
+    authorizeAdmin(),
+    asyncRoute(async (req: Request, res: Response) => {
+        const { project, user } = req.body as RemoveContributorBody;
+        await removeContributor({ projectId: project, userId: user })({ projectContributionRepository });
 
         res.status(200).json({ success: true });
     }),

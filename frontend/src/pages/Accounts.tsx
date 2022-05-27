@@ -1,12 +1,13 @@
 import AddMemberToOrganizationForm from '@components/AddMemberToOrganizationForm';
 import { ProjectContribution } from '@customTypes/projectContribution';
-import { Button } from '@design/buttons';
+import { Button, DeleteButton } from '@design/buttons';
 import Layout from '@design/layouts/Layout';
 import Modal from '@design/modals/DefaultModal';
 import Space from '@design/Space';
 import { Table, Tbody, Td, Th, Thead, Tr } from '@design/table';
 import { H2 } from '@design/titles';
 import useModal from '@hooks/useModal';
+import notify, { NotificationType } from '@services/notifications';
 import OrganizationService, { OrganizationMembership } from '@services/organizations';
 import ProjectService from '@services/projects';
 import { useEffect, useState } from 'react';
@@ -16,7 +17,7 @@ const AccountsPage = () => {
     const [projectContributors, setProjectContributors] = useState<ProjectContribution[]>([]);
     const [organizationMembers, setOrganizationMembers] = useState<OrganizationMembership[]>([]);
 
-    useEffect(() => {
+    const refresh = () => {
         const getAllContributors = async () => {
             const contributors = await ProjectService.getContributors();
             setProjectContributors(contributors);
@@ -28,7 +29,22 @@ const AccountsPage = () => {
 
         getAllContributors();
         getAllMembers();
+    };
+
+    useEffect(() => {
+        refresh();
     }, []);
+
+    const deleteContributor = (projectId: string, userId: string) => {
+        try {
+            ProjectService.removeContributor({ projectId, userId });
+            notify(NotificationType.Success, 'Opération réussie');
+            refresh();
+        } catch (e) {
+            console.error(e);
+            notify(NotificationType.Error, "Échec de l'opération");
+        }
+    };
 
     return (
         <Layout>
@@ -42,14 +58,20 @@ const AccountsPage = () => {
                                 <Th>Utilisateur</Th>
                                 <Th>Projet</Th>
                                 <Th>Rôle</Th>
+                                <Th>Actions</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {projectContributors.map((contributor) => (
-                                <Tr key={`${contributor.user.id}${contributor.project.title}`}>
-                                    <Td>{contributor.user.fullname}</Td>
-                                    <Td>{contributor.project.title}</Td>
-                                    <Td>{contributor.role.label}</Td>
+                            {projectContributors.map(({ user, project, role }) => (
+                                <Tr key={`${user.id}${project.title}`}>
+                                    <Td>{user.fullname}</Td>
+                                    <Td>{project.title}</Td>
+                                    <Td>{role.label}</Td>
+                                    <Td>
+                                        <DeleteButton
+                                            onClick={() => deleteContributor(project.id, user.id)}
+                                        />
+                                    </Td>
                                 </Tr>
                             ))}
                         </Tbody>
