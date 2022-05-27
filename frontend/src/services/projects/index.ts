@@ -1,5 +1,9 @@
 /* eslint-disable import/no-cycle */
 import Budget from '@customTypes/budget';
+import {
+    ProjectContribution,
+    ProjectContributionConverter,
+} from '@customTypes/projectContribution';
 import { Category } from '@services/categories';
 import { Status } from '@services/status';
 import { GET, POST } from '@utils/http';
@@ -98,10 +102,23 @@ async function addContributor({
     }
 }
 
+async function getContributors(): Promise<ProjectContribution[]> {
+    try {
+        const result = await GET<ProjectContribution[]>('/api/projects/contributors');
+
+        return result.map(ProjectContributionConverter.fromApi);
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('ProjectService::addContributor Unhandled error');
+    }
+}
+
 const ProjectService = {
     addContributor,
     create,
     getAll,
+    getContributors,
     getOne,
     search,
 };

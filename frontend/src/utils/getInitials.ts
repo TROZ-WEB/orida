@@ -6,7 +6,7 @@
 function getInitials(input: string) {
     const names = input
         .split(' ') // consider whitespace as a separator for names
-        .filter(value => value.length > 0); // remove empty strings (occurs when a user enter mmultiple whitespaces)
+        .filter((value) => value.length > 0); // remove empty strings (occurs when a user enter mmultiple whitespaces)
 
     return names.map((name) => name[0].toUpperCase()).join('');
 }

@@ -2,13 +2,14 @@ import { Request, Response, Router } from 'express';
 import ErrorType from '../../types/Error';
 import addMember from '../../useCases/organization/addMember';
 import createOrganization from '../../useCases/organization/createOrganization';
+import findAllMemberships from '../../useCases/organization/findAllMemberships';
 import findAllOrganizations from '../../useCases/organization/findAllOrganizations';
 import findOrganizationById from '../../useCases/organization/findOrganizationById';
 import removeMember from '../../useCases/organization/removeMember';
 import updateOrganization from '../../useCases/organization/updateOrganization';
 import asyncRoute from '../../utils/asyncRoute';
 import { organizationMembershipRepository, organizationRepository, roleRepository, userRepository } from '../database';
-import { mapOrganization } from '../mappers';
+import { mapOrganization, mapOrganizationMembership } from '../mappers';
 import authorizeAdmin from '../middlewares/authorizeAdmin';
 import authorizeOrganizationAdmin from '../middlewares/authorizeOrganizationAdmin';
 
@@ -20,6 +21,12 @@ router.get(
         res.status(200).json((await findAllOrganizations()({ organizationRepository })).map(mapOrganization));
     }),
 );
+
+router.get('/memberships', authorizeAdmin(), asyncRoute(async (req: Request, res: Response) => {
+    const members = await findAllMemberships()({ organizationMembershipRepository });
+
+    res.status(200).json(members.map(mapOrganizationMembership));
+}));
 
 router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
     const { id } = req.params;

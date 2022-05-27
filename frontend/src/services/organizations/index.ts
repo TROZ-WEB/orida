@@ -5,6 +5,8 @@ import {
     CreateProps,
     Organization,
     OrganizationConverter,
+    OrganizationMembership,
+    OrganizationMembershipConverter,
     RemoveMemberProps,
     UpdateProps,
 } from './types';
@@ -91,13 +93,26 @@ async function removeMember({ userId, organizationId }: RemoveMemberProps): Prom
     }
 }
 
+async function getMembers(): Promise<OrganizationMembership[]> {
+    try {
+        const results = await GET<OrganizationMembership[]>('/api/organizations/memberships');
+
+        return results.map(OrganizationMembershipConverter.fromApi);
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('OrganizationService::removeMember Unhandled error');
+    }
+}
+
 const OrganizationService = {
     addMember,
     create,
-    update,
     getAll,
+    getMembers,
     getOne,
     removeMember,
+    update,
 };
 
 export default OrganizationService;

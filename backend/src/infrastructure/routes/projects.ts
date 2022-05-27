@@ -4,6 +4,7 @@ import ErrorType from '../../types/Error';
 import addAnswers from '../../useCases/polls/addAnswers';
 import addContributor from '../../useCases/project/addContributor';
 import createProject, { CreateProjectProps } from '../../useCases/project/createProject';
+import findAllContributors from '../../useCases/project/findAllContributors';
 import findAllProjets from '../../useCases/project/findAllProjects';
 import findOneById from '../../useCases/project/findOneById';
 import findProjectsBySearch from '../../useCases/project/findProjectsBySearch';
@@ -17,7 +18,8 @@ import {
     roleRepository,
     userRepository,
 } from '../database';
-import { mapProject } from '../mappers';
+import { mapProject, mapProjectContribution } from '../mappers';
+import authorizeAdmin from '../middlewares/authorizeAdmin';
 import authorizeAdminOfAllProjectOrganizations from '../middlewares/authorizeAdminOfAllProjectOrganizations';
 import authorizeProjectAdmin from '../middlewares/authorizeProjectAdmin';
 
@@ -27,6 +29,16 @@ router.get(
     '/',
     asyncRoute(async (req: Request, res: Response) => {
         res.status(200).json((await findAllProjets()({ projectRepository })).map(mapProject));
+    }),
+);
+
+router.get(
+    '/contributors',
+    authorizeAdmin(),
+    asyncRoute(async (req: Request, res: Response) => {
+        const contributors = await findAllContributors()({ projectContributionRepository });
+
+        res.status(200).json(contributors.map(mapProjectContribution));
     }),
 );
 
