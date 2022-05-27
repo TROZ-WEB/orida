@@ -46,6 +46,17 @@ const AccountsPage = () => {
         }
     };
 
+    const deleteMembership = (organizationId: string, userId: string) => {
+        try {
+            OrganizationService.removeMember({ organizationId, userId });
+            notify(NotificationType.Success, 'Opération réussie');
+            refresh();
+        } catch (e) {
+            console.error(e);
+            notify(NotificationType.Error, "Échec de l'opération");
+        }
+    };
+
     return (
         <Layout>
             <Space px={60} />
@@ -90,14 +101,22 @@ const AccountsPage = () => {
                                 <Th>Utilisateur</Th>
                                 <Th>Organisation</Th>
                                 <Th>Rôle</Th>
+                                <Th>Actions</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {organizationMembers.map((membership) => (
-                                <Tr key={`${membership.user.id}${membership.organization.name}`}>
-                                    <Td>{membership.user.fullname}</Td>
-                                    <Td>{membership.organization.name}</Td>
-                                    <Td>{membership.role.label}</Td>
+                            {organizationMembers.map(({ user, organization, role }) => (
+                                <Tr key={`${user.id}${organization.name}`}>
+                                    <Td>{user.fullname}</Td>
+                                    <Td>{organization.name}</Td>
+                                    <Td>{role.label}</Td>
+                                    <Td>
+                                        <DeleteButton
+                                            onClick={() =>
+                                                deleteMembership(organization.id, user.id)
+                                            }
+                                        />
+                                    </Td>
                                 </Tr>
                             ))}
                         </Tbody>
