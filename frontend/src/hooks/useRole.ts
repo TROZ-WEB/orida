@@ -40,7 +40,9 @@ const useRole = ({ organization, project }: UseRoleProps = {}) => {
 
     const { isAdmin } = user;
 
-    const isAdminOfAtLeastOneOrganization = user.organizationMemberships.length > 0 || user.isAdmin;
+    const isAdminOfAtLeastOneOrganization = user.organizationMemberships
+        ? user.organizationMemberships.length > 0 || user.isAdmin
+        : false;
 
     const isOrganizationAdmin = organization
         ? computeIsOrganizationAdmin(user, organization)
