@@ -5,6 +5,7 @@ import { Entity, Column, ManyToMany, JoinTable, ManyToOne, OneToMany, JoinColumn
 import { Project as ProjectDomain } from '../../../domain/Project';
 import BaseColumns from './BaseColumns';
 import { Category } from './Category';
+import { Image } from './Image';
 import { Organization } from './Organization';
 import { Post } from './Post';
 import { ProjectContribution } from './ProjectContribution';
@@ -51,6 +52,9 @@ class Project extends BaseColumns {
     )
         contributors: ProjectContribution[];
 
+    @OneToMany(() => Image, (image) => image.project, { eager: true, cascade: true })
+        images: Image[];
+
     constructor(
         id: string,
         createdAt: Date,
@@ -58,6 +62,7 @@ class Project extends BaseColumns {
         budget: Number,
         description: string | null,
         participatoryBudgetYear: Number | null,
+        images: Image[],
         startDate: Date | null,
         title: string,
         organizations: Organization[],
@@ -76,6 +81,7 @@ class Project extends BaseColumns {
         this.organizations = organizations;
         this.participatoryBudgetYear = participatoryBudgetYear;
         this.posts = posts;
+        this.images = images;
         this.startDate = startDate;
         this.status = status;
         this.title = title;
@@ -99,6 +105,7 @@ class Project extends BaseColumns {
             organizations: this.organizations?.map((o) => o.toDomain()) || [],
             participatoryBudgetYear: this.participatoryBudgetYear,
             posts: this.posts?.map((post) => post.toDomain()) || [],
+            images: this.images?.map((image) => image.toDomain()) || [],
             startDate: this.startDate,
             status: this.status,
             title: this.title,

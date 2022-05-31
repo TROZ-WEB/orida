@@ -3,12 +3,14 @@ import { createContext, PropsWithChildren, useContext, useEffect, useState } fro
 
 interface EnvironmentCtxProps {
     googleMapsKey: string;
+    uploadcarePublicKey: string;
 }
 
 const EnvironmentCtx = createContext<EnvironmentCtxProps | null>(null);
 
 const defaultCtx: EnvironmentCtxProps = {
     googleMapsKey: '',
+    uploadcarePublicKey: '',
 };
 
 const EnvironmentProvider = ({ children }: PropsWithChildren<{}>) => {

@@ -26,3 +26,9 @@ variable "google_maps_key" {
     nullable  = false
     sensitive = true
 }
+
+variable "uploadcare_public_key" {
+    type      = string
+    nullable  = false
+    sensitive = true
+}

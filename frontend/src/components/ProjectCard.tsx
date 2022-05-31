@@ -25,7 +25,11 @@ const classes = {
 const ProjectCard = ({ project, theme = Theme.Light }: ProjectCardProps) => {
     return (
         <Link className={classes.wrapper} to={goToProject(project.id)}>
-            <img alt='project' className={classes.image} src={placeholderProjectSrc} />
+            <img
+                alt='project'
+                className={classes.image}
+                src={project.images?.[0]?.url || placeholderProjectSrc}
+            />
             <div className={classes.content}>
                 <CategoryList categories={project.categories} />
                 <span

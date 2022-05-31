@@ -58,6 +58,11 @@ resource "helm_release" "main" {
         name  = "backend.google_maps_key"
         value = var.backend_google_maps_key
     }
+    
+    set {
+        name  = "backend.uploadcare_public_key"
+        value = var.backend_uploadcare_public_key
+    }
 
     set {
         name  = "backend.database.host"

@@ -3,7 +3,7 @@ import { Repository, In } from 'typeorm';
 import { Category } from '../../domain/Category';
 import { Project } from '../../domain/Project';
 import { User } from '../../domain/User';
-import { projectStatusRepository, projectContributionRepository, roleRepository, userRepository } from '../../infrastructure/database';
+import { projectStatusRepository, projectContributionRepository, roleRepository, userRepository, imageRepository } from '../../infrastructure/database';
 import { Category as CategoryEntity } from '../../infrastructure/database/entities/Category';
 import { Organization as OrganizationEntity } from '../../infrastructure/database/entities/Organization';
 import { Project as ProjectEntity } from '../../infrastructure/database/entities/Project';
@@ -20,6 +20,7 @@ export interface CreateProjectProps {
     organizations: string[];
     participatoryBudgetYear?: Number;
     location: Position;
+    images?: string[];
     startDate?: Date;
     status: string;
     title: string;
@@ -39,6 +40,7 @@ const createProject = ({
     organizations,
     participatoryBudgetYear,
     location,
+    images,
     startDate,
     status,
     title,
@@ -84,6 +86,12 @@ const createProject = ({
         });
 
         const entity = await projectRepository.save(project);
+
+        if (images && images?.length > 0) {
+            const imagesArray = images.map((url) => ({ project, url }));
+
+            await imageRepository.save(imagesArray);
+        }
 
         addContributor({
             userId: auth.id,

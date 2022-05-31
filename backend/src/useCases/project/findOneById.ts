@@ -30,6 +30,7 @@ const findOneById = (id: string) => async ({ projectRepository }: Context): Prom
                     status: true,
                 },
             },
+            images: true,
         },
     });
 

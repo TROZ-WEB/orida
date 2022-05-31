@@ -108,3 +108,71 @@ input[type='search']::-webkit-search-cancel-button {
     height: inherit !important;
     display: flex;
 }
+
+/* Override Uploadcare Style */
+
+.uploadcare--widget__button,
+.uploadcare--widget__button:hover,
+.uploadcare--widget__button:focus, 
+.uploadcare--button_primary,
+.uploadcare--button_primary:hover,
+.uploadcare--button_primary:focus,
+.uploadcare--preview__back,
+.uploadcare--preview__back:hover,
+.uploadcare--preview__back:focus {
+    background-color: #38337c !important;
+    border: none;
+    cursor: pointer;
+    min-width: 100px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 300ms;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    text-align: center;
+    font-weight: 400;
+}
+
+.uploadcare--button_primary,
+.uploadcare--button_primary:hover,
+.uploadcare--button_primary:focus,
+.uploadcare--preview__back,
+.uploadcare--preview__back:hover,
+.uploadcare--preview__back:focus {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5rem
+}
+
+.uploadcare--preview__back {
+    background-color: #fea733 !important;
+}
+
+.uploadcare--preview__back:hover,
+.uploadcare--preview__back:focus {
+    background-color: #fbc173 !important;
+}
+
+.uploadcare--widget__button:hover,
+.uploadcare--widget__button:focus, 
+.uploadcare--button_primary:hover,
+.uploadcare--button_primary:focus {
+    background-color: #6560af !important;
+}
+
+.uploadcare--panel__footer {
+    background-color: transparent;
+}
+
+.uploadcare--file__remove {
+    cursor: pointer;
+}
+
+.uploadcare--file__remove:hover,
+.uploadcare--file__remove:focus {
+    color: #6560af !important;
+}

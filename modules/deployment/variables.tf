@@ -76,6 +76,10 @@ variable "backend_google_maps_key" {
     type = string
 }
 
+variable "backend_uploadcare_public_key" {
+    type = string
+}
+
 variable "frontend_sentry_dsn" {
     type = string
 }

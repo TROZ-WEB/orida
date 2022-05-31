@@ -1,5 +1,6 @@
 /* global NodeJS */
 import { Category } from '../domain/Category';
+import { Image } from '../domain/Image';
 import { Message } from '../domain/Message';
 import { Organization } from '../domain/Organization';
 import { OrganizationMembership } from '../domain/OrganizationMembership';
@@ -78,6 +79,11 @@ export const mapCategory = (category: Category) => ({
     projects: category.projects,
 });
 
+export const mapImage = (image: Image) => ({
+    id: image.id,
+    url: image.url,
+});
+
 export const mapRole = (role: Role) => ({
     id: role.id,
     label: role.label,
@@ -115,12 +121,7 @@ export const mapProject = (project: Project) => ({
     createdAt: project.createdAt,
     description: project.description,
     id: project.id,
-    images: [
-        'https://placekitten.com/177/177?1',
-        'https://placekitten.com/177/177?2',
-        'https://placekitten.com/177/177?3',
-        'https://placekitten.com/177/177?4',
-    ], //! MOCK
+    images: project.images.map(mapImage),
     location: project.location,
     organizations: project.organizations.map(mapOrganization),
     participatoryBudgetYear: project.participatoryBudgetYear,
@@ -132,4 +133,5 @@ export const mapProject = (project: Project) => ({
 
 export const mapEnvironment = (env: NodeJS.ProcessEnv) => ({
     googleMapsKey: env.GOOGLE_MAPS_KEY,
+    uploadcarePublicKey: env.UPLOADCARE_PUBLIC_KEY,
 });

@@ -6,6 +6,7 @@ import {
     ProjectContributionConverter,
 } from '@customTypes/projectContribution';
 import { Category, CategoryConverter } from '@services/categories';
+import { Image, ImageConverter } from '@services/images';
 import { Organization } from '@services/organizations';
 import { Role, RoleConverter } from '@services/roles';
 import { Status, StatusConverter } from '@services/status';
@@ -36,7 +37,7 @@ export type Project = {
     createdAt: Date;
     description: string;
     id: string;
-    images: string[];
+    images: Image[];
     location?: Position;
     modifiedAt: Date;
     organizations: Organization[];
@@ -51,19 +52,17 @@ export const ProjectConverter = {
     fromApi(data: any): Project {
         return {
             budget: data.budget,
-            categories:
-                data.categories.map((category: Category) => CategoryConverter.fromApi(category)) ??
-                [],
-            contributors: data.contributors.map(ProjectContributionConverter.fromApi),
+            categories: data.categories?.map(CategoryConverter.fromApi) ?? [],
+            contributors: data.contributors?.map(ProjectContributionConverter.fromApi) ?? [],
             createdAt: data.createdAt,
             description: data.description,
             id: data.id,
-            images: data.images,
+            images: data.images?.map(ImageConverter.fromApi) ?? [],
             location: data.location ? PositionConverter.fromApi(data.location) : undefined,
             modifiedAt: data.modifiedAt,
             organizations: data.organizations,
             participatoryBudgetYear: data.participatoryBudgetYear,
-            posts: data.posts.map((post: any) => PostConverter.fromApi(post)),
+            posts: data.posts?.map(PostConverter.fromApi) ?? [],
             startDate: data.startDate,
             status: StatusConverter.fromApi(data.status),
             title: data.title,

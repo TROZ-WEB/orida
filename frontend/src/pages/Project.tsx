@@ -93,8 +93,8 @@ const ProjectPage = () => {
                     <Paragraph>{project.description}</Paragraph>
                 </div>
                 <div className='grid grid-cols-2 gap-1 w-full max-w-xs'>
-                    {project.images.map((src) => (
-                        <img key={src} alt='project' src={src} />
+                    {project.images.map(({ id, url }) => (
+                        <img key={id} alt='project' src={url} />
                     ))}
                 </div>
             </div>

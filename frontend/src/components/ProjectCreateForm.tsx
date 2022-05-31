@@ -3,6 +3,7 @@ import Position from '@customTypes/position';
 import { SubmitButton } from '@design/buttons';
 import {
     DateInput,
+    FileInput,
     LocationInput,
     MultiSelectInput,
     NumberInput,
@@ -33,6 +34,7 @@ type Inputs = {
     startDate: Date;
     status: Status;
     title: string;
+    images: string[];
 };
 
 interface CreateProjectFormProps {
@@ -40,7 +42,7 @@ interface CreateProjectFormProps {
 }
 
 const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
-    const { control, register, handleSubmit, reset } = useForm<Inputs>();
+    const { control, register, handleSubmit, reset, setValue } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
     const { isAdmin } = useRole();
@@ -100,6 +102,11 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
         }
     }, []);
 
+    // OnFileUpdate
+    const handleChange = (files: string[]) => {
+        setValue('images', files);
+    };
+
     const onCreate: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
             const cleanBudget = data.budget || 0;
@@ -135,6 +142,13 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
                 placeholder={t('project_create_title_placeholder')}
                 register={register}
                 required
+            />
+            <Space px={8} />
+            <FileInput
+                control={control}
+                handleChange={handleChange}
+                label={t('project_create_images_label')}
+                name='images'
             />
             <Space px={8} />
             <LocationInput control={control} label='Location' name='location' />

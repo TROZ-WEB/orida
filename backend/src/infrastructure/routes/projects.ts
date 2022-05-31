@@ -72,6 +72,7 @@ router.post(
             organizations: req.body.organizations,
             participatoryBudgetYear: req.body.participatoryBudgetYear,
             location: req.body.location,
+            images: req.body.images,
             startDate: req.body.startDate,
             status: req.body.status,
             title: req.body.title,

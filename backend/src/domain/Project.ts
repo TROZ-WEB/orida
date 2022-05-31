@@ -2,6 +2,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import Position from '../types/position';
 import { Category } from './Category';
+import { Image } from './Image';
 import { Organization } from './Organization';
 import { Post } from './Post';
 import { ProjectContribution } from './ProjectContribution';
@@ -17,6 +18,8 @@ class Project {
     description: string | null;
 
     participatoryBudgetYear: Number | null;
+
+    images: Image[];
 
     startDate: Date | null;
 
@@ -38,6 +41,7 @@ class Project {
         budget: Number,
         description: string | null,
         participatoryBudgetYear: Number | null,
+        images: Image[],
         startDate: Date | null,
         status: ProjectStatus,
         title: string,
@@ -57,6 +61,7 @@ class Project {
         this.organizations = organizations;
         this.participatoryBudgetYear = participatoryBudgetYear;
         this.posts = posts;
+        this.images = images;
         this.startDate = startDate;
         this.status = status;
         this.title = title;
