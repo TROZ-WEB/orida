@@ -2,7 +2,7 @@ import AdminRoute from '@components/AdminRoute';
 import AuthenticatedRoute from '@components/AuthenticatedRoute';
 import NotFound from '@pages/404';
 import Accounts from '@pages/Accounts';
-import DashboardRedirect from '@pages/Dashboard/DashboardRedirect';
+import Dashboard from '@pages/Dashboard';
 import Explore from '@pages/Explore';
 import Login from '@pages/Login';
 import Organization from '@pages/Organization';
@@ -21,7 +21,7 @@ const Router = () => (
         <Route element={<Project />} path={AppRoutes.Project} />
         <Route element={<Explore />} path={AppRoutes.Explore} />
         <Route element={<AuthenticatedRoute />}>
-            <Route element={<DashboardRedirect />} path={AppRoutes.Dashboard} />
+            <Route element={<Dashboard />} path={AppRoutes.Dashboard} />
             <Route element={<AdminRoute />}>
                 <Route element={<Accounts />} path={AppRoutes.Accounts} />
             </Route>

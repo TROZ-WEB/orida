@@ -3,7 +3,6 @@ import OrganizationForm from '@components/OrganizationForm';
 import MemberTile from '@components/organizations/MemberTile';
 import ProjectList from '@components/ProjectList';
 import FormActions from '@customTypes/FormActions';
-import { Theme } from '@customTypes/theme';
 import IconButton from '@design/buttons/IconButton';
 import Icon from '@design/Icon';
 import Layout from '@design/layouts/Layout';
@@ -17,6 +16,7 @@ import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { getOne } from '@store/organizations/actions';
+import colors from '@styles/colors';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -47,11 +47,8 @@ const OrganizationPage = () => {
                     <main className='px-5 py-14 w-full'>
                         <div className='flex items-center pb-3'>
                             {isOrganizationAdmin && (
-                                <IconButton
-                                    className='bg-transparent hover:bg-background-hover mr-2'
-                                    onClick={organisationModalProps.open}
-                                >
-                                    <Icon color='#fea733' name='edit' size={15} />
+                                <IconButton className='mr-2' onClick={organisationModalProps.open}>
+                                    <Icon color={colors.secondary} name='edit' />
                                 </IconButton>
                             )}
                             <H1>{organization.name}</H1>
@@ -151,10 +148,10 @@ const OrganizationPage = () => {
                         <H3 className='flex'>
                             {isOrganizationAdmin && (
                                 <IconButton
-                                    className='bg-transparent hover:bg-background-hover'
+                                    className='mr-2'
                                     onClick={() => addMemberToOrgaModalProps.open()}
                                 >
-                                    <Icon className='stroke-secondary mr-2' name='plus' />
+                                    <Icon color={colors.secondary} name='plus' />
                                 </IconButton>
                             )}
                             {t('organization_details_members')}
@@ -174,7 +171,7 @@ const OrganizationPage = () => {
                             ))}
                         </ul>
                         <h1>{t('project_list_title')}</h1>
-                        <ProjectList projects={organization?.projects} theme={Theme.Dark} />
+                        <ProjectList projects={organization?.projects} />
                     </main>
                     <Modal {...organisationModalProps}>
                         <OrganizationForm

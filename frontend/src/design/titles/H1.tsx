@@ -6,9 +6,7 @@ interface H1Props {
 }
 
 const H1 = ({ children, className }: PropsWithChildren<H1Props>) => (
-    <h1 className={classnames('text-3xl text-primary-dark font-semibold', className)}>
-        {children}
-    </h1>
+    <h1 className={classnames('text-3xl text-primary-dark font-bold', className)}>{children}</h1>
 );
 
 export default H1;

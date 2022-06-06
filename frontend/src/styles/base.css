@@ -1,5 +1,23 @@
 @import-normalize;
 
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(../assets/fonts/Lato-Regular.eot) format('embedded-opentype') /* IE6-IE8 */,
+        url(../assets/fonts/Lato-Regular.woff2) format('woff2') /* Super Modern Browsers */;
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url(../assets/fonts/Lato-Bold.eot) format('embedded-opentype') /* IE6-IE8 */,
+        url(../assets/fonts/Lato-Bold.woff2) format('woff2') /* Super Modern Browsers */;
+}
+
 html,
 body,
 #root {
@@ -30,8 +48,6 @@ span {
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-        'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }

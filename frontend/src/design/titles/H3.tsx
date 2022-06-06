@@ -6,7 +6,7 @@ interface H3Props {
 }
 
 const H3_CLASSES = `
-font-medium
+font-bold
 leading-6
 text-lg
 text-primary-dark

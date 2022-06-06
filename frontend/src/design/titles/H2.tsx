@@ -6,9 +6,9 @@ interface H2Props {
 }
 
 const H2_CLASSES = `
-font-semibold
+font-bold
 leading-8
-text-2xl
+text-xl
 text-primary-dark
 `;
 

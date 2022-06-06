@@ -33,8 +33,8 @@ const ProjectLocation = ({ location }: ProjectLocationProps) => {
 
     return (
         <div className='flex items-center'>
-            <Icon className='mr-2' name='marker' size={25} />
-            <span className='text-sm'>{address}</span>
+            <Icon className='mr-1' color='#686868' name='location' size={16} />
+            <span className='text-xs text-grey truncate'>{address}</span>
         </div>
     );
 };

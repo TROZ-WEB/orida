@@ -19,7 +19,7 @@ const classes = {
         bg-transparent
         flex
         flex-col
-        font-semibold
+        font-bold
         h-full
         items-center
         justify-center

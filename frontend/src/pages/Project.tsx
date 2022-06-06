@@ -52,10 +52,17 @@ const ProjectPage = () => {
     // Contributors List (all admins of the project + all admins of every organizations of the project)
     let projectContributions = project.contributors;
     if (roles.find((role) => role.label === 'ADMIN') !== undefined) {
+        const projectContributionsIds = project.contributors.map(
+            (contributor) => contributor.user.id
+        );
         const OrganizationAdmin = project.organizations
             .map((organization) => {
                 return organization.members
-                    .filter((member) => member.role.label === 'ADMIN')
+                    .filter(
+                        (member) =>
+                            member.role.label === 'ADMIN' &&
+                            !projectContributionsIds.includes(member.user.id)
+                    )
                     .map((member) => {
                         return {
                             role: roles.find((r) => r.label === 'ADMIN')!,

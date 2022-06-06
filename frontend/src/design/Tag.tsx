@@ -14,6 +14,7 @@ rounded-xl
 text-white
 text-xs
 w-fit
+h-6
 `;
 
 const Tag = ({ children, className, color = '#cccccc' }: PropsWithChildren<TagProps>) => {

@@ -3,8 +3,6 @@ import classnames from '@utils/classnames';
 
 const defaultStyle = `
   duration-100
-  group-hover:duration-100
-  group-hover:fill-black
   w-full
   h-full
 `;
@@ -16,7 +14,7 @@ interface Props {
     className?: string;
 }
 
-const Icon = ({ name, color = '#000', size, className }: Props) => (
+const Icon = ({ name, color = '#000', size = 16, className }: Props) => (
     <svg
         className={classnames(defaultStyle, className)}
         fill={color}

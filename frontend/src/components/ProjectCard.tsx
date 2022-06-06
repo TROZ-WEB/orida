@@ -1,47 +1,56 @@
 import placeholderProjectSrc from '@assets/placeholder-project.jpg';
-import WithTheme, { Theme } from '@customTypes/theme';
+import ProjectLocation from '@components/ProjectLocation';
+import { H3 } from '@design/titles';
 import { goToProject } from '@router/AppRoutes';
 import { Project } from '@services/projects';
-import formatBudget from '@utils/formatBudget';
 import classnames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import CategoryList from './CategoryList';
 
-interface ProjectCardProps extends WithTheme {
+interface ProjectCardProps {
     project: Project;
 }
 
 const classes = {
-    budget: 'text-warning font-semibold',
-    content: 'flex flex-col',
-    image: 'w-1/3 rounded mr-4',
-    tag: 'mb-4',
-    title: 'text-white font-semibold text-lg mb-2',
-    titleDark: 'text-primary',
-    wrapper: 'border-b-2 border-border flex py-5 w-full',
+    title: 'truncate',
+    description: 'text-xs text-primary-dark font-bold min-h-[34px] text-ellipsis line-clamp-2 mb-1',
+    wrapper: 'shadow relative rounded-lg overflow-hidden w-80',
+    categories: 'absolute top-4 left-4',
+    image: 'w-full h-32 bg-cover bg-center',
+    content: 'mx-4 py-4 border-border border-b box-border',
+    link: `
+        w-full 
+        p-3 
+        text-secondary 
+        font-bold 
+        text-center 
+        relative
+    `,
 };
 
-const ProjectCard = ({ project, theme = Theme.Light }: ProjectCardProps) => {
+const ProjectCard = ({ project }: ProjectCardProps) => {
+    const { t } = useTranslation();
+
     return (
-        <Link className={classes.wrapper} to={goToProject(project.id)}>
-            <img
-                alt='project'
-                className={classes.image}
-                src={project.images?.[0]?.url || placeholderProjectSrc}
-            />
-            <div className={classes.content}>
-                <CategoryList categories={project.categories} />
-                <span
-                    className={classnames(classes.title, {
-                        [classes.titleDark]: theme === Theme.Dark,
-                    })}
-                >
-                    {project.title}
-                </span>
-                <span className={classes.budget}>{formatBudget(project.budget)} €</span>
-            </div>
-        </Link>
+        <div className={classnames(classes.wrapper)}>
+            <Link to={goToProject(project.id)}>
+                <CategoryList categories={project.categories} className={classes.categories} />
+                <div
+                    className={classes.image}
+                    style={{
+                        backgroundImage: `url(${project.images?.[0]?.url || placeholderProjectSrc}`,
+                    }}
+                />
+                <div className={classes.content}>
+                    <H3 className={classnames(classes.title)}>{project.title}</H3>
+                    <div className={classes.description}>{project.description}</div>
+                    <ProjectLocation location={project.location} />
+                </div>
+                <div className={classes.link}>{t('project_link')}</div>
+            </Link>
+        </div>
     );
 };
 

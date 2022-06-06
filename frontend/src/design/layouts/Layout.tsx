@@ -1,3 +1,4 @@
+import placeholderCoverSrc from '@assets/placeholder-cover.jpg';
 import Header from '@components/Header';
 import classnames from '@utils/classnames';
 import { PropsWithChildren } from 'react';
@@ -7,6 +8,7 @@ interface LayoutProps {
     className?: string;
     header?: boolean;
     fullWith?: boolean;
+    cover?: boolean;
 }
 
 const classes = {
@@ -36,9 +38,11 @@ const Layout = ({
     children,
     fullWith = false,
     header = true,
+    cover = false,
 }: PropsWithChildren<LayoutProps>) => (
     <div className={classnames(classes.wrapper, backgroundClassName)}>
-        {header ? <Header /> : null}
+        {header && <Header />}
+        {cover && <img alt='cover' className='w-full h-56 mb-[-3rem]' src={placeholderCoverSrc} />}
         <div className={classnames(classes.inner, { 'max-w-lg': !fullWith }, className)}>
             {children}
         </div>

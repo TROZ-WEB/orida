@@ -1,43 +1,26 @@
 import placeholderOrganizationSrc from '@assets/placeholder-project.jpg';
-import WithTheme, { Theme } from '@customTypes/theme';
-import Tag from '@design/Tag';
 import { Organization } from '@services/organizations';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 
 import { goToOrganization } from '../router/AppRoutes';
 
-interface OrganizationCardProps extends WithTheme {
+interface OrganizationCardProps {
     organization: Organization;
 }
 
 const classes = {
-    budget: 'text-warning font-semibold',
-    content: 'flex flex-col',
-    image: 'w-1/3 rounded mr-4 ',
-    tag: 'mb-4',
-    title: 'text-white font-semibold text-lg mb-2',
-    titleDark: 'text-primary',
-    wrapper: 'border-b-2 border-border flex py-5 w-full',
+    wrapper: 'shadow bg-white rounded-lg flex py-5 w-full flex items-center w-52 h-20 mb-4 p-4',
+    image: 'w-1/4 rounded mr-2 ',
+    title: 'text-primary-dark font-bold truncate',
 };
 
-const OrganizationCard = ({ organization, theme = Theme.Light }: OrganizationCardProps) => {
+const OrganizationCard = ({ organization }: OrganizationCardProps) => {
     return (
-        <Link className={classes.wrapper} to={goToOrganization(organization.id)}>
-            <img alt='organization' className={classes.image} src={placeholderOrganizationSrc} />
-            <div className={classes.content}>
-                {organization.parentOrganizations.map((po) => (
-                    <Tag key={po.id} className={classes.tag}>
-                        {po.name}
-                    </Tag>
-                ))}
-                <span
-                    className={classnames(classes.title, {
-                        [classes.titleDark]: theme === Theme.Dark,
-                    })}
-                >
-                    {organization.name}
-                </span>
+        <Link to={goToOrganization(organization.id)}>
+            <div className={classes.wrapper}>
+                <img alt='' className={classes.image} src={placeholderOrganizationSrc} />
+                <span className={classnames(classes.title)}>{organization.name}</span>
             </div>
         </Link>
     );

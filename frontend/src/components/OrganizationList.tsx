@@ -1,18 +1,17 @@
-import WithTheme from '@customTypes/theme';
 import { Organization } from '@services/organizations';
 
 import OrganizationCard from './OrganizationCard';
 
-interface OrganizationListProps extends WithTheme {
+interface OrganizationListProps {
     className?: string;
     organizations: Organization[];
 }
 
-const OrganizationList = ({ className, organizations, theme }: OrganizationListProps) => (
+const OrganizationList = ({ className, organizations }: OrganizationListProps) => (
     <ul className={className}>
         {organizations.map((organization) => (
             <li key={organization.id}>
-                <OrganizationCard organization={organization} theme={theme} />
+                <OrganizationCard organization={organization} />
             </li>
         ))}
     </ul>

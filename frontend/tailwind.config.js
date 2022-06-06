@@ -3,6 +3,9 @@ module.exports = {
     content: ["./src/**/*.{js,jsx,ts,tsx}"],
     theme: {
         extend: {
+            fontFamily: {
+                sans: ["Lato", "Arial", "sans-serif"],
+            },
             colors: {
                 backdrop: "#00000066",
                 "background-hover": "#efefef",
@@ -17,6 +20,7 @@ module.exports = {
                 "primary-transparent": "#38337c40",
                 "secondary-dark": "#e18f22",
                 "secondary-hover": "#fbc173",
+                grey: "#686868",
                 secondary: "#fea733",
                 success: "#00cf6c",
                 "text-secondary": "#686868",
@@ -30,9 +34,9 @@ module.exports = {
                 "50%": "50%",
             },
             boxShadow: {
-                'card': '0px 0px 10px rgba(0, 0, 0, 0.05)',
+                card: "0px 0px 10px rgba(0, 0, 0, 0.05)",
             },
         },
     },
-    plugins: [],
+    plugins: [require("@tailwindcss/line-clamp")],
 };

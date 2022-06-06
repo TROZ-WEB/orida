@@ -1,7 +1,6 @@
 import Filters from '@components/filters';
 import ProjectList from '@components/ProjectList';
 import ProjectsMap from '@components/ProjectsMap';
-import { Theme } from '@customTypes/theme';
 import Divider from '@design/Divider';
 import ThreeColsLayout, { MenuItem } from '@design/layouts/ThreeCols';
 import { H2 } from '@design/titles';
@@ -49,7 +48,7 @@ const ExplorePage = () => {
     return (
         <ThreeColsLayout left={left} menuItems={menuItems}>
             <div className='relative h-full w-full'>
-                {tab === ExploreTab.list && <ProjectList projects={projects} theme={Theme.Dark} />}
+                {tab === ExploreTab.list && <ProjectList projects={projects} />}
                 {tab === ExploreTab.map && <ProjectsMap projects={projects} />}
             </div>
         </ThreeColsLayout>
