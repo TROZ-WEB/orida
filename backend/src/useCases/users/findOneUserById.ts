@@ -10,7 +10,11 @@ const findOneUserById = (id: string) => async ({ userRepository }: Context): Pro
     const entity = await userRepository.findOne({
         where: { id },
         relations: {
-            organizations: true,
+            organizations: {
+                organization: {
+                    projects: true,
+                },
+            },
             projects: {
                 project: {
                     status: true,

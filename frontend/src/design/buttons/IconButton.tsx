@@ -14,8 +14,6 @@ flex
 items-center
 justify-center
 
-hover:bg-background-hover
-
 group
 `;
 

@@ -16,6 +16,7 @@ import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { castToProjectTab, goToProject, ProjectTab } from '@router/AppRoutes';
 import { getOne } from '@store/projects/actions';
+import { getAll as getAllRoles } from '@store/roles/actions';
 import sortBy from '@utils/sortBy';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,9 +30,11 @@ const ProjectPage = () => {
     const project = useSelector((state) => state.projects.data.find((p) => p.id === projectId));
     const dispatch = useThunkDispatch();
     const { t } = useTranslation();
+    const roles = useSelector((state) => state.roles.data);
 
     const refresh = () => {
         dispatch(getOne(projectId));
+        dispatch(getAllRoles());
     };
 
     useEffect(() => {
@@ -44,6 +47,27 @@ const ProjectPage = () => {
                 <Loader />
             </Layout>
         );
+    }
+
+    // Contributors List (all admins of the project + all admins of every organizations of the project)
+    let projectContributions = project.contributors;
+    if (roles.find((role) => role.label === 'ADMIN') !== undefined) {
+        const OrganizationAdmin = project.organizations
+            .map((organization) => {
+                return organization.members
+                    .filter((member) => member.role.label === 'ADMIN')
+                    .map((member) => {
+                        return {
+                            role: roles.find((r) => r.label === 'ADMIN')!,
+                            user: member.user,
+                            project,
+                        };
+                    })
+                    .flat();
+            })
+            .flat();
+
+        projectContributions = projectContributions.concat(OrganizationAdmin);
     }
 
     const polls = project.posts
@@ -65,7 +89,7 @@ const ProjectPage = () => {
             <OrganizationTileList organizations={project.organizations} />
             <Divider className='my-6' />
             <ContributorSection
-                contributors={project.contributors}
+                contributors={projectContributions}
                 onAddContributor={() => refresh()}
                 project={project}
             />

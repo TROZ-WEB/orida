@@ -1,3 +1,4 @@
+import ProjectCreateForm from '@components/ProjectCreateForm';
 import { Button, ButtonLink } from '@design/buttons';
 import Icon from '@design/Icon';
 import Logo from '@design/Logo';
@@ -12,8 +13,6 @@ import classnames from '@utils/classnames';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-import ProjectCreateForm from './ProjectCreateForm';
 
 const classes = {
     menuItem: `

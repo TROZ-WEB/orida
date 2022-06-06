@@ -25,13 +25,19 @@ function computeIsOrganizationAdmin(user: User, organization: Organization): boo
 function computeIsProjectAdmin(user: User, project: Project): boolean {
     if (user.isAdmin) return true;
 
+    // True if user is admin of at least one organization of the project
+    const isOrganizationAdmin = user.organizationMemberships.reduce((acc, m) => {
+        return m.role.label === 'ADMIN' &&
+            m.organization.projects.findIndex((p) => p.id === project.id) !== -1
+            ? acc
+            : false;
+    }, true);
+
     const isMember = user.projectContributions.find(
         (membership) => membership.project.id === project.id
     );
 
-    if (!isMember) return false;
-
-    return isMember.role.label === 'ADMIN';
+    return isMember?.role.label === 'ADMIN' || isOrganizationAdmin;
 }
 
 const useRole = ({ organization, project }: UseRoleProps = {}) => {

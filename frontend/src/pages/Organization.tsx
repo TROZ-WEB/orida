@@ -1,7 +1,9 @@
 import AddMemberToOrganizationForm from '@components/AddMemberToOrganizationForm';
 import OrganizationForm from '@components/OrganizationForm';
 import MemberTile from '@components/organizations/MemberTile';
+import ProjectList from '@components/ProjectList';
 import FormActions from '@customTypes/FormActions';
+import { Theme } from '@customTypes/theme';
 import IconButton from '@design/buttons/IconButton';
 import Icon from '@design/Icon';
 import Layout from '@design/layouts/Layout';
@@ -149,7 +151,7 @@ const OrganizationPage = () => {
                         <H3 className='flex'>
                             {isOrganizationAdmin && (
                                 <IconButton
-                                    className='bg-transparent'
+                                    className='bg-transparent hover:bg-background-hover'
                                     onClick={() => addMemberToOrgaModalProps.open()}
                                 >
                                     <Icon className='stroke-secondary mr-2' name='plus' />
@@ -171,6 +173,8 @@ const OrganizationPage = () => {
                                 </li>
                             ))}
                         </ul>
+                        <h1>{t('project_list_title')}</h1>
+                        <ProjectList projects={organization?.projects} theme={Theme.Dark} />
                     </main>
                     <Modal {...organisationModalProps}>
                         <OrganizationForm

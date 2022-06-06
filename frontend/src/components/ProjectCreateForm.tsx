@@ -194,7 +194,7 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
                 register={register}
             />
             <Space px={8} />
-            {isAdmin ? (
+            {isAdmin && (
                 <MultiSelectInput
                     label={t('project_create_organizations_label')}
                     name='organizations'
@@ -202,7 +202,8 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
                     register={register}
                     required
                 />
-            ) : (
+            )}
+            {organizationsOptions.length > 1 && (
                 <MultiSelectInput
                     label={t('project_create_organizations_label')}
                     name='organizations'

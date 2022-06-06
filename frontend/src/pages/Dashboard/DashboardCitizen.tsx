@@ -1,3 +1,4 @@
+import OrganizationList from '@components/OrganizationList';
 import ProjectCreateForm from '@components/ProjectCreateForm';
 import ProjectList from '@components/ProjectList';
 import { Theme } from '@customTypes/theme';
@@ -17,10 +18,15 @@ import { useTranslation } from 'react-i18next';
 const DashboardCitizenPage = () => {
     const dispatch = useThunkDispatch();
     const auth = useSelector((state) => state.auth.data);
-    const projects = useSelector((state) => state.projects.data);
     const projectModalProps = useModal();
     const { t } = useTranslation();
     const { isAdmin } = useRole();
+
+    // List Auth Organizations
+    const organizations = auth.organizationMemberships.map((membership) => membership.organization);
+
+    // List Auth Projects
+    const projects = auth.projectContributions.map((contribution) => contribution.project);
 
     useEffect(() => {
         dispatch(getAllProjects());
@@ -37,11 +43,12 @@ const DashboardCitizenPage = () => {
             <p>Citizen</p>
             <Space px={40} />
 
-            {/* if the citizen does not have an admin role he cannot see the button */}
             {isAdmin && (
                 <Button onClick={projectModalProps.open}>{t('project_create_modal_button')}</Button>
             )}
-
+            <Space px={40} />
+            <h1>{t('organization_list_title')}</h1>
+            <OrganizationList organizations={organizations} theme={Theme.Dark} />
             <Space px={40} />
             <h1>{t('project_list_title')}</h1>
             <ProjectList projects={projects} theme={Theme.Dark} />

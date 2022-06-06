@@ -15,7 +15,13 @@ interface Context {
 const loginUser = ({ username, password }: Arg) => async ({ userRepository }: Context): Promise<User> => {
     const user = await userRepository.findOne({
         where: { email: username },
-        relations: { organizations: true, projects: true },
+        relations: {
+            organizations: {
+                organization: {
+                    projects: true,
+                },
+            },
+            projects: true },
     });
 
     if (!user) {
