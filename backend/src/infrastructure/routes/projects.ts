@@ -9,7 +9,6 @@ import findAllProjets from '../../useCases/project/findAllProjects';
 import findOneById from '../../useCases/project/findOneById';
 import findProjectsBySearch from '../../useCases/project/findProjectsBySearch';
 import removeContributor from '../../useCases/project/removeContributor';
-import asyncRoute from '../../utils/asyncRoute';
 import normalize from '../../utils/normalize';
 import {
     categoryRepository,
@@ -28,22 +27,22 @@ const router = Router();
 
 router.get(
     '/',
-    asyncRoute(async (req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
         res.status(200).json((await findAllProjets()({ projectRepository })).map(mapProject));
-    }),
+    },
 );
 
 router.get(
     '/contributors',
     authorizeAdmin(),
-    asyncRoute(async (req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
         const contributors = await findAllContributors()({ projectContributionRepository });
 
         res.status(200).json(contributors.map(mapProjectContribution));
-    }),
+    },
 );
 
-router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
+router.get('/:id', async (req: Request, res: Response) => {
     const { user } = req;
     const { id } = req.params;
     const project = await findOneById(id)({ projectRepository });
@@ -58,12 +57,12 @@ router.get('/:id', asyncRoute(async (req: Request, res: Response) => {
 
     const result = mapProject(project);
     res.status(200).json(result);
-}));
+});
 
 router.post(
     '/',
     authorizeAdminOfAllProjectOrganizations(),
-    asyncRoute(async (req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
         const project: CreateProjectProps = {
             auth: req.user!,
             budget: req.body.budget,
@@ -80,7 +79,7 @@ router.post(
         const created = await createProject(project)({ projectRepository, categoryRepository, organizationRepository });
 
         res.status(200).json(mapProject(created));
-    }),
+    },
 );
 
 interface SearchProps {
@@ -92,7 +91,7 @@ interface SearchProps {
 
 router.post(
     '/search',
-    asyncRoute(async (req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
         const { search, status, categories, budgets } = req.body as SearchProps;
         const normalizedSearch = search ? normalize(search) : undefined;
 
@@ -104,7 +103,7 @@ router.post(
         })({ projectRepository });
 
         res.status(200).json(results.map(mapProject));
-    }),
+    },
 );
 
 interface AddContributorBody {
@@ -115,7 +114,7 @@ interface AddContributorBody {
 router.post(
     '/add-contributor',
     authorizeProjectAdmin(),
-    asyncRoute(async (req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
         const { project, role, user } = req.body as AddContributorBody;
         await addContributor({ projectId: project, roleId: role, userId: user })({
             projectContributionRepository,
@@ -125,7 +124,7 @@ router.post(
         });
 
         res.status(200).json({ success: true });
-    }),
+    },
 );
 
 interface RemoveContributorBody {
@@ -135,12 +134,12 @@ interface RemoveContributorBody {
 router.delete(
     '/contributor',
     authorizeAdmin(),
-    asyncRoute(async (req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
         const { project, user } = req.body as RemoveContributorBody;
         await removeContributor({ projectId: project, userId: user })({ projectContributionRepository });
 
         res.status(200).json({ success: true });
-    }),
+    },
 );
 
 export default router;
