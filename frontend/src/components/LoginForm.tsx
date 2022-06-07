@@ -3,7 +3,7 @@ import { SubmitButton } from '@design/buttons';
 import { TextInput } from '@design/inputs';
 import Space from '@design/Space';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import AppRoutes from '@router/AppRoutes';
+import { goToExplore } from '@router/AppRoutes';
 import { login } from '@store/auth/actions';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +23,7 @@ const LoginForm = () => {
     const onLogin: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
             await dispatch(login(data));
-            navigate(AppRoutes.Dashboard);
+            navigate(goToExplore());
         } catch (e) {
             // temporary error handling
             // eslint-disable-next-line

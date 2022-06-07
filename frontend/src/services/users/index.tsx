@@ -14,6 +14,18 @@ async function getAll(): Promise<User[]> {
     }
 }
 
+async function getOne(id: string): Promise<User | undefined> {
+    try {
+        const response = await GET<User | undefined>(`/api/users/${id}`);
+
+        return UserConverter.fromApi(response);
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('UserService::getOne Unhandled error');
+    }
+}
+
 interface UpdateProps extends Partial<User> {
     id: string;
 }
@@ -32,6 +44,7 @@ async function update(updated: UpdateProps): Promise<User> {
 
 const UserService = {
     getAll,
+    getOne,
     update,
 };
 

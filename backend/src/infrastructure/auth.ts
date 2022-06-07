@@ -4,7 +4,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { User } from '../domain/User';
 import UserError from '../useCases/auth/AuthError';
 import loginUser from '../useCases/auth/loginUser';
-import findOneUserById from '../useCases/users/findOneUserById';
+import findUserById from '../useCases/users/findUserById';
 import { userRepository } from './database';
 
 const auth = new Authenticator();
@@ -13,7 +13,7 @@ const auth = new Authenticator();
 auth.serializeUser(callbackify(async (user: User): Promise<string> => user.id));
 
 auth.deserializeUser(
-    callbackify(async (id: string): Promise<User | null> => findOneUserById(id)({ userRepository })),
+    callbackify(async (id: string): Promise<User | null> => findUserById(id)({ userRepository })),
 );
 
 // Strategies

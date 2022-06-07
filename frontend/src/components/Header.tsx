@@ -7,7 +7,7 @@ import useModal from '@hooks/useModal';
 import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import AppRoutes, { goToExplore, goToLogin, LoginTab } from '@router/AppRoutes';
+import AppRoutes, { goToExplore, goToLogin, goToProfile, LoginTab } from '@router/AppRoutes';
 import { logout } from '@store/auth/actions';
 import classnames from '@utils/classnames';
 import { useCallback } from 'react';
@@ -50,6 +50,7 @@ const Header = () => {
     const { isAdmin, isAuthenticated, isAdminOfAtLeastOneOrganization } = useRole();
     const { pathname } = useLocation();
     const projectModalProps = useModal();
+    const auth = useSelector((state) => state.auth.data);
 
     const onLogout = useCallback(async () => {
         await dispatch(logout());
@@ -63,7 +64,7 @@ const Header = () => {
     return (
         <div className={classes.wrapper}>
             <div className='flex flex-row'>
-                <ButtonLink className={classes.menuItem} to={AppRoutes.Dashboard}>
+                <ButtonLink className={classes.menuItem} to={goToProfile(auth.id)}>
                     <Logo />
                 </ButtonLink>
                 <ButtonLink

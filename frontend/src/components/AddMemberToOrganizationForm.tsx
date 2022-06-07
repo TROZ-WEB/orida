@@ -5,9 +5,9 @@ import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
 import OrganizationService, { Organization } from '@services/organizations';
-import { getAllUsers } from '@store/admin/actions';
 import { getAll as getAllOrganizations } from '@store/organizations/actions';
 import { getAll as getAllRoles } from '@store/roles/actions';
+import { getAll as getAllUsers } from '@store/users/actions';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +26,7 @@ const AddMemberToOrganizationForm = ({ organization }: AddMemberToOrganizationFo
     const { setValue, register, handleSubmit } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
-    const users = useSelector((state) => state.admin.users);
+    const users = useSelector((state) => state.users.data);
     const roles = useSelector((state) => state.roles.data);
     const organizations = useSelector((state) => state.organizations.data);
 

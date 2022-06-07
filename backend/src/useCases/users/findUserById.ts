@@ -6,7 +6,7 @@ interface Context {
     userRepository: Repository<UserEntity>;
 }
 
-const findOneUserById = (id: string) => async ({ userRepository }: Context): Promise<User | null> => {
+const findUserById = (id: string) => async ({ userRepository }: Context): Promise<User | null> => {
     const entity = await userRepository.findOne({
         where: { id },
         relations: {
@@ -26,4 +26,4 @@ const findOneUserById = (id: string) => async ({ userRepository }: Context): Pro
     return entity ? entity.toDomain() : null;
 };
 
-export default findOneUserById;
+export default findUserById;

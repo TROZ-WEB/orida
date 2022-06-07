@@ -8,6 +8,7 @@ import { IconButton } from '@design/buttons';
 import Divider from '@design/Divider';
 import Icon from '@design/Icon';
 import Layout from '@design/layouts/Layout';
+import Loader from '@design/Loader';
 import Modal from '@design/modals/DefaultModal';
 import Space from '@design/Space';
 import { Paragraph } from '@design/texts';
@@ -21,28 +22,50 @@ import { Project } from '@services/projects';
 import { getAll as getAllOrganizations } from '@store/organizations/actions';
 import { getAll as getAllProjects } from '@store/projects/actions';
 import { getAll as getAllProjectStatuses } from '@store/status/actions';
+import { getOne as getOneUser } from '@store/users/actions';
 import colors from '@styles/colors';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
-const DashboardAdminPage = () => {
-    const { isAdmin } = useRole();
+const Profile = () => {
+    const userId = useParams().userId ?? '';
+    const { isAdmin, isAdminOfAtLeastOneOrganization } = useRole();
     const dispatch = useThunkDispatch();
-    const auth = useSelector((state) => state.auth.data);
+    const user = useSelector((state) =>
+        state.users.data.find((userData) => userData.id === userId)
+    );
     const projects = useSelector((state) => state.projects.data);
+    const auth = useSelector((state) => state.auth.data);
     const organizations = useSelector((state) => state.organizations.data);
     const projectModalProps = useModal();
     const organisationModalProps = useModal();
     const { t } = useTranslation();
+    const isAuth = userId === auth.id;
+
+    useEffect(() => {
+        dispatch(getAllOrganizations());
+        dispatch(getAllProjects());
+        dispatch(getAllProjectStatuses());
+        dispatch(getOneUser(userId));
+    }, []);
+
+    if (!user) {
+        return (
+            <Layout className='flex-row'>
+                <Loader />
+            </Layout>
+        );
+    }
 
     // Get organization list
     let organizationList: Organization[] = [];
     if (isAdmin) {
         organizationList = organizations;
     } else {
-        organizationList = auth.organizationMemberships
-            .filter((membership) => membership.role.label === 'ADMIN')
-            .map((membership) => membership.organization);
+        organizationList = user.organizationMemberships.map(
+            (membership) => membership.organization
+        );
     }
 
     // Get projects list
@@ -50,10 +73,10 @@ const DashboardAdminPage = () => {
     if (isAdmin) {
         projectList = projects;
     } else {
-        projectList = auth.projectContributions.map((contribution) => contribution.project);
+        projectList = user.projectContributions.map((contribution) => contribution.project);
         const projectsListIds = projectList.map((project) => project.id);
 
-        const organizationsProjects = auth.organizationMemberships
+        const organizationsProjects = user.organizationMemberships
             .filter((membership) => membership.role.label === 'ADMIN')
             .map((membership) => membership.organization.projects)
             .flat()
@@ -61,12 +84,6 @@ const DashboardAdminPage = () => {
 
         projectList = projectList.concat(organizationsProjects);
     }
-
-    useEffect(() => {
-        dispatch(getAllOrganizations());
-        dispatch(getAllProjects());
-        dispatch(getAllProjectStatuses());
-    }, []);
 
     return (
         <Layout cover>
@@ -76,18 +93,27 @@ const DashboardAdminPage = () => {
                     className='rounded-full border-2 border-white w-24 h-24'
                     src={placeholderProfileSrc}
                 />
-                <H1>{`${auth.fullname}`}</H1>
-                <Paragraph className='text-grey my-3'>{isAdmin ? 'Admin' : 'Citizen'}</Paragraph>
-                <Paragraph>{t('profile_placeholder')}</Paragraph>
+                <H1>{`${user.fullname}`}</H1>
+                {isAdminOfAtLeastOneOrganization && (
+                    <div className='flex items-center mt-3'>
+                        <Icon color={colors.grey} name='email' />
+                        <a className='text-sm text-grey ml-2' href={`mailto:${user.email}`}>
+                            {user.email}
+                        </a>
+                    </div>
+                )}
+                <Paragraph className='mt-3'>{t('profile_placeholder')}</Paragraph>
             </div>
             <Divider className='my-4' />
-            <div className='flex gap-10'>
-                <div className=''>
+            <div className='flex w-full gap-10'>
+                <div className='w-1/4'>
                     <div className='flex'>
                         <H2>{t('organization_list_title')}</H2>
-                        <IconButton className='ml-2' onClick={organisationModalProps.open}>
-                            <Icon color={colors.secondary} name='plus' />
-                        </IconButton>
+                        {isAdmin && (
+                            <IconButton className='ml-2' onClick={organisationModalProps.open}>
+                                <Icon color={colors.secondary} name='plus' />
+                            </IconButton>
+                        )}
                     </div>
                     <Space px={40} />
                     <OrganizationList organizations={organizationList} />
@@ -98,12 +124,14 @@ const DashboardAdminPage = () => {
                         />
                     </Modal>
                 </div>
-                <div>
+                <div className='w-3/4'>
                     <div className='flex'>
                         <H2>{t('project_list_title')}</H2>
-                        <IconButton className='ml-2' onClick={projectModalProps.open}>
-                            <Icon color={colors.secondary} name='plus' />
-                        </IconButton>
+                        {isAuth && isAdminOfAtLeastOneOrganization && (
+                            <IconButton className='ml-2' onClick={projectModalProps.open}>
+                                <Icon color={colors.secondary} name='plus' />
+                            </IconButton>
+                        )}
                     </div>
                     <Space px={40} />
                     <ProjectList projects={projectList} />
@@ -116,4 +144,4 @@ const DashboardAdminPage = () => {
     );
 };
 
-export default DashboardAdminPage;
+export default Profile;

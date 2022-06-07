@@ -1,7 +1,6 @@
+import Avatar from '@design/Avatar';
 import { User } from '@services/users';
 import getInitials from '@utils/getInitials';
-
-import Avatar from './Avatar';
 
 const classes = {
     avatar: 'absolute top-0',

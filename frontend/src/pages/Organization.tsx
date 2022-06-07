@@ -28,7 +28,7 @@ const OrganizationPage = () => {
     const { t } = useTranslation();
     const organizationId = useParams().organizationId ?? '';
     const organization = useSelector((state) =>
-        state.organizations.data.find((p) => p.id === organizationId)
+        state.organizations.data.find((orga) => orga.id === organizationId)
     );
     const { isOrganizationAdmin } = useRole({ organization });
 

@@ -3,7 +3,7 @@ import { ExploreTab, LoginTab, ProjectTab } from './tabs';
 enum AppRoutes {
     Accounts = '/accounts',
     Explore = '/explore',
-    Dashboard = '/dashboard',
+    Profile = '/profile/:userId',
     Home = '/',
     Login = '/login',
     Project = '/project/:projectId',
@@ -14,6 +14,10 @@ enum AppRoutes {
 
 export function goToProject(id: string, tab: ProjectTab = ProjectTab.general) {
     return `/project/${id}?tab=${tab}`;
+}
+
+export function goToProfile(id: string) {
+    return `/profile/${id}`;
 }
 
 export function goToOrganization(id: string) {

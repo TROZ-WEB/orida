@@ -6,9 +6,9 @@ import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
 import ProjectService, { Project } from '@services/projects';
 import { User } from '@services/users';
-import { getAllUsers } from '@store/admin/actions';
 import { getAll as getAllProjects } from '@store/projects/actions';
 import { getAll as getAllRoles } from '@store/roles/actions';
+import { getAll as getAllUsers } from '@store/users/actions';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -37,7 +37,7 @@ const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToPro
                   acc.concat(organization.members.map((member) => member.user)),
               []
           ) // get all users of project organizations
-        : useSelector((state) => state.admin.users); // get all users
+        : useSelector((state) => state.users.data); // get all users
     const uniqueUsers = Array.from(new Map(users.map((u) => [u.id, u])).values()).filter(
         (user) => user.id !== auth.id
     ); // get unique users from array, and remove auth from array

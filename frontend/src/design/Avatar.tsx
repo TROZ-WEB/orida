@@ -1,7 +1,10 @@
 import classnames from '@utils/classnames';
+import { CSSProperties } from 'react';
 
 const classes = {
     wrapper: `
+        border-2
+        border-background
         flex
         items-center
         justify-center
@@ -15,17 +18,18 @@ const classes = {
     `,
 };
 
-interface Props {
-    initials: string;
+interface AvatarProps {
+    className?: string;
+    initials?: string;
     pictureURL?: string | null;
     size?: number;
-    className?: string;
+    style?: CSSProperties;
 }
 
-const Avatar = ({ initials, pictureURL, size = 40, className }: Props) => (
+const Avatar = ({ className, initials, pictureURL, size = 40, style }: AvatarProps) => (
     <div
         className={classnames(classes.wrapper, className)}
-        style={{ width: `${size}px`, height: `${size}px` }}
+        style={{ ...style, width: `${size}px`, height: `${size}px` }}
     >
         {pictureURL ? (
             <img alt='user avatar' className={classes.picture} src={pictureURL} />

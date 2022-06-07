@@ -1,10 +1,10 @@
 import AddContributorToProject from '@components/AddContributorToProject';
+import UserCard from '@components/UserCard';
 import UserList from '@components/UserList';
 import { ProjectContribution } from '@customTypes/projectContribution';
 import { InvisibleButton, TertiaryButton } from '@design/buttons';
 import Icon from '@design/Icon';
 import Modal from '@design/modals/DefaultModal';
-import { Table, Tbody, Td, Th, Thead, Tr } from '@design/table';
 import { H3 } from '@design/titles';
 import useModal from '@hooks/useModal';
 import useRole from '@hooks/useRole';
@@ -67,22 +67,9 @@ const ContributorSection = ({
                 />
             </Modal>
             <Modal {...showContributorModalProps}>
-                <Table>
-                    <Thead>
-                        <Tr>
-                            <Th>Utilisateur</Th>
-                            <Th>Rôle</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {contributors.map((contributor) => (
-                            <Tr key={contributor.user.id}>
-                                <Td>{contributor.user.fullname}</Td>
-                                <Td>{contributor.role.label}</Td>
-                            </Tr>
-                        ))}
-                    </Tbody>
-                </Table>
+                {contributors.map((contributor) => (
+                    <UserCard role={contributor.role.label} user={contributor.user} />
+                ))}
             </Modal>
         </div>
     );
