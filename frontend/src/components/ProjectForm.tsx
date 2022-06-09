@@ -7,8 +7,8 @@ import {
     LocationInput,
     MultiSelectInput,
     NumberInput,
+    RichTextEditor,
     SelectInput,
-    TextAreaInput,
     TextInput,
 } from '@design/inputs';
 import Space from '@design/Space';
@@ -213,11 +213,12 @@ const ProjectForm = ({ onCreated, project }: ProjectFormProps) => {
                 name='location'
             />
             <Space px={8} />
-            <TextAreaInput
+            <RichTextEditor
+                control={control}
+                defaultValue={project?.description}
                 label={t('project_create_description_label')}
                 name='description'
                 placeholder={t('project_create_description_placeholder')}
-                register={register}
             />
             <Space px={8} />
             <NumberInput

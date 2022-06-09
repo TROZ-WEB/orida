@@ -33,6 +33,16 @@ const classes = {
 const ProjectCard = ({ project }: ProjectCardProps) => {
     const { t } = useTranslation();
 
+    // converts HTML to well escaped Text
+    function getText(html: string) {
+        const divContainer = document.createElement('div');
+        divContainer.innerHTML = html.replace(/<[^>]+>/g, ' ');
+
+        return divContainer.textContent || divContainer.innerText || '';
+    }
+
+    const description = getText(project.description);
+
     return (
         <div className={classnames(classes.wrapper)}>
             <Link to={goToProject(project.id)}>
@@ -45,7 +55,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 />
                 <div className={classes.content}>
                     <H3 className={classnames(classes.title)}>{project.title}</H3>
-                    <div className={classes.description}>{project.description}</div>
+                    <div className={classes.description}>{description}</div>
                     <ProjectLocation location={project.location} />
                 </div>
                 <div className={classes.link}>{t('project_link')}</div>

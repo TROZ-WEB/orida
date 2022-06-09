@@ -81,6 +81,7 @@ module "deployment" {
     backend_typeform_webhook_url = "https://orida.thestaging.io/api/polls/answer"
     backend_typeform_workspace = var.typeform_workspace
     backend_google_maps_key = var.google_maps_key
+    backend_tiny_mce_key = var.tiny_mce_key
     backend_uploadcare_public_key = var.uploadcare_public_key
 
     frontend_sentry_dsn = "https://20453e06f46c4c14bfdc09ca863ca183@o132732.ingest.sentry.io/6308943"

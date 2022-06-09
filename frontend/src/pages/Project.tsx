@@ -16,6 +16,7 @@ import Loader from '@design/Loader';
 import Modal from '@design/modals/DefaultModal';
 import Space from '@design/Space';
 import { Paragraph } from '@design/texts';
+import ParsedHTML from '@design/texts/ParsedHTML';
 import { H2, H3 } from '@design/titles';
 import useModal from '@hooks/useModal';
 import useRole from '@hooks/useRole';
@@ -26,6 +27,7 @@ import { getOne } from '@store/projects/actions';
 import { getAll as getAllRoles } from '@store/roles/actions';
 import colors from '@styles/colors';
 import sortBy from '@utils/sortBy';
+import ReactHtmlParser from 'html-react-parser';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -150,7 +152,7 @@ const ProjectPage = () => {
             <div className='pt-16 px-16 flex items-start'>
                 <div className='flex flex-col mr-16 w-full'>
                     <H3 className='pb-8'>{t('project_details_title')}</H3>
-                    <Paragraph>{project.description}</Paragraph>
+                    <ParsedHTML>{ReactHtmlParser(project.description)}</ParsedHTML>
                 </div>
                 <div className='flex flex-wrap gap-1 w-[38.28rem]'>
                     {projectImages.map(({ id, url }) => (

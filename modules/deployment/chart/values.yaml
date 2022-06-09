@@ -16,6 +16,7 @@ backend:
     typeform_webhook_url: ~
     typeform_workspace: ~
     google_maps_key: ~
+    tiny_mce_key: ~
     uploadcare_public_key: ~
 
 frontend:

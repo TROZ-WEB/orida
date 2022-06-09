@@ -133,5 +133,6 @@ export const mapProject = (project: Project) => ({
 
 export const mapEnvironment = (env: NodeJS.ProcessEnv) => ({
     googleMapsKey: env.GOOGLE_MAPS_KEY,
+    tinyMCEKey: env.TINY_MCE_KEY,
     uploadcarePublicKey: env.UPLOADCARE_PUBLIC_KEY,
 });

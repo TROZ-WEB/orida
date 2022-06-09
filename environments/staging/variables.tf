@@ -27,6 +27,12 @@ variable "google_maps_key" {
     sensitive = true
 }
 
+variable "tiny_mce_key" {
+    type      = string
+    nullable  = false
+    sensitive = true
+}
+
 variable "uploadcare_public_key" {
     type      = string
     nullable  = false

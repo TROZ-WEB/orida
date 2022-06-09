@@ -60,6 +60,11 @@ resource "helm_release" "main" {
     }
     
     set {
+        name  = "backend.tiny_mce_key"
+        value = var.backend_tiny_mce_key
+    }
+    
+    set {
         name  = "backend.uploadcare_public_key"
         value = var.backend_uploadcare_public_key
     }

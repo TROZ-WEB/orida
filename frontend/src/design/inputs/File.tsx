@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/aria-role */
 import { useEnvironment } from '@contexts/appEnvironment';
 import WithTheme, { Theme } from '@customTypes/theme';
 import { Button } from '@design/buttons';
@@ -86,7 +85,7 @@ const ControlledFileInput = ({ control, label, name, theme }: ControlledFileInpu
             <Controller
                 control={control}
                 name={name}
-                render={({ field }) => <FileInput {...field} onChange={field.onChange} />}
+                render={({ field }) => <FileInput {...field} />}
             />
         </div>
     );

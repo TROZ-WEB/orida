@@ -4,6 +4,7 @@ export { default as FileInput } from './File';
 export { default as LocationInput } from './Location';
 export { default as MultiSelectInput } from './MultiSelect';
 export { default as NumberInput } from './Number';
+export { default as RichTextEditor } from './RichTextEditor';
 export { default as SearchInput } from './Search';
 export { default as SelectInput } from './Select';
 export { default as TextInput } from './Text';
