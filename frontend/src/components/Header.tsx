@@ -1,4 +1,4 @@
-import ProjectCreateForm from '@components/ProjectCreateForm';
+import ProjectForm from '@components/ProjectForm';
 import { Button, ButtonLink } from '@design/buttons';
 import Icon from '@design/Icon';
 import Logo from '@design/Logo';
@@ -118,7 +118,7 @@ const Header = () => {
                 )}
             </div>
             <Modal {...projectModalProps}>
-                <ProjectCreateForm onCreated={() => projectModalProps.close()} />
+                <ProjectForm onCreated={() => projectModalProps.close()} />
             </Modal>
         </div>
     );

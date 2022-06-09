@@ -1,7 +1,7 @@
 import placeholderProfileSrc from '@assets/placeholder-profile.png';
 import OrganizationForm from '@components/OrganizationForm';
 import OrganizationList from '@components/OrganizationList';
-import ProjectCreateForm from '@components/ProjectCreateForm';
+import ProjectForm from '@components/ProjectForm';
 import ProjectList from '@components/ProjectList';
 import FormActions from '@customTypes/FormActions';
 import { IconButton } from '@design/buttons';
@@ -136,7 +136,7 @@ const Profile = () => {
                     <Space px={40} />
                     <ProjectList projects={projectList} />
                     <Modal {...projectModalProps}>
-                        <ProjectCreateForm onCreated={() => projectModalProps.close()} />
+                        <ProjectForm onCreated={() => projectModalProps.close()} />
                     </Modal>
                 </div>
             </div>

@@ -68,7 +68,11 @@ const ContributorSection = ({
             </Modal>
             <Modal {...showContributorModalProps}>
                 {contributors.map((contributor) => (
-                    <UserCard role={contributor.role.label} user={contributor.user} />
+                    <UserCard
+                        key={contributor.user.id}
+                        role={contributor.role.label}
+                        user={contributor.user}
+                    />
                 ))}
             </Modal>
         </div>

@@ -1,7 +1,12 @@
 import Budget from '@customTypes/budget';
 import { ReduxDispatch } from '@hooks/useThunkDispatch';
 import { Category } from '@services/categories';
-import ProjectService, { CreateProps, Project } from '@services/projects';
+import ProjectService, {
+    AddImagesProps,
+    CreateProps,
+    Project,
+    UpdateProps,
+} from '@services/projects';
 import { Status } from '@services/status';
 
 import { FILTER, ProjectActionTypes, SEARCH, UPSERT } from './types';
@@ -27,6 +32,20 @@ export const create =
     (props: CreateProps) =>
     async (dispatch: ReduxDispatch): Promise<void> => {
         const result = await ProjectService.create(props);
+        dispatch(upsertAction([result]));
+    };
+
+export const addImages =
+    (props: AddImagesProps) =>
+    async (dispatch: ReduxDispatch): Promise<void> => {
+        const result = await ProjectService.addImages(props);
+        dispatch(upsertAction([result]));
+    };
+
+export const update =
+    (props: UpdateProps) =>
+    async (dispatch: ReduxDispatch): Promise<void> => {
+        const result = await ProjectService.update(props);
         dispatch(upsertAction([result]));
     };
 

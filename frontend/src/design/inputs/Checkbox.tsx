@@ -1,4 +1,5 @@
 import Icon from '@design/Icon';
+import colors from '@styles/colors';
 import classnames from '@utils/classnames';
 import { ChangeEvent } from 'react';
 
@@ -68,7 +69,7 @@ const CheckboxInput = ({ className, label, onChange, value }: CheckboxInputProps
                 type='checkbox'
             />
             <span className={classnames(classes.checkmark, { [classes.checkmarkActive]: value })}>
-                {value && <Icon className={classes.icon} color='#fff' name='checkmark' />}
+                {value && <Icon className={classes.icon} color={colors.default} name='checkmark' />}
             </span>
         </label>
     );

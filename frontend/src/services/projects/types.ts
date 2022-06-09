@@ -82,3 +82,13 @@ export type CreateProps = {
     statusId: string;
     title: string;
 };
+
+export type UpdateProps = CreateProps & {
+    id: string;
+    project: string;
+};
+
+export type AddImagesProps = {
+    id: string;
+    images: string[];
+};

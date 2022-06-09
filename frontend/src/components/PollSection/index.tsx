@@ -9,6 +9,7 @@ import useModal from '@hooks/useModal';
 import useRole from '@hooks/useRole';
 import { Poll as PollType } from '@services/polls';
 import { Project } from '@services/projects';
+import colors from '@styles/colors';
 import classnames from '@utils/classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -49,7 +50,7 @@ const PollSection = ({ polls, project, refresh }: PollSectionProps) => {
                             onClick={() => modalProps.open()}
                             secondary
                         >
-                            <Icon className='stroke-white' color='#fff' name='plus' />
+                            <Icon className='stroke-white' color={colors.secondary} name='plus' />
                         </IconButton>
                     )}
                 </div>

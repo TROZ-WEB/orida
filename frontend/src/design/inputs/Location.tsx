@@ -5,23 +5,37 @@ import Label from '@design/Label';
 import Space from '@design/Space';
 import GeocodingService from '@services/geocoding';
 import { GeocodingObject } from '@services/geocoding/types';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Controller } from 'react-hook-form';
 
 interface LocationInputProps extends WithTheme {
     onChange: (coordinates: Position, fullObject: GeocodingObject) => void;
+    value?: Position;
 }
-const LocationInput = ({ onChange }: LocationInputProps) => {
+const LocationInput = ({ onChange, value }: LocationInputProps) => {
     const env = useEnvironment();
-    const [value, setValue] = useState(null);
+
+    const [address, setAddress] = useState<any>();
+
+    useEffect(() => {
+        async function getValueAddress() {
+            if (value) {
+                const gMapAddress = await GeocodingService.getAddressFromCoordinates(value, {
+                    apiKey: env?.googleMapsKey || '',
+                });
+                setAddress(gMapAddress);
+            }
+        }
+
+        getValueAddress();
+    }, [value]);
 
     const handleChange = async (event: any) => {
         const placeId = event.value.place_id;
         const geocodingAnswer = await GeocodingService.getPlaceFromPlaceId(placeId, {
             apiKey: env?.googleMapsKey || '',
         });
-        setValue(event);
 
         if (geocodingAnswer) {
             const position = {
@@ -32,16 +46,30 @@ const LocationInput = ({ onChange }: LocationInputProps) => {
         }
     };
 
+    if (value && !address) {
+        return null;
+    }
+
+    const selectProps = value
+        ? {
+              onChange: handleChange,
+              placeholder: 'Taper une adresse',
+              defaultValue: { label: address?.toString(), value: address },
+          }
+        : {
+              onChange: handleChange,
+              placeholder: 'Taper une adresse',
+          };
+
     return (
         <GooglePlacesAutocomplete
             apiKey={env?.googleMapsKey || ''}
-            apiOptions={{
-                region: 'FR',
+            autocompletionRequest={{
+                componentRestrictions: {
+                    country: ['fr'],
+                },
             }}
-            selectProps={{
-                value,
-                onChange: handleChange,
-            }}
+            selectProps={selectProps}
         />
     );
 };
@@ -51,6 +79,7 @@ interface ControlledLocationInputProps {
     name: string;
     control: any;
     required?: boolean;
+    defaultValue?: Position;
 }
 
 const ControlledLocationInput = ({
@@ -66,7 +95,7 @@ const ControlledLocationInput = ({
             <Controller
                 control={control}
                 name={name}
-                render={({ field }) => <LocationInput onChange={field.onChange} />}
+                render={({ field }) => <LocationInput {...field} />}
                 rules={{ required }}
             />
         </div>

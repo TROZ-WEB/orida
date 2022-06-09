@@ -10,6 +10,7 @@ import { Project as ProjectEntity } from '../../infrastructure/database/entities
 import Position from '../../types/position';
 import AuthError, { AuthErrorType } from '../auth/AuthError';
 import isAdmin from '../auth/isAdmin';
+import StatusError, { StatusErrorType } from '../status/statusError';
 import addContributor from './addContributor';
 
 export interface CreateProjectProps {
@@ -22,7 +23,7 @@ export interface CreateProjectProps {
     location: Position;
     images?: string[];
     startDate?: Date;
-    status: string;
+    statusId: string;
     title: string;
 }
 
@@ -42,13 +43,13 @@ const createProject = ({
     location,
     images,
     startDate,
-    status,
+    statusId,
     title,
 }: CreateProjectProps) => (
     async ({ projectRepository, categoryRepository, organizationRepository }: Context): Promise<Project> => {
         // Verify if auth is in all the organizations linked to the project, or is Orida
         const organisationsOfAuth = auth.organizationMemberships.map((o) => o.organization.id);
-        const isAuthAuthorized = organizations.reduce((acc, val) => (organisationsOfAuth.includes(val) ? acc : false), true);
+        const isAuthAuthorized = organizations.length > 0 && organizations.reduce((acc, val) => (organisationsOfAuth.includes(val) ? acc : false), true);
         if (!isAuthAuthorized && !isAdmin(auth)) { throw new AuthError(AuthErrorType.Unauthorized); }
 
         const categoriesData = await categoryRepository.findBy({
@@ -61,11 +62,11 @@ const createProject = ({
         });
 
         const statusData = await projectStatusRepository.findOne({
-            where: { id: status },
+            where: { id: statusId },
         });
 
         if (!statusData) {
-            throw Error('Missing StatusData');
+            throw new StatusError(StatusErrorType.NotFound);
         }
 
         const project = projectRepository.create({

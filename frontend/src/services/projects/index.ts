@@ -6,9 +6,9 @@ import {
 } from '@customTypes/projectContribution';
 import { Category } from '@services/categories';
 import { Status } from '@services/status';
-import { DELETE, GET, POST } from '@utils/http';
+import { DELETE, GET, PATCH, POST } from '@utils/http';
 
-import { CreateProps, Project, ProjectConverter } from './types';
+import { AddImagesProps, CreateProps, Project, ProjectConverter, UpdateProps } from './types';
 
 async function getAll(): Promise<Project[]> {
     try {
@@ -45,6 +45,34 @@ async function create(props: CreateProps): Promise<Project> {
         // TODO::error handling
         console.error(error);
         throw Error('ProjectService::create Unhandled error');
+    }
+}
+
+async function addImages(props: AddImagesProps): Promise<Project> {
+    try {
+        const response = await POST<Project>('/api/projects/addimages', {
+            ...props,
+        });
+
+        return ProjectConverter.fromApi(response);
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('ProjectService::create Unhandled error');
+    }
+}
+
+async function update(props: UpdateProps): Promise<Project> {
+    try {
+        const response = await PATCH<Project>(`/api/projects/${props.id}`, {
+            ...props,
+        });
+
+        return ProjectConverter.fromApi(response);
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('ProjectService::update Unhandled error');
     }
 }
 
@@ -136,6 +164,8 @@ async function getContributors(): Promise<ProjectContribution[]> {
 const ProjectService = {
     addContributor,
     create,
+    addImages,
+    update,
     getAll,
     getContributors,
     getOne,

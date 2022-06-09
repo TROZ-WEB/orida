@@ -16,10 +16,12 @@ import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import notify, { NotificationType } from '@services/notifications';
-import { Status } from '@services/status';
+import { Project } from '@services/projects';
 import { getAuth } from '@store/auth/actions';
 import { getAll as getAllCategories } from '@store/categories/actions';
-import { create } from '@store/projects/actions';
+import { getAll as getAllOrganizations } from '@store/organizations/actions';
+import { create, update } from '@store/projects/actions';
+import { getAll as getAllStatus } from '@store/status/actions';
 import { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -31,21 +33,39 @@ type Inputs = {
     location: Position;
     organizations: string[];
     participatoryBudgetYear: number;
-    startDate: Date;
-    status: Status;
+    startDate: string;
+    status: string;
     title: string;
     images: string[];
 };
 
-interface CreateProjectFormProps {
+interface ProjectFormProps {
     onCreated: () => void;
+    project?: Project;
 }
 
-const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
-    const { control, register, handleSubmit, reset, setValue } = useForm<Inputs>();
+enum FormMode {
+    Create = 'CREATE',
+    Update = 'UPDATE',
+}
+
+const ProjectForm = ({ onCreated, project }: ProjectFormProps) => {
+    const { control, register, handleSubmit, reset } = useForm<Inputs>({
+        defaultValues: {
+            title: project?.title,
+            description: project?.description,
+            budget: project?.budget,
+            participatoryBudgetYear: project?.participatoryBudgetYear,
+            startDate: project?.startDate?.toString().slice(0, 10),
+            status: project?.status?.id,
+            categories: project?.categories?.map((c) => c.id),
+            location: project?.location,
+        },
+    });
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
     const { isAdmin } = useRole();
+    const mode = project ? FormMode.Update : FormMode.Create;
 
     // Years options
     const [yearsOptions, setYearsOptions] = useState<Option[]>([]);
@@ -100,16 +120,15 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
         if (categories.length === 0) {
             dispatch(getAllCategories());
         }
+        dispatch(getAllStatus());
+        dispatch(getAllOrganizations());
+        dispatch(getAuth());
     }, []);
-
-    // OnFileUpdate
-    const handleChange = (files: string[]) => {
-        setValue('images', files);
-    };
 
     const onCreate: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
             const cleanBudget = data.budget || 0;
+            const cleanStartDate = data.startDate ? new Date(data.startDate) : undefined;
             const cleanParticipatoryBudgetYear = data.participatoryBudgetYear || 0;
             const cleanCategories = data.categories || [];
             const cleanOrganizations =
@@ -120,9 +139,10 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
                 create({
                     ...data,
                     budget: cleanBudget,
+                    startDate: cleanStartDate,
                     participatoryBudgetYear: cleanParticipatoryBudgetYear,
                     categories: cleanCategories,
-                    statusId: data.status.id,
+                    statusId: data.status,
                     organizations: cleanOrganizations,
                 })
             );
@@ -134,8 +154,40 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
         }
     };
 
+    const onUpdate: SubmitHandler<Inputs> = async (data: Inputs) => {
+        if (project) {
+            try {
+                const cleanBudget = data.budget || 0;
+                const cleanStartDate = data.startDate ? new Date(data.startDate) : undefined;
+                const cleanParticipatoryBudgetYear = data.participatoryBudgetYear || 0;
+                let cleanCategories = data.categories || [];
+                if (typeof cleanCategories === 'string') cleanCategories = [cleanCategories];
+                await dispatch(
+                    update({
+                        project: project.id,
+                        description: data.description,
+                        startDate: cleanStartDate,
+                        title: data.title,
+                        id: project.id,
+                        statusId: data.status,
+                        location: data.location,
+                        budget: cleanBudget,
+                        participatoryBudgetYear: cleanParticipatoryBudgetYear,
+                        categories: cleanCategories,
+                    })
+                );
+                reset();
+                onCreated();
+            } catch (e: any) {
+                notify(NotificationType.Error, e.message);
+            }
+        }
+    };
+
+    const onSubmit: SubmitHandler<Inputs> = mode === FormMode.Create ? onCreate : onUpdate;
+
     return (
-        <form className='max-w-[500px]' onSubmit={handleSubmit(onCreate)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <TextInput
                 label={t('project_create_title_label')}
                 name='title'
@@ -144,14 +196,22 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
                 required
             />
             <Space px={8} />
-            <FileInput
+            {mode === FormMode.Create && (
+                <>
+                    <FileInput
+                        control={control}
+                        label={t('project_create_images_label')}
+                        name='images'
+                    />
+                    <Space px={8} />
+                </>
+            )}
+            <LocationInput
                 control={control}
-                handleChange={handleChange}
-                label={t('project_create_images_label')}
-                name='images'
+                defaultValue={project?.location}
+                label='Location'
+                name='location'
             />
-            <Space px={8} />
-            <LocationInput control={control} label='Location' name='location' />
             <Space px={8} />
             <TextAreaInput
                 label={t('project_create_description_label')}
@@ -175,8 +235,9 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
             />
             <Space px={8} />
             <DateInput
+                defaultValue={project?.startDate?.toString().slice(0, 10)}
                 label={t('project_create_startdate_label')}
-                name='startdate'
+                name='startDate'
                 register={register}
             />
             <Space px={8} />
@@ -188,13 +249,14 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
             />
             <Space px={8} />
             <MultiSelectInput
+                defaultValue={project?.categories?.map((c) => c.id)}
                 label={t('project_create_startdate_label')}
                 name='categories'
                 options={categoriesOptions}
                 register={register}
             />
             <Space px={8} />
-            {isAdmin && (
+            {mode === FormMode.Create && isAdmin && (
                 <MultiSelectInput
                     label={t('project_create_organizations_label')}
                     name='organizations'
@@ -203,7 +265,7 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
                     required
                 />
             )}
-            {organizationsOptions.length > 1 && (
+            {mode === FormMode.Create && organizationsOptions.length > 1 && (
                 <MultiSelectInput
                     label={t('project_create_organizations_label')}
                     name='organizations'
@@ -215,10 +277,14 @@ const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
             <Space px={8} />
             <SubmitButton
                 className='bg-secondary hover:bg-secondary-hover'
-                value={t('project_create_button') as string}
+                value={
+                    mode === FormMode.Create
+                        ? t('project_create_button')
+                        : t('project_update_button')
+                }
             />
         </form>
     );
 };
 
-export default CreateProjectForm;
+export default ProjectForm;

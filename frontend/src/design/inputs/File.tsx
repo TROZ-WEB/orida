@@ -1,18 +1,15 @@
 /* eslint-disable jsx-a11y/aria-role */
 import { useEnvironment } from '@contexts/appEnvironment';
 import WithTheme, { Theme } from '@customTypes/theme';
+import { Button } from '@design/buttons';
 import Label from '@design/Label';
+import Modal from '@design/modals/DefaultModal';
 import Space from '@design/Space';
-import { FilesUpload, Widget } from '@uploadcare/react-widget';
-import { InputHTMLAttributes, ReactNode } from 'react';
+import useModal from '@hooks/useModal';
+import { FileUpload, Panel } from '@uploadcare/react-widget';
+import { ReactNode } from 'react';
 import { Controller } from 'react-hook-form';
-
-export interface FileInputProps extends InputHTMLAttributes<HTMLInputElement>, WithTheme {
-    label?: ReactNode;
-    name: string;
-    handleChange: (files: any) => void;
-    control: any;
-}
+import { useTranslation } from 'react-i18next';
 
 const classes = {
     labelDarkTheme: `
@@ -20,16 +17,59 @@ const classes = {
     `,
 };
 
-const FileInput = ({ control, label, name, theme = Theme.Light, handleChange }: FileInputProps) => {
-    const env = useEnvironment();
+interface FileInputProps {
+    onChange: (group: string[]) => void;
+    value?: string[];
+}
 
-    const handleFileSelect = async (group: FilesUpload | null) => {
-        if (group) {
-            const files = await Promise.all(group.files());
-            handleChange(files.map((file) => file.cdnUrl));
-        }
+const FileInput = ({ onChange, value }: FileInputProps) => {
+    const env = useEnvironment();
+    const { t } = useTranslation();
+    const filesModalProps = useModal();
+
+    const handleChange = async (group: FileUpload[]) => {
+        const files: string[] = await Promise.all(group.map((g) => g.then((a) => a.cdnUrl)));
+        onChange(files);
     };
 
+    return (
+        <>
+            <Button onClick={filesModalProps.open}>
+                {value?.length && value?.length > 0
+                    ? `${value?.length} ${t('files_modal_button_files')}`
+                    : t('files_modal_button')}
+            </Button>
+            <Modal classname='max-w-[1000px] p-0 rounded-md' {...filesModalProps}>
+                <Panel
+                    imageShrink='800x600'
+                    locale='fr'
+                    multipleMax={4}
+                    onChange={handleChange}
+                    publicKey={env?.uploadcarePublicKey || ''}
+                    tabs='file url facebook gdrive dropbox instagram'
+                    value={value}
+                    imagesOnly
+                    multiple
+                    previewStep
+                />
+                <Button
+                    className='absolute z-10 bottom-[20px] right-[20px] text-base py-3 px-4'
+                    onClick={filesModalProps.close}
+                >
+                    {t('files_modal_button_close')}
+                </Button>
+            </Modal>
+        </>
+    );
+};
+
+interface ControlledFileInputProps extends WithTheme {
+    label?: ReactNode;
+    name: string;
+    control: any;
+}
+
+const ControlledFileInput = ({ control, label, name, theme }: ControlledFileInputProps) => {
     return (
         <div className='w-full'>
             {label && (
@@ -46,22 +86,10 @@ const FileInput = ({ control, label, name, theme = Theme.Light, handleChange }: 
             <Controller
                 control={control}
                 name={name}
-                render={() => (
-                    <Widget
-                        imageShrink='800x600'
-                        locale='fr'
-                        multipleMax={4}
-                        onFileSelect={(group) => handleFileSelect(group as FilesUpload | null)}
-                        publicKey={env?.uploadcarePublicKey || ''}
-                        tabs='file url facebook gdrive dropbox instagram'
-                        imagesOnly
-                        multiple
-                        previewStep
-                    />
-                )}
+                render={({ field }) => <FileInput {...field} onChange={field.onChange} />}
             />
         </div>
     );
 };
 
-export default FileInput;
+export default ControlledFileInput;

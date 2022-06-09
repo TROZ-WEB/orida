@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 const OrganizationPage = () => {
-    const organisationModalProps = useModal();
+    const organizationModalProps = useModal();
     const addMemberToOrgaModalProps = useModal();
     const dispatch = useThunkDispatch();
     const { t } = useTranslation();
@@ -47,7 +47,7 @@ const OrganizationPage = () => {
                     <main className='px-5 py-14 w-full'>
                         <div className='flex items-center pb-3'>
                             {isOrganizationAdmin && (
-                                <IconButton className='mr-2' onClick={organisationModalProps.open}>
+                                <IconButton className='mr-2' onClick={organizationModalProps.open}>
                                     <Icon color={colors.secondary} name='edit' />
                                 </IconButton>
                             )}
@@ -173,10 +173,10 @@ const OrganizationPage = () => {
                         <h1>{t('project_list_title')}</h1>
                         <ProjectList projects={organization?.projects} />
                     </main>
-                    <Modal {...organisationModalProps}>
+                    <Modal {...organizationModalProps}>
                         <OrganizationForm
                             action={FormActions.Update}
-                            onCreated={() => organisationModalProps.close()}
+                            onCreated={() => organizationModalProps.close()}
                             organization={organization}
                         />
                     </Modal>

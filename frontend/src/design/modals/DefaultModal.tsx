@@ -1,5 +1,6 @@
 import IconButton from '@design/buttons/IconButton';
 import Portal from '@design/Portal';
+import colors from '@styles/colors';
 import classnames from '@utils/classnames';
 import { PropsWithChildren } from 'react';
 
@@ -21,8 +22,6 @@ const classes = {
         overflow-auto
         w-full
         z-900
-    `,
-    inner: `
         bg-white
         p-5
         relative
@@ -38,6 +37,7 @@ const classes = {
         right-0
         top-0
         w-[30px]
+        z-10
 
         hover:bg-transparent
     `,
@@ -52,12 +52,10 @@ const Modal = ({ children, close, isOpen, classname }: PropsWithChildren<ModalPr
         <Portal id='modal-root'>
             <Backdrop>
                 <div className={classnames(classes.modal, classname)}>
-                    <div className={classes.inner}>
-                        <IconButton className={classes.close} onClick={close}>
-                            <Icon color='grey' name='cross' />
-                        </IconButton>
-                        {children}
-                    </div>
+                    <IconButton className={classes.close} onClick={close}>
+                        <Icon color={colors.grey} name='cross' />
+                    </IconButton>
+                    {children}
                 </div>
             </Backdrop>
         </Portal>

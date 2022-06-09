@@ -1,5 +1,6 @@
 import Icon from '@design/Icon';
 import { Organization } from '@services/organizations';
+import colors from '@styles/colors';
 import { useTranslation } from 'react-i18next';
 
 import OrganizationTile from './OrganizationTile';
@@ -14,7 +15,7 @@ const OrganizationTileList = ({ organizations }: OrganizationTileListProps) => {
     if (organizations.length === 0) {
         return (
             <div className='flex items-center'>
-                <Icon className='mr-2' color='#38337c' name='city' size={25} />
+                <Icon className='mr-2' color={colors.primary} name='city' size={25} />
                 <span className='text-sm'>{t('organization_list_none')}</span>
             </div>
         );

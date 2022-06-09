@@ -3,12 +3,14 @@ import Budget from '../../types/Budget';
 import ErrorType from '../../types/Error';
 import addAnswers from '../../useCases/polls/addAnswers';
 import addContributor from '../../useCases/project/addContributor';
+import addProjectImages, { AddProjectImagesProps } from '../../useCases/project/addProjectImages';
 import createProject, { CreateProjectProps } from '../../useCases/project/createProject';
 import findAllContributors from '../../useCases/project/findAllContributors';
 import findAllProjets from '../../useCases/project/findAllProjects';
 import findOneById from '../../useCases/project/findOneById';
 import findProjectsBySearch from '../../useCases/project/findProjectsBySearch';
 import removeContributor from '../../useCases/project/removeContributor';
+import updateProject, { UpdateProjectProps } from '../../useCases/project/updateProject';
 import normalize from '../../utils/normalize';
 import {
     categoryRepository,
@@ -73,12 +75,47 @@ router.post(
             location: req.body.location,
             images: req.body.images,
             startDate: req.body.startDate,
-            status: req.body.status,
+            statusId: req.body.statusId,
             title: req.body.title,
         };
         const created = await createProject(project)({ projectRepository, categoryRepository, organizationRepository });
 
         res.status(200).json(mapProject(created));
+    },
+);
+
+router.post(
+    '/addimages',
+    async (req: Request, res: Response) => {
+        const images: AddProjectImagesProps = {
+            id: req.body.id,
+            images: req.body.images,
+        };
+        const project = await addProjectImages(images)({ projectRepository });
+
+        res.status(200).json(mapProject(project));
+    },
+);
+
+router.patch(
+    '/:id',
+    authorizeProjectAdmin(),
+    async (req: Request, res: Response) => {
+        const project: UpdateProjectProps = {
+            id: req.body.id,
+            auth: req.user!,
+            budget: req.body.budget,
+            categories: req.body.categories,
+            description: req.body.description,
+            participatoryBudgetYear: req.body.participatoryBudgetYear,
+            startDate: req.body.startDate,
+            statusId: req.body.statusId,
+            title: req.body.title,
+            location: req.body.location,
+        };
+        const updated = await updateProject(project)({ projectRepository, categoryRepository });
+
+        res.status(200).json(mapProject(updated));
     },
 );
 

@@ -1,5 +1,6 @@
 import Icon from '@design/Icon';
 import Layout from '@design/layouts/Layout';
+import colors from '@styles/colors';
 import classnames from '@utils/classnames';
 import { PropsWithChildren, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
@@ -68,7 +69,7 @@ const ThreeColsLayout = ({
                     })}
                     to={item.href}
                 >
-                    <Icon color='#fff' name={item.iconName} size={50} />
+                    <Icon color={colors.default} name={item.iconName} size={50} />
                 </Link>
             ))}
         </div>

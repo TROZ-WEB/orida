@@ -127,15 +127,15 @@ input[type='search']::-webkit-search-cancel-button {
 
 /* Override Uploadcare Style */
 
-.uploadcare--widget__button,
-.uploadcare--widget__button:hover,
-.uploadcare--widget__button:focus, 
 .uploadcare--button_primary,
 .uploadcare--button_primary:hover,
 .uploadcare--button_primary:focus,
 .uploadcare--preview__back,
 .uploadcare--preview__back:hover,
-.uploadcare--preview__back:focus {
+.uploadcare--preview__back:focus,
+.uploadcare--panel__show-files,
+.uploadcare--panel__show-files:hover,
+.uploadcare--panel__show-files:focus {
     background-color: #38337c !important;
     border: none;
     cursor: pointer;
@@ -151,6 +151,7 @@ input[type='search']::-webkit-search-cancel-button {
     line-height: 1rem;
     text-align: center;
     font-weight: 400;
+    font-family: Lato, Arial, sans-serif;
 }
 
 .uploadcare--button_primary,
@@ -158,23 +159,27 @@ input[type='search']::-webkit-search-cancel-button {
 .uploadcare--button_primary:focus,
 .uploadcare--preview__back,
 .uploadcare--preview__back:hover,
-.uploadcare--preview__back:focus {
+.uploadcare--preview__back:focus,
+.uploadcare--panel__show-files,
+.uploadcare--panel__show-files:hover,
+.uploadcare--panel__show-files:focus {
     padding: 0.75rem 1rem;
     font-size: 1rem;
     line-height: 1.5rem
 }
 
-.uploadcare--preview__back {
+.uploadcare--preview__back,
+.uploadcare--panel__show-files {
     background-color: #fea733 !important;
 }
 
 .uploadcare--preview__back:hover,
-.uploadcare--preview__back:focus {
+.uploadcare--preview__back:focus,
+.uploadcare--panel__show-files:hover,
+.uploadcare--panel__show-files:focus {
     background-color: #fbc173 !important;
 }
 
-.uploadcare--widget__button:hover,
-.uploadcare--widget__button:focus, 
 .uploadcare--button_primary:hover,
 .uploadcare--button_primary:focus {
     background-color: #6560af !important;

@@ -11,7 +11,7 @@ const authorizeAdminOfAllProjectOrganizations = () => (req: Request, res: Respon
     }
 
     const organisationsOfAuth = user.organizationMemberships.map((o) => o.organization.id);
-    const isAuthAuthorized = organizations.reduce(
+    const isAuthAuthorized = organizations.length > 0 && organizations.reduce(
         (acc: boolean, organizationId:string) => (organisationsOfAuth.includes(organizationId) ? acc : false),
         true,
     );
