@@ -1,7 +1,7 @@
-import { User as UserModel } from './domain/User';
+import UserDomain from './core/domain/User';
 
 declare global {
     namespace Express {
-        interface User extends UserModel {}
+        interface User extends UserDomain {}
     }
 }

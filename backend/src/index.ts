@@ -1,28 +1,32 @@
-/// <reference types="./types" />
-import * as Sentry from '@sentry/node';
-import AppDataSource from './infrastructure/database';
-import version from './version';
+import serverAdapter from './application';
+import sentryAdapter from './application/adapters/errorsMonitoring/sentryAdapter';
+import DBCategoryRepository from './infrastructure/repositories/DBCategoryRepository';
+import DBOrganizationMembershipRepository from './infrastructure/repositories/DBOrganizationMembershipRepository';
+import DBOrganizationRepository from './infrastructure/repositories/DBOrganizationRepository';
+import DBPollRepository from './infrastructure/repositories/DBPollRepository';
+import DBProjectContributionRepository from './infrastructure/repositories/DBProjectContributionRepository';
+import DBProjectRepository from './infrastructure/repositories/DBProjectRepository';
+import DBProjectStatusRepository from './infrastructure/repositories/DBProjectStatusRepository';
+import DBRoleRepository from './infrastructure/repositories/DBRoleRepository';
+import DBThreadRepository from './infrastructure/repositories/DBThreadRepository';
+import DBUserRepository from './infrastructure/repositories/DBUserRepository';
 
-Sentry.init({
-    dsn: process.env.SENTRY_DSN,
-    environment: process.env.ENVIRONMENT_NAME,
-    release: version ? `orida-backend@${version}` : undefined,
-});
-
-// to initialize initial connection with the database, register all entities
-// and "synchronize" database schema, call "initialize()" method of a newly created database
-// once in your application bootstrap
-AppDataSource.initialize()
-    .then(async () => {
-        const { default: app } = await import('./infrastructure/app');
-
-        const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-
-        app.listen(port, () => {
-            console.info(`Server listening on port ${port}`);
-        });
-    })
-    .catch((error) => {
-        console.error(error);
-        process.exitCode = 1;
+(async () => {
+    // Init sentry
+    sentryAdapter.init();
+    // Setup express
+    serverAdapter.setup({
+        categoryRepository: DBCategoryRepository,
+        organizationMembershipRepository: DBOrganizationMembershipRepository,
+        organizationRepository: DBOrganizationRepository,
+        pollRepository: DBPollRepository,
+        projectContributionRepository: DBProjectContributionRepository,
+        projectRepository: DBProjectRepository,
+        projectStatusRepository: DBProjectStatusRepository,
+        roleRepository: DBRoleRepository,
+        threadRepository: DBThreadRepository,
+        userRepository: DBUserRepository,
     });
+    // Init express
+    serverAdapter.init();
+})().catch((error) => console.error('Boostrap error : ', { data: error }));
