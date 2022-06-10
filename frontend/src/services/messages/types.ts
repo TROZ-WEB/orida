@@ -26,3 +26,7 @@ export type CreateProps = {
     authorId: string;
     content: string;
 };
+
+export type DeleteProps = {
+    id: string;
+};

@@ -1,9 +1,17 @@
 import Avatar from '@design/Avatar';
 import { Paragraph, SmallGreyText } from '@design/texts';
 import { H3 } from '@design/titles';
+import useSelector from '@hooks/useSelector';
+import useThunkDispatch from '@hooks/useThunkDispatch';
 import { Message } from '@services/messages';
+import notify, { NotificationType } from '@services/notifications';
+import { getAuth } from '@store/auth/actions';
+import { deleteMessage } from '@store/messages/actions';
+import { getOne as getOneThread } from '@store/threads/actions';
 import formatRelative from '@utils/formatRelativeLocalized';
 import getInitials from '@utils/getInitials';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface MessageTileProps {
     message: Message;
@@ -24,7 +32,27 @@ const classes = {
 };
 
 const MessageTile = ({ message }: MessageTileProps) => {
+    const dispatch = useThunkDispatch();
     const initials = getInitials(message.author.fullname);
+    const auth = useSelector((state) => state.auth.data);
+
+    const { t } = useTranslation();
+
+    useEffect(() => {
+        dispatch(getAuth());
+    }, []);
+
+    const isAuthor = auth.id === message.author.id;
+
+    const handleDelete = async () => {
+        try {
+            await dispatch(deleteMessage({ id: message.id }));
+            await dispatch(getOneThread(message.thread.id));
+            notify(NotificationType.Success, t('success_message_deleted'));
+        } catch (e: any) {
+            notify(NotificationType.Error, e.message);
+        }
+    };
 
     return (
         <div className='mb-3'>
@@ -38,7 +66,12 @@ const MessageTile = ({ message }: MessageTileProps) => {
                         <H3>{message.author.fullname}</H3>
                         <Paragraph>{message.content}</Paragraph>
                     </div>
-                    <SmallGreyText>{formatRelative(message.createdAt, new Date())}</SmallGreyText>
+                    <SmallGreyText>{formatRelative(message.createdAt, new Date())} </SmallGreyText>
+                    {isAuthor && (
+                        <button onClick={handleDelete}>
+                            <SmallGreyText>| {t('delete_message')}</SmallGreyText>
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

@@ -25,7 +25,7 @@ services:
             TYPEFORM_TOKEN: secret
             TYPEFORM_WORKSPACE: secret
             GOOGLE_MAPS_KEY: AIzaSyBV8KWOU6WUtYNZNBosay_xmcusx2Cj8-Y
-            TINY_MCE_KEY: wwc5315ofgspabl82ozg0n9jnzf45f7b8304s4qwv3sp326a
+            TINY_MCE_KEY: 3pzlbr66yfp2wgitvb2w2mk1ghwlie76tgy23xczix1t2p18
             UPLOADCARE_PUBLIC_KEY: aeb2112620c51cdc2ce1
     frontend:
         build:

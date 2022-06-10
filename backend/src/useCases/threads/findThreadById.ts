@@ -10,7 +10,7 @@ const findThreadById = (id: string) => (
     async ({ threadRepository }: Context): Promise<Thread | null> => {
         const entity = await threadRepository.findOne({
             where: { id },
-            relations: { messages: true },
+            relations: { messages: { thread: true } },
         });
 
         return entity ? entity.toDomain() : null;

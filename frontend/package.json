@@ -29,6 +29,7 @@
     "react-dom": "^18.0.0",
     "react-google-places-autocomplete": "^3.3.4",
     "react-hook-form": "^7.30.0",
+    "react-html-parser": "^2.0.2",
     "react-i18next": "^11.16.7",
     "react-redux": "^8.0.0",
     "react-router-dom": "^6.3.0",

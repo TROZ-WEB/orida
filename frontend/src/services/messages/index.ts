@@ -1,6 +1,6 @@
-import { POST } from '@utils/http';
+import { DELETE, POST } from '@utils/http';
 
-import { CreateProps, Message, MessageConverter } from './types';
+import { CreateProps, DeleteProps, Message, MessageConverter } from './types';
 
 async function create(props: CreateProps): Promise<Message> {
     try {
@@ -14,8 +14,21 @@ async function create(props: CreateProps): Promise<Message> {
     }
 }
 
+async function deleteMessage(props: DeleteProps): Promise<Message> {
+    try {
+        const response = await DELETE<Message>(`/api/messages/${props.id}`, props);
+
+        return MessageConverter.fromApi(response);
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('MessageService::create Unhandled error');
+    }
+}
+
 const MessageService = {
     create,
+    deleteMessage,
 };
 
 export default MessageService;

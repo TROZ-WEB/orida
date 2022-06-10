@@ -197,3 +197,25 @@ input[type='search']::-webkit-search-cancel-button {
 .uploadcare--file__remove:focus {
     color: #6560af !important;
 }
+
+/* Parsed HTML Style */
+
+.parsed-html a {
+    color: #38337c !important;
+    text-decoration: underline;
+}
+
+.parsed-html a:hover {
+    color: #6560af !important;
+    text-decoration: underline;
+}
+
+.parsed-html ul {
+    list-style: circle;
+    padding: 0 0 0 1rem;
+}
+
+.parsed-html ol {
+    list-style: auto;
+    padding: 0 0 0 1rem;
+}
