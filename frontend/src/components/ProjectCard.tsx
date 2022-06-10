@@ -36,7 +36,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     // converts HTML to well escaped Text
     function getText(html: string) {
         const divContainer = document.createElement('div');
-        divContainer.innerHTML = html.replace(/<[^>]+>/g, ' ');
+        divContainer.innerHTML = html?.replace(/<[^>]+>/g, ' ') || '';
 
         return divContainer.textContent || divContainer.innerText || '';
     }
