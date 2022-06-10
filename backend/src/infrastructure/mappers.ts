@@ -45,6 +45,7 @@ export const mapMessage = (message: Message) => ({
     thread: message.thread,
     author: message.author ? mapUser(message.author) : undefined,
     content: message.content,
+    isModerated: message.isModerated,
 });
 
 export const mapThread = (thread: Thread) => ({

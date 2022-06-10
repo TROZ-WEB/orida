@@ -208,8 +208,7 @@ const ProjectForm = ({ onCreated, project }: ProjectFormProps) => {
             )}
             <LocationInput
                 control={control}
-                defaultValue={project?.location}
-                label='Location'
+                label={t('project_create_location_label')}
                 name='location'
             />
             <Space px={8} />

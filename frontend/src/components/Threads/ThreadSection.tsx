@@ -58,7 +58,7 @@ const ThreadSection = ({ threads, project, refresh }: ThreadSectionProps) => {
                                     { [styles.lastPoll]: index === threads.length - 1 }
                                 )}
                             >
-                                <ThreadCard thread={thread!} />
+                                <ThreadCard project={project} thread={thread!} />
                             </div>
                         ))}
                     </Carousel>

@@ -4,6 +4,7 @@ import Loader from '@design/Loader';
 import { H2 } from '@design/titles';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
+import { Project } from '@services/projects';
 import { getOne as getOneThread } from '@store/threads/actions';
 import { useEffect, useRef } from 'react';
 
@@ -18,9 +19,10 @@ const classes = {
 
 interface ThreadDetailsProps {
     threadId: string;
+    project: Project;
 }
 
-const ThreadDetails = ({ threadId }: ThreadDetailsProps) => {
+const ThreadDetails = ({ threadId, project }: ThreadDetailsProps) => {
     const dispatch = useThunkDispatch();
     const thread = useSelector((state) => state.threads.data.find((t) => t.id === threadId));
 
@@ -48,7 +50,12 @@ const ThreadDetails = ({ threadId }: ThreadDetailsProps) => {
                     <H2 className={classes.title}>Échanges</H2>
                     <div ref={messagesWrapper} className={classes.messagesWrapper}>
                         {thread.messages.map((message) => (
-                            <MessageTile key={message.id} message={message} />
+                            <MessageTile
+                                key={message.id}
+                                message={message}
+                                project={project}
+                                threadId={threadId}
+                            />
                         ))}
                     </div>
                     <SendMessageForm

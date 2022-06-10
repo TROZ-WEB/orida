@@ -3,6 +3,7 @@ import Icon from '@design/Icon';
 import Modal from '@design/modals/DefaultModal';
 import { SmallGreyText } from '@design/texts';
 import useModal from '@hooks/useModal';
+import { Project } from '@services/projects';
 import { Thread } from '@services/threads';
 import ellipsis from '@utils/ellipsis';
 import formatRelative from '@utils/formatRelativeLocalized';
@@ -18,9 +19,10 @@ const styles = {
 
 interface ThreadCardProps {
     thread: Thread;
+    project: Project;
 }
 
-const ThreadCard = ({ thread }: ThreadCardProps) => {
+const ThreadCard = ({ thread, project }: ThreadCardProps) => {
     const modalProps = useModal();
     const { open } = modalProps;
 
@@ -37,7 +39,7 @@ const ThreadCard = ({ thread }: ThreadCardProps) => {
                 </div>
             </InvisibleButton>
             <Modal {...modalProps}>
-                <ThreadDetails threadId={thread.id} />
+                <ThreadDetails project={project} threadId={thread.id} />
             </Modal>
         </>
     );

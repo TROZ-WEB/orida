@@ -7,6 +7,7 @@ export type Message = {
     thread: Thread;
     author: User;
     content: string;
+    isModerated: string;
 };
 
 export const MessageConverter = {
@@ -17,6 +18,7 @@ export const MessageConverter = {
             thread: data.thread,
             author: data.author,
             content: data.content,
+            isModerated: data.isModerated,
         };
     },
 };
@@ -28,5 +30,9 @@ export type CreateProps = {
 };
 
 export type DeleteProps = {
+    id: string;
+};
+
+export type ModerateProps = {
     id: string;
 };

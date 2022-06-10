@@ -21,11 +21,11 @@ const classes = {
     image: 'w-full h-32 bg-cover bg-center',
     content: 'mx-4 py-4 border-border border-b box-border',
     link: `
-        w-full 
-        p-3 
-        text-secondary 
-        font-bold 
-        text-center 
+        w-full
+        p-3
+        text-secondary
+        font-bold
+        text-center
         relative
     `,
 };

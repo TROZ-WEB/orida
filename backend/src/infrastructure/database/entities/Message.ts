@@ -19,6 +19,9 @@ class Message extends BaseColumns {
     @Column({ type: 'character varying', nullable: false })
         content: string;
 
+    @Column({ type: 'boolean', name: 'is-moderated', default: false })
+        isModerated: boolean;
+
     constructor(
         id: string,
         createdAt: Date,
@@ -26,11 +29,13 @@ class Message extends BaseColumns {
         thread: Thread,
         author: User,
         content: string,
+        isModerated: boolean,
     ) {
         super(id, createdAt, modifiedAt);
         this.thread = thread;
         this.author = author;
         this.content = content;
+        this.isModerated = isModerated;
     }
 
     toDomain(): MessageDomain {
@@ -40,6 +45,7 @@ class Message extends BaseColumns {
             thread: this.thread?.toDomain(),
             author: this.author?.toDomain(),
             content: this.content,
+            isModerated: this.isModerated,
         });
     }
 }

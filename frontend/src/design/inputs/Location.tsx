@@ -79,7 +79,6 @@ interface ControlledLocationInputProps {
     name: string;
     control: any;
     required?: boolean;
-    defaultValue?: Position;
 }
 
 const ControlledLocationInput = ({

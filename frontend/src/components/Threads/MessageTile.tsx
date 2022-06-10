@@ -1,12 +1,14 @@
 import Avatar from '@design/Avatar';
 import { Paragraph, SmallGreyText } from '@design/texts';
 import { H3 } from '@design/titles';
+import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { Message } from '@services/messages';
 import notify, { NotificationType } from '@services/notifications';
+import { Project } from '@services/projects';
 import { getAuth } from '@store/auth/actions';
-import { deleteMessage } from '@store/messages/actions';
+import { deleteMessage, toggleMessageModeration } from '@store/messages/actions';
 import { getOne as getOneThread } from '@store/threads/actions';
 import formatRelative from '@utils/formatRelativeLocalized';
 import getInitials from '@utils/getInitials';
@@ -15,6 +17,8 @@ import { useTranslation } from 'react-i18next';
 
 interface MessageTileProps {
     message: Message;
+    threadId: string;
+    project: Project;
 }
 
 const classes = {
@@ -31,10 +35,11 @@ const classes = {
     `,
 };
 
-const MessageTile = ({ message }: MessageTileProps) => {
+const MessageTile = ({ message, threadId, project }: MessageTileProps) => {
     const dispatch = useThunkDispatch();
     const initials = getInitials(message.author.fullname);
     const auth = useSelector((state) => state.auth.data);
+    const { isProjectAdmin } = useRole({ project });
 
     const { t } = useTranslation();
 
@@ -54,28 +59,46 @@ const MessageTile = ({ message }: MessageTileProps) => {
         }
     };
 
-    return (
-        <div className='mb-3'>
-            <div className='flex'>
-                <div>
-                    {/* TODO : add picture in avatar */}
-                    <Avatar initials={initials} pictureURL={null} size={30} />
+    const handleModerate = async () => {
+        try {
+            await dispatch(toggleMessageModeration({ id: message.id }));
+            await dispatch(getOneThread(threadId));
+        } catch (e: any) {
+            notify(NotificationType.Error, e.message);
+        }
+    };
+
+    return isProjectAdmin || !message.isModerated ? (
+        <div className='flex mb-3'>
+            <div>
+                {/* TODO : add picture in avatar */}
+                <Avatar initials={initials} pictureURL={null} size={30} />
+            </div>
+            <div className='pl-3 w-full'>
+                <div className={classes.message}>
+                    <H3 className={message.isModerated && 'text-gray-400'}>
+                        {message.author.fullname}
+                    </H3>
+                    <Paragraph className={message.isModerated && 'text-gray-400'}>
+                        {message.content}
+                    </Paragraph>
                 </div>
-                <div className='pl-3 w-full'>
-                    <div className={classes.message}>
-                        <H3>{message.author.fullname}</H3>
-                        <Paragraph>{message.content}</Paragraph>
-                    </div>
-                    <SmallGreyText>{formatRelative(message.createdAt, new Date())} </SmallGreyText>
-                    {isAuthor && (
-                        <button onClick={handleDelete}>
-                            <SmallGreyText>| {t('delete_message')}</SmallGreyText>
-                        </button>
-                    )}
-                </div>
+                <SmallGreyText>{formatRelative(message.createdAt, new Date())} </SmallGreyText>
+                {isAuthor && (
+                    <button onClick={handleDelete}>
+                        <SmallGreyText>| {t('delete_message')} </SmallGreyText>
+                    </button>
+                )}
+                {isProjectAdmin && (
+                    <button onClick={handleModerate}>
+                        <SmallGreyText>
+                            | {message.isModerated ? t('restore_message') : t('moderate_message')}{' '}
+                        </SmallGreyText>
+                    </button>
+                )}
             </div>
         </div>
-    );
+    ) : null;
 };
 
 export default MessageTile;

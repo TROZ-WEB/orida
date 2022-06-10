@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import createMessage from '../../useCases/messages/createMessage';
 import deleteMessage from '../../useCases/messages/deleteMessage';
+import toggleMessageModeration from '../../useCases/messages/toggleMessageModeration';
 import { userRepository, threadRepository, messageRepository } from '../database';
 import { mapThread } from '../mappers';
 
@@ -31,6 +32,19 @@ router.delete(
     async (req: Request, res: Response) => {
         const { id } = req.params;
         const thread = await deleteMessage({ id })({
+            threadRepository,
+            messageRepository,
+        });
+
+        res.status(200).json(mapThread(thread));
+    },
+);
+
+router.post(
+    '/toggleMessageModeration',
+    async (req: Request, res: Response) => {
+        const { id } = req.body;
+        const thread = await toggleMessageModeration({ id })({
             threadRepository,
             messageRepository,
         });

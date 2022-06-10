@@ -1,6 +1,6 @@
 import { DELETE, POST } from '@utils/http';
 
-import { CreateProps, DeleteProps, Message, MessageConverter } from './types';
+import { CreateProps, DeleteProps, Message, MessageConverter, ModerateProps } from './types';
 
 async function create(props: CreateProps): Promise<Message> {
     try {
@@ -22,13 +22,26 @@ async function deleteMessage(props: DeleteProps): Promise<Message> {
     } catch (error) {
         // TODO::error handling
         console.error(error);
-        throw Error('MessageService::create Unhandled error');
+        throw Error('MessageService::delete Unhandled error');
+    }
+}
+
+async function toggleMessageModeration(props: ModerateProps): Promise<Message> {
+    try {
+        const response = await POST<Message>('/api/messages/toggleMessageModeration', props);
+
+        return MessageConverter.fromApi(response);
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('MessageService::moderate Unhandled error');
     }
 }
 
 const MessageService = {
     create,
     deleteMessage,
+    toggleMessageModeration,
 };
 
 export default MessageService;
