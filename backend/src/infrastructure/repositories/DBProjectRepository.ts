@@ -11,6 +11,7 @@ import CategoryEntity from '../database/entities/Category.entity';
 import OrganizationEntity from '../database/entities/Organization.entity';
 import ProjectEntity from '../database/entities/Project.entity';
 import ProjectStatusEntity from '../database/entities/ProjectStatus.entity';
+import DBProjectContributionRepository from './DBProjectContributionRepository';
 
 const createProject: COREProjectRepository['createProject'] = async ({
     auth,
@@ -72,13 +73,11 @@ const createProject: COREProjectRepository['createProject'] = async ({
     //     await ImageEntity.save(imagesArray);
     // }
 
-    // createProjectContribution({
-    //     userId: auth.id,
-    //     projectId: saved.id,
-    //     roleId: '00000000-0000-0000-0000-000000000001',
-    // })({
-    //     projectContributionRepository,
-    // });
+    DBProjectContributionRepository.createProjectContribution({
+        userId: auth.id,
+        projectId: saved.id,
+        roleId: '00000000-0000-0000-0000-000000000001',
+    });
 
     return saved.toDomain();
 };
@@ -238,4 +237,6 @@ const getProjectById: COREProjectRepository['getProjectById'] = async (id: strin
     return project ? project.toDomain() : undefined;
 };
 
-export default { createProject, updateProject, createProjectImages, getAllProjects, getProjectById, getProjectBySearch };
+const DBProjectRepository: COREProjectRepository = { createProject, updateProject, createProjectImages, getAllProjects, getProjectById, getProjectBySearch };
+
+export default DBProjectRepository;

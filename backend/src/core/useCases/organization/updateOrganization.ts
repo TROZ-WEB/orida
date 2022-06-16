@@ -1,7 +1,6 @@
-import OrganizationDomain from '../../domain/Organization';
+import OrganizationDomain, { OrganizationType } from '../../domain/Organization';
 import OrganizationError, { OrganizationErrorType } from '../../errors/OrganizationError';
 import COREOrganizationRepository from '../../ports/repositories/COREOrganizationRepository';
-import OrganizationType from '../../types/OrganizationType';
 
 interface Arg {
     id:string;

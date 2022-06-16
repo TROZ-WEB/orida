@@ -1,8 +1,12 @@
 /* eslint-disable import/no-cycle */
-import OrganizationType from '../types/OrganizationType';
 import OrganizationMembership from './OrganizationMembership';
 import Project from './Project';
 
+export enum OrganizationType {
+    collectivity = 'COLLECTIVITY',
+    association = 'ASSOCIATION',
+    company = 'COMPANY',
+}
 interface Organization {
     id: string;
     name: string;

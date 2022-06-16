@@ -1,5 +1,4 @@
 /* eslint-disable import/no-cycle */
-import Position from '../types/Position';
 import Category from './Category';
 import Image from './Image';
 import Organization from './Organization';
@@ -7,6 +6,15 @@ import Post from './Post';
 import ProjectContribution from './ProjectContribution';
 import ProjectStatus from './ProjectStatus';
 
+export interface Position {
+    latitude: number;
+    longitude: number;
+}
+
+export interface Budget {
+    min: number;
+    max: number | undefined;
+}
 interface Project {
     id: string;
     budget: Number | undefined;

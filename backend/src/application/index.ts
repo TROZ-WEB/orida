@@ -76,7 +76,7 @@ const setup = ({
     );
 
     // Init authentication
-    app.use(auth.initialize() as RequestHandler);
+    app.use(auth.initialize({ userRepository }) as RequestHandler);
     app.use(auth.session());
 
     app.use('/categories/', categoriesRouter({ categoryRepository }));

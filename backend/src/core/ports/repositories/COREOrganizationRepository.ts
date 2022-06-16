@@ -1,6 +1,5 @@
-import OrganizationDomain from '../../domain/Organization';
+import OrganizationDomain, { OrganizationType } from '../../domain/Organization';
 import ProjectDomain from '../../domain/Project';
-import OrganizationType from '../../types/OrganizationType';
 
 interface createOrganizationProps {
     name: string,

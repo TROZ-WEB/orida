@@ -1,8 +1,6 @@
 import CategoryDomain from '../../domain/Category';
-import ProjectDomain from '../../domain/Project';
+import ProjectDomain, { Budget, Position } from '../../domain/Project';
 import UserDomain from '../../domain/User';
-import Budget from '../../types/Budget';
-import Position from '../../types/Position';
 
 interface createProjectProps {
     auth: UserDomain;

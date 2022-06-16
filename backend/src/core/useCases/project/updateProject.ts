@@ -1,9 +1,8 @@
 /* eslint-disable max-len */
 import CategoryDomain from '../../domain/Category';
-import ProjectDomain from '../../domain/Project';
+import ProjectDomain, { Position } from '../../domain/Project';
 import ProjectError, { ProjectErrorType } from '../../errors/ProjectError';
 import COREProjectRepository from '../../ports/repositories/COREProjectRepository';
-import Position from '../../types/Position';
 
 interface Arg {
     id:string;

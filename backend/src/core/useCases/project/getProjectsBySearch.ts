@@ -1,6 +1,5 @@
-import ProjectDomain from '../../domain/Project';
+import ProjectDomain, { Budget } from '../../domain/Project';
 import COREProjectRepository from '../../ports/repositories/COREProjectRepository';
-import Budget from '../../types/Budget';
 
 interface Context {
     projectRepository: COREProjectRepository;

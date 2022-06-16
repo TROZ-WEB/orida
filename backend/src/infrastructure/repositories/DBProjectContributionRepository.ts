@@ -88,4 +88,6 @@ const getAllProjectContributions: COREProjectContributionRepository['getAllProje
     return projectContributions.map((projectContribution) => projectContribution.toDomain());
 };
 
-export default { createProjectContribution, deleteProjectContribution, getAllProjectContributions };
+const DBProjectContributionRepository: COREProjectContributionRepository = { createProjectContribution, deleteProjectContribution, getAllProjectContributions };
+
+export default DBProjectContributionRepository;

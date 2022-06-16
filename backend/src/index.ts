@@ -1,5 +1,6 @@
 import serverAdapter from './application';
 import sentryAdapter from './application/adapters/errorsMonitoring/sentryAdapter';
+import AppDataSource from './infrastructure/database/index';
 import DBCategoryRepository from './infrastructure/repositories/DBCategoryRepository';
 import DBOrganizationMembershipRepository from './infrastructure/repositories/DBOrganizationMembershipRepository';
 import DBOrganizationRepository from './infrastructure/repositories/DBOrganizationRepository';
@@ -12,6 +13,8 @@ import DBThreadRepository from './infrastructure/repositories/DBThreadRepository
 import DBUserRepository from './infrastructure/repositories/DBUserRepository';
 
 (async () => {
+    // Database
+    await AppDataSource.initialize();
     // Init sentry
     sentryAdapter.init();
     // Setup express

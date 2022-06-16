@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import ProjectError, { ProjectErrorType } from '../../core/errors/ProjectError';
 import COREProjectRepository from '../../core/ports/repositories/COREProjectRepository';
-import Budget from '../../core/types/Budget';
+import { Budget } from '../../core/domain/Project';
 import createProject from '../../core/useCases/project/createProject';
 import createProjectImages from '../../core/useCases/project/createProjectImages';
 import getAllProjects from '../../core/useCases/project/getAllProjects';
@@ -38,9 +38,9 @@ const projectRouter = ({
             throw new ProjectError(ProjectErrorType.NotFound);
         }
 
-        if (user) {
-            project.posts = addAnswers({ posts: project.posts, user });
-        }
+        // if (user) {
+        //     project.posts = addAnswers({ posts: project.posts, user });
+        // }
 
         const result = mapProject(project);
         res.status(200).json(result);
