@@ -1,6 +1,11 @@
 import { SubmitButton } from '@design/buttons';
 import { TextInput } from '@design/inputs';
 import Space from '@design/Space';
+import useSelector from '@hooks/useSelector';
+import { goToProject } from '@router/AppRoutes';
+import NotificationService from '@services/notifications';
+import { NotificationType } from '@services/notifications/types';
+import { Project } from '@services/projects';
 import ThreadService from '@services/threads';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -10,18 +15,31 @@ type Inputs = {
 };
 
 interface ThreadCreateFormProps {
-    projectId: string;
+    project: Project;
     onSubmit: () => void;
 }
 
-const ThreadCreateForm = ({ projectId, onSubmit }: ThreadCreateFormProps) => {
+const ThreadCreateForm = ({ project, onSubmit }: ThreadCreateFormProps) => {
     const { register, handleSubmit } = useForm<Inputs>();
     const { t } = useTranslation();
+    const auth = useSelector((state) => state.auth.data);
 
     const onCreate = async (data: Inputs) => {
         await ThreadService.create({
-            project: projectId,
+            project: project.id,
             subject: data.subject,
+        });
+        await NotificationService.create({
+            usersIds: project.contributors
+                .map((contributor) => contributor.user.id)
+                .filter((id) => id !== auth.id),
+            type: NotificationType.project,
+            link: goToProject(project.id),
+            text: t('notification_new_project_thread', {
+                threadTitle: data.subject,
+                projectTitle: project.title,
+            }),
+            projectId: project.id,
         });
         onSubmit();
     };

@@ -1,9 +1,12 @@
 import { SubmitButton } from '@design/buttons';
 import { FileInput } from '@design/inputs';
 import Space from '@design/Space';
+import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import notify, { NotificationType } from '@services/notifications';
+import { goToProject } from '@router/AppRoutes';
+import NotificationService, { NotificationType } from '@services/notifications';
 import { Project } from '@services/projects';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
 import { getAuth } from '@store/auth/actions';
 import { addImages } from '@store/projects/actions';
 import { useEffect } from 'react';
@@ -23,6 +26,7 @@ const AddProjectImagesForm = ({ onCreated, project }: AddProjectImagesFormProps)
     const { control, handleSubmit, reset } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
+    const auth = useSelector((state) => state.auth.data);
 
     useEffect(() => {
         dispatch(getAuth());
@@ -31,10 +35,19 @@ const AddProjectImagesForm = ({ onCreated, project }: AddProjectImagesFormProps)
     const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
             await dispatch(addImages({ ...data, id: project.id }));
+            await NotificationService.create({
+                usersIds: project.contributors
+                    .map((contributor) => contributor.user.id)
+                    .filter((id) => id !== auth.id),
+                type: NotificationType.project,
+                link: goToProject(project.id),
+                text: t('notification_new_project_image', { projectTitle: project.title }),
+                projectId: project.id,
+            });
             reset();
             onCreated();
         } catch (e: any) {
-            notify(NotificationType.Error, e.message);
+            notify(ToastNotificationType.Error, e.message);
         }
     };
 

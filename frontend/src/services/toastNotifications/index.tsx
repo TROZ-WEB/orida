@@ -2,7 +2,7 @@ import './style.css';
 
 import { toast } from 'react-toastify';
 
-export enum NotificationType {
+export enum ToastNotificationType {
     Success,
     Error,
     Warning,
@@ -10,17 +10,17 @@ export enum NotificationType {
     Default,
 }
 
-function notify(type: NotificationType, content: string) {
+function notify(type: ToastNotificationType, content: string) {
     switch (type) {
-        case NotificationType.Success:
+        case ToastNotificationType.Success:
             return toast.success(content);
-        case NotificationType.Error:
+        case ToastNotificationType.Error:
             return toast.error(content);
-        case NotificationType.Warning:
+        case ToastNotificationType.Warning:
             return toast.warning(content);
-        case NotificationType.Info:
+        case ToastNotificationType.Info:
             return toast.info(content);
-        case NotificationType.Default:
+        case ToastNotificationType.Default:
         default:
             return toast(content);
     }

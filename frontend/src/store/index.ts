@@ -16,6 +16,7 @@ import authReducer from './auth/reducer';
 import { SIGN_OUT } from './auth/types';
 import categoriesReducer from './categories/reducer';
 import filtersReducer from './filters/reducer';
+import notificationsReducer from './notifications/reducer';
 import organizationReducer from './organizations/reducer';
 import pollReducer from './polls/reducer';
 import projectReducer from './projects/reducer';
@@ -43,6 +44,7 @@ const appReducer = combineReducers({
     roles: rolesReducer,
     status: statusReducer,
     threads: threadReducer,
+    notifications: notificationsReducer,
 });
 
 export type AppState = ReturnType<typeof appReducer>;

@@ -4,6 +4,8 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { Category as CategoryEntity } from './entities/Category';
 import { Image as ImageEntity } from './entities/Image';
 import { Message as MessageEntity } from './entities/Message';
+import { Notification as NotificationEntity } from './entities/Notification';
+import { NotificationState as NotificationStateEntity } from './entities/NotificationState';
 import { Organization as OrganizationEntity } from './entities/Organization';
 import { OrganizationMembership as OrganizationMembershipEntity } from './entities/OrganizationMembership';
 import { Poll as PollEntity } from './entities/Poll';
@@ -44,5 +46,9 @@ export const roleRepository = AppDataSource.getRepository<RoleEntity>(RoleEntity
 export const threadRepository = AppDataSource.getRepository<ThreadEntity>(ThreadEntity);
 export const userRepository = AppDataSource.getRepository<UserEntity>(UserEntity);
 export const messageRepository = AppDataSource.getRepository<MessageEntity>(MessageEntity);
+export const notificationRepository = AppDataSource.getRepository<NotificationEntity>(NotificationEntity);
+export const notificationStateRepository = (
+    AppDataSource.getRepository<NotificationStateEntity>(NotificationStateEntity)
+);
 
 export default AppDataSource;

@@ -8,6 +8,7 @@ import categoriesRouter from './routes/categories';
 import environmentRouter from './routes/environment';
 import healthRouter from './routes/health';
 import messagesRouter from './routes/messages';
+import notificationsRouter from './routes/notifications';
 import organizationsRouter from './routes/organizations';
 import pollsRouter from './routes/polls';
 import projectsRouter from './routes/projects';
@@ -53,6 +54,7 @@ app.use('/roles/', rolesRouter);
 app.use('/status/', statusRouter);
 app.use('/threads/', threadsRouter);
 app.use('/users/', usersRouter);
+app.use('/notifications/', notificationsRouter);
 
 app.use(Sentry.Handlers.errorHandler());
 

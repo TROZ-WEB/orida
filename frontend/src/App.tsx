@@ -3,7 +3,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 import EnvironmentProvider from '@contexts/appEnvironment';
-import ToastContainer from '@services/notifications/ToastContainer';
+import ToastContainer from '@services/toastNotifications/ToastContainer';
 import createStore from '@store/index';
 import { Provider as StoreProvider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';

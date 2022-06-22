@@ -14,7 +14,7 @@ import ProjectError, { ProjectErrorType } from './projectError';
 interface Arg {
     userId: string;
     projectId: string;
-    roleId?: string;
+    role: string;
 }
 
 interface Context {
@@ -27,7 +27,7 @@ interface Context {
 const addContributor = ({
     userId,
     projectId,
-    roleId,
+    role,
 }: Arg) => async ({
     projectContributionRepository,
     projectRepository,
@@ -64,9 +64,8 @@ const addContributor = ({
         throw new ProjectError(ProjectErrorType.NotFound);
     }
 
-    const roleData = roleId
-        ? await roleRepository.findOne({ where: { id: roleId } })
-        : await roleRepository.findOne({ where: { label: 'CONTRIBUTOR' } }); // by default, contributor
+    const roleData = await roleRepository.findOne({ where: { label: role } });
+
     if (!roleData) {
         throw new RoleError(RoleErrorType.NotFound);
     }

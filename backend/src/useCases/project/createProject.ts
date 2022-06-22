@@ -96,8 +96,8 @@ const createProject = ({
 
         addContributor({
             userId: auth.id,
+            role: 'ADMIN',
             projectId: entity.id,
-            roleId: '00000000-0000-0000-0000-000000000001',
         })({
             projectContributionRepository,
             projectRepository,

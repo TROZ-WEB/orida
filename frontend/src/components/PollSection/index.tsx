@@ -1,5 +1,6 @@
 import Poll from '@components/Poll';
 import PollCreateForm from '@components/PollCreateForm';
+import RoleType from '@customTypes/RoleType';
 import { IconButton } from '@design/buttons';
 import Carousel from '@design/Carousel';
 import Icon from '@design/Icon';
@@ -31,7 +32,7 @@ const PollSection = ({ polls, project, refresh }: PollSectionProps) => {
     const modalProps = useModal();
     const { t } = useTranslation();
     const { isAuthenticated } = useRole();
-    const { isProjectAdmin } = useRole({ project });
+    const { isProjectAdmin } = useRole({ role: RoleType.Admin, project });
 
     if (!isAuthenticated) {
         return <PollSectionBlurred />;
@@ -81,7 +82,7 @@ const PollSection = ({ polls, project, refresh }: PollSectionProps) => {
                         modalProps.close();
                         refresh();
                     }}
-                    projectId={project.id}
+                    project={project}
                 />
             </Modal>
         </>

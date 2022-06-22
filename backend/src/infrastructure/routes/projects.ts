@@ -145,15 +145,29 @@ router.post(
 
 interface AddContributorBody {
     project: string;
-    role: string;
     user: string;
 }
 router.post(
-    '/add-contributor',
+    '/add-admin',
     authorizeProjectAdmin(),
     async (req: Request, res: Response) => {
-        const { project, role, user } = req.body as AddContributorBody;
-        await addContributor({ projectId: project, roleId: role, userId: user })({
+        const { project, user } = req.body as AddContributorBody;
+        await addContributor({ projectId: project, role: 'ADMIN', userId: user })({
+            projectContributionRepository,
+            projectRepository,
+            roleRepository,
+            userRepository,
+        });
+
+        res.status(200).json({ success: true });
+    },
+);
+
+router.post(
+    '/add-contributor',
+    async (req: Request, res: Response) => {
+        const { project, user } = req.body as AddContributorBody;
+        await addContributor({ projectId: project, role: 'CONTRIBUTOR', userId: user })({
             projectContributionRepository,
             projectRepository,
             roleRepository,
@@ -169,8 +183,18 @@ interface RemoveContributorBody {
     user: string;
 }
 router.delete(
-    '/contributor',
+    '/admin',
     authorizeAdmin(),
+    async (req: Request, res: Response) => {
+        const { project, user } = req.body as RemoveContributorBody;
+        await removeContributor({ projectId: project, userId: user })({ projectContributionRepository });
+
+        res.status(200).json({ success: true });
+    },
+);
+
+router.delete(
+    '/contributor',
     async (req: Request, res: Response) => {
         const { project, user } = req.body as RemoveContributorBody;
         await removeContributor({ projectId: project, userId: user })({ projectContributionRepository });

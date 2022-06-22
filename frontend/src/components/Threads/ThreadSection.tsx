@@ -1,3 +1,4 @@
+import RoleType from '@customTypes/RoleType';
 import { IconButton } from '@design/buttons';
 import Carousel from '@design/Carousel';
 import Icon from '@design/Icon';
@@ -28,7 +29,7 @@ const styles = {
 const ThreadSection = ({ threads, project, refresh }: ThreadSectionProps) => {
     const modalProps = useModal();
     const { t } = useTranslation();
-    const { isProjectAdmin } = useRole({ project });
+    const { isProjectAdmin } = useRole({ role: RoleType.Admin, project });
 
     return (
         <>
@@ -70,7 +71,7 @@ const ThreadSection = ({ threads, project, refresh }: ThreadSectionProps) => {
                         modalProps.close();
                         refresh();
                     }}
-                    projectId={project.id}
+                    project={project}
                 />
             </Modal>
         </>

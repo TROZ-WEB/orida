@@ -1,8 +1,8 @@
 import { IconButton } from '@design/buttons';
 import Icon from '@design/Icon';
-import notify, { NotificationType } from '@services/notifications';
 import OrganizationService, { Organization } from '@services/organizations';
 import { Role } from '@services/roles/types';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
 import { User } from '@services/users';
 
 interface MemberTileProps {
@@ -22,7 +22,7 @@ const MemberTile = ({ isAdmin, onRemoveMember, organization, role, user }: Membe
             });
             onRemoveMember();
         } catch (e) {
-            notify(NotificationType.Error, 'Erreur');
+            notify(ToastNotificationType.Error, 'Erreur');
         }
     };
 

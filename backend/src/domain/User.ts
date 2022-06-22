@@ -3,6 +3,7 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { Message } from './Message';
+import { NotificationState } from './NotificationState';
 import { OrganizationMembership } from './OrganizationMembership';
 import { ProjectContribution } from './ProjectContribution';
 
@@ -17,6 +18,7 @@ interface UserConstructorProps {
     organizationMemberships: OrganizationMembership[];
     projectContributions: ProjectContribution[];
     messages: Message[],
+    notifications: NotificationState[],
 }
 
 class User {
@@ -40,6 +42,8 @@ class User {
 
     messages: Message[];
 
+    notifications: NotificationState[];
+
     constructor({
         id,
         email,
@@ -51,6 +55,7 @@ class User {
         organizationMemberships,
         projectContributions,
         messages,
+        notifications,
     }: UserConstructorProps) {
         this.id = id ?? uuidv4();
         this.email = email;
@@ -62,6 +67,7 @@ class User {
         this.organizationMemberships = organizationMemberships;
         this.projectContributions = projectContributions;
         this.messages = messages;
+        this.notifications = notifications;
     }
 
     async updatePassword(password: string): Promise<void> {

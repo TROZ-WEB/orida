@@ -5,7 +5,6 @@ type LabelProps = PropsWithChildren<LabelHTMLAttributes<HTMLLabelElement>>;
 
 const Label = ({ children, className, htmlFor, ...props }: LabelProps) => (
     <label className={classnames('text-xs', className)} htmlFor={htmlFor} {...props}>
-        {' '}
         {children}
     </label>
 );

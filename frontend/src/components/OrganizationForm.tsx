@@ -5,9 +5,9 @@ import { MultiSelectInput, SelectInput, TextAreaInput, TextInput } from '@design
 import Space from '@design/Space';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import notify, { NotificationType } from '@services/notifications';
 import { Organization, OrganizationType } from '@services/organizations/types';
 import { Project } from '@services/projects/types';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
 import { create, getAll as getAllOrganizations, update } from '@store/organizations/actions';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -72,7 +72,7 @@ const OrganizationForm = ({ onCreated, organization, action }: OrganizationFormP
             reset();
             onCreated();
         } catch (e: any) {
-            notify(NotificationType.Error, e.message);
+            notify(ToastNotificationType.Error, e.message);
         }
     };
 
@@ -92,7 +92,7 @@ const OrganizationForm = ({ onCreated, organization, action }: OrganizationFormP
                 reset();
                 onCreated();
             } catch (e: any) {
-                notify(NotificationType.Error, e.message);
+                notify(ToastNotificationType.Error, e.message);
             }
         }
     };

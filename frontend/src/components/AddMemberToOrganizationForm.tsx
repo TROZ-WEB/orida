@@ -3,8 +3,8 @@ import { SelectInput } from '@design/inputs';
 import Space from '@design/Space';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import notify, { NotificationType } from '@services/notifications';
 import OrganizationService, { Organization } from '@services/organizations';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
 import { getAll as getAllOrganizations } from '@store/organizations/actions';
 import { getAll as getAllRoles } from '@store/roles/actions';
 import { getAll as getAllUsers } from '@store/users/actions';
@@ -43,10 +43,10 @@ const AddMemberToOrganizationForm = ({ organization }: AddMemberToOrganizationFo
     const addMember: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
             await OrganizationService.addMember(data);
-            notify(NotificationType.Success, 'success');
+            notify(ToastNotificationType.Success, 'success');
         } catch (e) {
             console.error(e);
-            notify(NotificationType.Error, 'error');
+            notify(ToastNotificationType.Error, 'error');
         }
     };
 

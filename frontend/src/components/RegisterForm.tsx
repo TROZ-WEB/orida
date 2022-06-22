@@ -4,7 +4,7 @@ import { TextInput } from '@design/inputs';
 import Space from '@design/Space';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import AppRoutes from '@router/AppRoutes';
-import notify, { NotificationType } from '@services/notifications';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
 import { login, register as authRegister } from '@store/auth/actions';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +33,7 @@ const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
             await dispatch(login(data));
             navigate(redirectTo || AppRoutes.Home);
         } catch (e) {
-            notify(NotificationType.Error, t('register_error_emailAlreadyInUse'));
+            notify(ToastNotificationType.Error, t('register_error_emailAlreadyInUse'));
         }
     };
 

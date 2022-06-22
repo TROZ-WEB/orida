@@ -5,6 +5,7 @@ import { Entity, Column, OneToMany } from 'typeorm';
 import { User as UserDomain } from '../../../domain/User';
 import BaseColumns from './BaseColumns';
 import { Message } from './Message';
+import { NotificationState } from './NotificationState';
 import { OrganizationMembership } from './OrganizationMembership';
 import { PollResponse } from './PollResponse';
 import { ProjectContribution } from './ProjectContribution';
@@ -49,6 +50,13 @@ class User extends BaseColumns {
     )
         projects?: ProjectContribution[];
 
+    @OneToMany(
+        () => NotificationState,
+        (notificationsState) => notificationsState.user,
+        { cascade: true },
+    )
+        notifications: NotificationState[];
+
     constructor(
         id: string,
         createdAt: Date,
@@ -62,6 +70,7 @@ class User extends BaseColumns {
         organizations: OrganizationMembership[],
         messages: Message[],
         projects: ProjectContribution[],
+        notifications: NotificationState[],
     ) {
         super(id, createdAt, modifiedAt);
         this.email = email;
@@ -74,6 +83,7 @@ class User extends BaseColumns {
         this.organizations = organizations;
         this.messages = messages;
         this.projects = projects;
+        this.notifications = notifications;
     }
 
     async updatePassword(password: string): Promise<void> {
@@ -100,6 +110,7 @@ class User extends BaseColumns {
             organizationMemberships: this.organizations?.map((membership) => membership.toDomain()) ?? [],
             messages: this.messages?.map((m) => m.toDomain()) ?? [],
             projectContributions: this.projects?.map((membership) => membership.toDomain()) ?? [],
+            notifications: this.notifications?.map((notification) => notification.toDomain()) ?? [],
         });
     }
 }

@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* global NodeJS */
 import { Category } from '../domain/Category';
 import { Image } from '../domain/Image';
 import { Message } from '../domain/Message';
+import { Notification } from '../domain/Notification';
+import { NotificationState } from '../domain/NotificationState';
 import { Organization } from '../domain/Organization';
 import { OrganizationMembership } from '../domain/OrganizationMembership';
 import { Poll } from '../domain/Poll';
@@ -19,12 +22,28 @@ export const mapUser = (user: User) => ({
     id: user.id,
     lastname: user.lastname,
     isAdmin: user.isAdmin,
-    // disable rule as the function is exported
-    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     organizationMemberships: user.organizationMemberships.map(mapOrganizationMembership),
-    // disable rule as the function is exported
-    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     projectContributions: user.projectContributions.map(mapProjectContribution),
+    notifications: user.notifications?.map(mapNotificationState),
+});
+
+export const mapNotification = (notification: Notification) => ({
+    id: notification.id,
+    createdAt: notification.createdAt,
+    modifiedAt: notification.modifiedAt,
+    users: notification.users?.map(mapNotificationState) || [],
+    type: notification.type,
+    text: notification.text,
+    link: notification.link,
+    project: notification.project,
+    organization: notification.organization,
+});
+
+export const mapNotificationState = (notificationState: NotificationState): any => ({
+    id: notificationState.id,
+    user: mapUser(notificationState.user),
+    notification: mapNotification(notificationState.notification),
+    isNew: notificationState.isNew,
 });
 
 export const mapProjectStatus = (status: ProjectStatus) => ({
@@ -65,11 +84,7 @@ export const mapPost = (post: Post) => ({
 
 export const mapProjectContribution = (contribution: ProjectContribution): any => ({
     user: mapUser(contribution.user),
-    // disable rule as the function is exported
-    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     project: mapProject(contribution.project),
-    // disable rule as the function is exported
-    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     role: mapRole(contribution.role),
 });
 
@@ -92,8 +107,6 @@ export const mapRole = (role: Role) => ({
 
 export const mapOrganizationMembership = (membership: OrganizationMembership): any => ({
     user: mapUser(membership.user),
-    // disable rule as the function is exported
-    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     organization: mapOrganization(membership.organization),
     role: mapRole(membership.role),
 });

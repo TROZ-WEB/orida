@@ -7,8 +7,11 @@ import UnauthenticatedCTA from '@design/UnauthenticatedCTA';
 import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import notify, { NotificationType } from '@services/notifications';
+import { goToProject } from '@router/AppRoutes';
+import NotificationService, { NotificationType } from '@services/notifications';
+import { Project } from '@services/projects';
 import { Thread } from '@services/threads';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
 import { create } from '@store/messages/actions';
 import getInitials from '@utils/getInitials';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -19,10 +22,11 @@ type Inputs = {
 };
 interface SendMessageFormProps {
     thread: Thread;
+    project: Project;
     onCreated: () => void;
 }
 
-const SendMessageForm = ({ thread, onCreated }: SendMessageFormProps) => {
+const SendMessageForm = ({ thread, project, onCreated }: SendMessageFormProps) => {
     const { register, handleSubmit, reset, formState } = useForm<Inputs>({ mode: 'onChange' });
     const userName = useSelector((state) => state.auth.data.fullname);
     const { t } = useTranslation();
@@ -39,10 +43,23 @@ const SendMessageForm = ({ thread, onCreated }: SendMessageFormProps) => {
                     authorId: auth.id,
                 })
             );
+            await NotificationService.create({
+                usersIds: project.contributors
+                    .map((contributor) => contributor.user.id)
+                    .filter((id) => id !== auth.id),
+                type: NotificationType.project,
+                link: goToProject(project.id),
+                text: t('notification_new_thread_message', {
+                    userName: auth.fullname,
+                    threadTitle: thread.subject,
+                    projectTitle: project.title,
+                }),
+                projectId: project.id,
+            });
             reset();
             onCreated();
         } catch (e: any) {
-            notify(NotificationType.Error, e.message);
+            notify(ToastNotificationType.Error, e.message);
         }
     };
 

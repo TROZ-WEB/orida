@@ -3,11 +3,10 @@ import { SelectInput } from '@design/inputs';
 import Space from '@design/Space';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import notify, { NotificationType } from '@services/notifications';
 import ProjectService, { Project } from '@services/projects';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
 import { User } from '@services/users';
 import { getAll as getAllProjects } from '@store/projects/actions';
-import { getAll as getAllRoles } from '@store/roles/actions';
 import { getAll as getAllUsers } from '@store/users/actions';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -19,16 +18,16 @@ type Inputs = {
     userId: string;
 };
 
-interface AddContributorToProjectFormProps {
+interface AddAdminToProjectFormProps {
     onSuccess?: () => void;
     project?: Project;
 }
 
-const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToProjectFormProps) => {
+const AddAdminToProjectForm = ({ onSuccess, project }: AddAdminToProjectFormProps) => {
     const { register, handleSubmit, setValue } = useForm<Inputs>();
     const { t } = useTranslation();
     const dispatch = useThunkDispatch();
-    const roles = useSelector((state) => state.roles.data);
+
     // Users options
     const auth = useSelector((state) => state.auth.data);
     const users = project
@@ -52,7 +51,6 @@ const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToPro
     }));
 
     useEffect(() => {
-        dispatch(getAllRoles());
         if (project) {
             setValue('projectId', project.id);
         } else {
@@ -61,23 +59,23 @@ const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToPro
         }
     }, []);
 
-    const addContributor: SubmitHandler<Inputs> = async (data: Inputs) => {
+    const addAdmin: SubmitHandler<Inputs> = async (data: Inputs) => {
         try {
-            await ProjectService.addContributor(data);
+            await ProjectService.addAdmin(data);
             if (onSuccess) {
                 onSuccess();
             }
         } catch (e) {
             console.error(e);
-            notify(NotificationType.Error, 'error');
+            notify(ToastNotificationType.Error, 'error');
         }
     };
 
     return (
-        <form onSubmit={handleSubmit(addContributor)}>
+        <form onSubmit={handleSubmit(addAdmin)}>
             <SelectInput
                 disabled={!!project}
-                label={t('addContributorToProject_project')}
+                label={t('addAdminToProject_project')}
                 name='projectId'
                 options={projectOptions}
                 register={register}
@@ -85,7 +83,7 @@ const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToPro
             />
             <Space px={8} />
             <SelectInput
-                label={t('addContributorToProject_user')}
+                label={t('addAdminToProject_user')}
                 name='userId'
                 options={usersOptions}
                 register={register}
@@ -93,21 +91,12 @@ const AddContributorToProjectForm = ({ onSuccess, project }: AddContributorToPro
                 required
             />
             <Space px={8} />
-            <SelectInput
-                label={t('addContributorToProject_role')}
-                name='roleId'
-                options={roles.map((role) => ({ label: role.label, value: role.id }))}
-                register={register}
-                emptyChoice
-                required
-            />
-            <Space px={8} />
             <SubmitButton
                 className='bg-secondary hover:bg-secondary-hover'
-                value={t('addContributorToProject_submit')}
+                value={t('addAdminToProject_submit')}
             />
         </form>
     );
 };
 
-export default AddContributorToProjectForm;
+export default AddAdminToProjectForm;

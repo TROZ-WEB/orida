@@ -20,7 +20,17 @@ const registerUser = ({
     lastname,
     password,
 }: Arg) => async ({ userRepository }: Context): Promise<User> => {
-    const existingUser = await userRepository.findOne({ where: { email } });
+    const existingUser = await userRepository.findOne({
+        where: { email },
+        relations: {
+            organizations: {
+                organization: {
+                    projects: true,
+                },
+            },
+            projects: true,
+        },
+    });
 
     if (existingUser) {
         throw new AuthError(AuthErrorType.RegisterEmailAlreadyInUse);

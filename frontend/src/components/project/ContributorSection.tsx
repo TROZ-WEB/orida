@@ -1,7 +1,8 @@
-import AddContributorToProject from '@components/AddContributorToProject';
+import AddAdminToProject from '@components/AddAdminToProject';
 import UserCard from '@components/UserCard';
 import UserList from '@components/UserList';
 import { ProjectContribution } from '@customTypes/projectContribution';
+import RoleType from '@customTypes/RoleType';
 import { InvisibleButton, TertiaryButton } from '@design/buttons';
 import Icon from '@design/Icon';
 import Modal from '@design/modals/DefaultModal';
@@ -18,18 +19,14 @@ const classes = {
 };
 
 interface ContributorSectionProps {
-    onAddContributor: () => void;
+    onAddAdmin: () => void;
     contributors: ProjectContribution[];
     project: Project;
 }
 
-const ContributorSection = ({
-    onAddContributor,
-    contributors,
-    project,
-}: ContributorSectionProps) => {
-    const { isProjectAdmin } = useRole({ project });
-    const addContributorModalProps = useModal();
+const ContributorSection = ({ onAddAdmin, contributors, project }: ContributorSectionProps) => {
+    const { isProjectAdmin } = useRole({ role: RoleType.Admin, project });
+    const addAdminModalProps = useModal();
     const showContributorModalProps = useModal();
 
     return (
@@ -49,7 +46,7 @@ const ContributorSection = ({
                     <div className={classes.invite}>
                         <TertiaryButton
                             className={classes.inviteButton}
-                            onClick={() => addContributorModalProps.open()}
+                            onClick={() => addAdminModalProps.open()}
                         >
                             <Icon className={classes.inviteIcon} name='add-people' size={15} />
                             Inviter
@@ -57,11 +54,11 @@ const ContributorSection = ({
                     </div>
                 )}
             </div>
-            <Modal {...addContributorModalProps}>
-                <AddContributorToProject
+            <Modal {...addAdminModalProps}>
+                <AddAdminToProject
                     onSuccess={() => {
-                        addContributorModalProps.close();
-                        onAddContributor();
+                        addAdminModalProps.close();
+                        onAddAdmin();
                     }}
                     project={project}
                 />

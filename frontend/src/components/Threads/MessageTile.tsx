@@ -1,3 +1,4 @@
+import RoleType from '@customTypes/RoleType';
 import Avatar from '@design/Avatar';
 import { Paragraph, SmallGreyText } from '@design/texts';
 import { H3 } from '@design/titles';
@@ -5,8 +6,8 @@ import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { Message } from '@services/messages';
-import notify, { NotificationType } from '@services/notifications';
 import { Project } from '@services/projects';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
 import { getAuth } from '@store/auth/actions';
 import { deleteMessage, toggleMessageModeration } from '@store/messages/actions';
 import { getOne as getOneThread } from '@store/threads/actions';
@@ -39,7 +40,7 @@ const MessageTile = ({ message, threadId, project }: MessageTileProps) => {
     const dispatch = useThunkDispatch();
     const initials = getInitials(message.author.fullname);
     const auth = useSelector((state) => state.auth.data);
-    const { isProjectAdmin } = useRole({ project });
+    const { isProjectAdmin } = useRole({ role: RoleType.Admin, project });
 
     const { t } = useTranslation();
 
@@ -53,9 +54,9 @@ const MessageTile = ({ message, threadId, project }: MessageTileProps) => {
         try {
             await dispatch(deleteMessage({ id: message.id }));
             await dispatch(getOneThread(message.thread.id));
-            notify(NotificationType.Success, t('success_message_deleted'));
+            notify(ToastNotificationType.Success, t('success_message_deleted'));
         } catch (e: any) {
-            notify(NotificationType.Error, e.message);
+            notify(ToastNotificationType.Error, e.message);
         }
     };
 
@@ -64,7 +65,7 @@ const MessageTile = ({ message, threadId, project }: MessageTileProps) => {
             await dispatch(toggleMessageModeration({ id: message.id }));
             await dispatch(getOneThread(threadId));
         } catch (e: any) {
-            notify(NotificationType.Error, e.message);
+            notify(ToastNotificationType.Error, e.message);
         }
     };
 

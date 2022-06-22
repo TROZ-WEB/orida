@@ -1,4 +1,4 @@
-import AddContributorToProject from '@components/AddContributorToProject';
+import AddAdminToProject from '@components/AddAdminToProject';
 import AddMemberToOrganizationForm from '@components/AddMemberToOrganizationForm';
 import { ProjectContribution } from '@customTypes/projectContribution';
 import { Button, DeleteButton } from '@design/buttons';
@@ -9,9 +9,9 @@ import { Table, Tbody, Td, Th, Thead, Tr } from '@design/table';
 import { H2 } from '@design/titles';
 import useModal from '@hooks/useModal';
 import { goToOrganization, goToProject } from '@router/AppRoutes';
-import notify, { NotificationType } from '@services/notifications';
 import OrganizationService, { OrganizationMembership } from '@services/organizations';
 import ProjectService from '@services/projects';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ const classes = {
 
 const AccountsPage = () => {
     const addMemberToOrgaModalProps = useModal();
-    const addContributorToProjectModalProps = useModal();
+    const addAdminToProjectModalProps = useModal();
     const [projectContributors, setProjectContributors] = useState<ProjectContribution[]>([]);
     const [organizationMembers, setOrganizationMembers] = useState<OrganizationMembership[]>([]);
 
@@ -43,25 +43,25 @@ const AccountsPage = () => {
         refresh();
     }, []);
 
-    const deleteContributor = (projectId: string, userId: string) => {
+    const deleteAdmin = (projectId: string, userId: string) => {
         try {
-            ProjectService.removeContributor({ projectId, userId });
-            notify(NotificationType.Success, 'Opération réussie');
+            ProjectService.removeAdmin({ projectId, userId });
+            notify(ToastNotificationType.Success, 'Opération réussie');
             refresh();
         } catch (e) {
             console.error(e);
-            notify(NotificationType.Error, "Échec de l'opération");
+            notify(ToastNotificationType.Error, "Échec de l'opération");
         }
     };
 
     const deleteMembership = (organizationId: string, userId: string) => {
         try {
             OrganizationService.removeMember({ organizationId, userId });
-            notify(NotificationType.Success, 'Opération réussie');
+            notify(ToastNotificationType.Success, 'Opération réussie');
             refresh();
         } catch (e) {
             console.error(e);
-            notify(NotificationType.Error, "Échec de l'opération");
+            notify(ToastNotificationType.Error, "Échec de l'opération");
         }
     };
 
@@ -70,7 +70,7 @@ const AccountsPage = () => {
             <Space px={60} />
             <div className='flex w-full'>
                 <div className='w-full'>
-                    <Button onClick={() => addContributorToProjectModalProps.open()}>
+                    <Button onClick={() => addAdminToProjectModalProps.open()}>
                         Ajouter un utilisateur à un projet
                     </Button>
                     <Space px={8} />
@@ -96,7 +96,7 @@ const AccountsPage = () => {
                                     <Td>{role.label}</Td>
                                     <Td>
                                         <DeleteButton
-                                            onClick={() => deleteContributor(project.id, user.id)}
+                                            onClick={() => deleteAdmin(project.id, user.id)}
                                         />
                                     </Td>
                                 </Tr>
@@ -149,10 +149,10 @@ const AccountsPage = () => {
             <Modal {...addMemberToOrgaModalProps}>
                 <AddMemberToOrganizationForm />
             </Modal>
-            <Modal {...addContributorToProjectModalProps}>
-                <AddContributorToProject
+            <Modal {...addAdminToProjectModalProps}>
+                <AddAdminToProject
                     onSuccess={() => {
-                        notify(NotificationType.Success, 'Utilisateur ajouté au projet');
+                        notify(ToastNotificationType.Success, 'Utilisateur ajouté au projet');
                         refresh();
                     }}
                 />

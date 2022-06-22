@@ -107,18 +107,28 @@ async function search({
 
 interface AddContributorProps {
     projectId: string;
-    roleId: string;
     userId: string;
 }
-async function addContributor({
-    projectId,
-    roleId,
-    userId,
-}: AddContributorProps): Promise<boolean> {
+
+async function addAdmin({ projectId, userId }: AddContributorProps): Promise<boolean> {
+    try {
+        await POST<Project[]>('/api/projects/add-admin', {
+            project: projectId,
+            user: userId,
+        });
+
+        return true;
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('ProjectService::addAdmin Unhandled error');
+    }
+}
+
+async function addContributor({ projectId, userId }: AddContributorProps): Promise<boolean> {
     try {
         await POST<Project[]>('/api/projects/add-contributor', {
             project: projectId,
-            role: roleId,
             user: userId,
         });
 
@@ -134,6 +144,21 @@ interface RemoveContributorProps {
     projectId: string;
     userId: string;
 }
+async function removeAdmin({ projectId, userId }: RemoveContributorProps): Promise<boolean> {
+    try {
+        await DELETE<Project[]>('/api/projects/admin', {
+            project: projectId,
+            user: userId,
+        });
+
+        return true;
+    } catch (error) {
+        // TODO::error handling
+        console.error(error);
+        throw Error('ProjectService::addContributor Unhandled error');
+    }
+}
+
 async function removeContributor({ projectId, userId }: RemoveContributorProps): Promise<boolean> {
     try {
         await DELETE<Project[]>('/api/projects/contributor', {
@@ -162,6 +187,7 @@ async function getContributors(): Promise<ProjectContribution[]> {
 }
 
 const ProjectService = {
+    addAdmin,
     addContributor,
     create,
     addImages,
@@ -169,6 +195,7 @@ const ProjectService = {
     getAll,
     getContributors,
     getOne,
+    removeAdmin,
     removeContributor,
     search,
 };

@@ -7,7 +7,8 @@ import ProjectForm from '@components/ProjectForm';
 import ProjectLocation from '@components/ProjectLocation';
 import ThreadSection from '@components/Threads/ThreadSection';
 import { PostType } from '@customTypes/post';
-import { IconButton } from '@design/buttons';
+import RoleType from '@customTypes/RoleType';
+import { Button, IconButton } from '@design/buttons';
 import Divider from '@design/Divider';
 import Icon from '@design/Icon';
 import Layout from '@design/layouts/Layout';
@@ -23,6 +24,9 @@ import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
 import { castToProjectTab, goToProject, ProjectTab } from '@router/AppRoutes';
+import ProjectService from '@services/projects';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
+import { getAuth } from '@store/auth/actions';
 import { getOne } from '@store/projects/actions';
 import { getAll as getAllRoles } from '@store/roles/actions';
 import colors from '@styles/colors';
@@ -43,11 +47,14 @@ const ProjectPage = () => {
     const roles = useSelector((state) => state.roles.data);
     const projectModalProps = useModal();
     const addImagesModalProps = useModal();
-    const { isProjectAdmin } = useRole({ project });
+    const { isProjectAdmin } = useRole({ role: RoleType.Admin, project });
+    const { isProjectContributor } = useRole({ role: RoleType.Contributor, project });
+    const auth = useSelector((state) => state.auth.data);
 
     const refresh = () => {
         dispatch(getOne(projectId));
         dispatch(getAllRoles());
+        dispatch(getAuth());
     };
 
     useEffect(() => {
@@ -64,7 +71,7 @@ const ProjectPage = () => {
 
     // Contributors List (all admins of the project + all admins of every organizations of the project)
     let projectContributions = project.contributors;
-    if (roles.find((role) => role.label === 'ADMIN') !== undefined) {
+    if (roles.find((role) => role.label === RoleType.Admin) !== undefined) {
         const projectContributionsIds = project.contributors.map(
             (contributor) => contributor.user.id
         );
@@ -73,12 +80,12 @@ const ProjectPage = () => {
                 return organization.members
                     .filter(
                         (member) =>
-                            member.role.label === 'ADMIN' &&
+                            member.role.label === RoleType.Admin &&
                             !projectContributionsIds.includes(member.user.id)
                     )
                     .map((member) => {
                         return {
-                            role: roles.find((r) => r.label === 'ADMIN')!,
+                            role: roles.find((r) => r.label === RoleType.Admin)!,
                             user: member.user,
                             project,
                         };
@@ -101,6 +108,27 @@ const ProjectPage = () => {
         .filter((post) => post.type === PostType.Thread)
         .filter((post) => post.thread !== undefined)
         .map((post) => post.thread!);
+
+    const toggleFollow = async () => {
+        try {
+            if (isProjectContributor) {
+                await ProjectService.removeContributor({
+                    userId: auth.id,
+                    projectId: project.id,
+                });
+            } else {
+                await ProjectService.addContributor({
+                    userId: auth.id,
+                    projectId: project.id,
+                });
+                notify(ToastNotificationType.Success, 'success');
+            }
+            refresh();
+        } catch (e) {
+            console.error(e);
+            notify(ToastNotificationType.Error, 'error');
+        }
+    };
 
     const left = (
         <>
@@ -125,9 +153,14 @@ const ProjectPage = () => {
             <Divider className='my-6' />
             <ContributorSection
                 contributors={projectContributions}
-                onAddContributor={() => refresh()}
+                onAddAdmin={() => refresh()}
                 project={project}
             />
+            {!isProjectAdmin && (
+                <Button onClick={toggleFollow}>
+                    {isProjectContributor ? t('project_unfollow') : t('project_follow')}
+                </Button>
+            )}
             <Modal classname='max-w-[800px]' {...projectModalProps}>
                 <ProjectForm onCreated={() => projectModalProps.close()} project={project} />
             </Modal>
@@ -152,7 +185,7 @@ const ProjectPage = () => {
             <div className='pt-16 px-16 flex items-start'>
                 <div className='flex flex-col mr-16 w-full'>
                     <H3 className='pb-8'>{t('project_details_title')}</H3>
-                    <ParsedHTML>{ReactHtmlParser(project.description)}</ParsedHTML>
+                    <ParsedHTML>{ReactHtmlParser(project.description || '')}</ParsedHTML>
                 </div>
                 <div className='flex flex-wrap gap-1 w-[38.28rem]'>
                     {projectImages.map(({ id, url }) => (

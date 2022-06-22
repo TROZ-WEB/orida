@@ -3,6 +3,7 @@ import OrganizationForm from '@components/OrganizationForm';
 import MemberTile from '@components/organizations/MemberTile';
 import ProjectList from '@components/ProjectList';
 import FormActions from '@customTypes/FormActions';
+import RoleType from '@customTypes/RoleType';
 import IconButton from '@design/buttons/IconButton';
 import Icon from '@design/Icon';
 import Layout from '@design/layouts/Layout';
@@ -30,7 +31,7 @@ const OrganizationPage = () => {
     const organization = useSelector((state) =>
         state.organizations.data.find((orga) => orga.id === organizationId)
     );
-    const { isOrganizationAdmin } = useRole({ organization });
+    const { isOrganizationAdmin } = useRole({ role: RoleType.Admin, organization });
 
     const refresh = () => {
         dispatch(getOne(organizationId));

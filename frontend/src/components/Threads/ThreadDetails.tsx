@@ -64,6 +64,7 @@ const ThreadDetails = ({ threadId, project }: ThreadDetailsProps) => {
                                 scrollToBottom();
                             });
                         }}
+                        project={project}
                         thread={thread}
                     />
                 </>

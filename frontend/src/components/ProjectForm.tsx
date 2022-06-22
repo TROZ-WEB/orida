@@ -15,8 +15,11 @@ import Space from '@design/Space';
 import useRole from '@hooks/useRole';
 import useSelector from '@hooks/useSelector';
 import useThunkDispatch from '@hooks/useThunkDispatch';
-import notify, { NotificationType } from '@services/notifications';
+import { goToProject } from '@router/AppRoutes';
+import NotificationService from '@services/notifications';
+import { NotificationType } from '@services/notifications/types';
 import { Project } from '@services/projects';
+import notify, { ToastNotificationType } from '@services/toastNotifications';
 import { getAuth } from '@store/auth/actions';
 import { getAll as getAllCategories } from '@store/categories/actions';
 import { getAll as getAllOrganizations } from '@store/organizations/actions';
@@ -150,7 +153,7 @@ const ProjectForm = ({ onCreated, project }: ProjectFormProps) => {
             reset();
             onCreated();
         } catch (e: any) {
-            notify(NotificationType.Error, e.message);
+            notify(ToastNotificationType.Error, e.message);
         }
     };
 
@@ -176,10 +179,19 @@ const ProjectForm = ({ onCreated, project }: ProjectFormProps) => {
                         categories: cleanCategories,
                     })
                 );
+                await NotificationService.create({
+                    usersIds: project.contributors
+                        .map((contributor) => contributor.user.id)
+                        .filter((id) => id !== auth.id),
+                    type: NotificationType.project,
+                    link: goToProject(project.id),
+                    text: t('notification_project_update', { projectTitle: project.title }),
+                    projectId: project.id,
+                });
                 reset();
                 onCreated();
             } catch (e: any) {
-                notify(NotificationType.Error, e.message);
+                notify(ToastNotificationType.Error, e.message);
             }
         }
     };
