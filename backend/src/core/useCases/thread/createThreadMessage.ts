@@ -1,4 +1,4 @@
-import ThreadDomain from '../../domain/Thread';
+import ThreadDomain, { threadSnapshot } from '../../domain/Thread';
 import ThreadError, { ThreadErrorType } from '../../errors/ThreadError';
 import COREThreadRepository from '../../ports/repositories/COREThreadRepository';
 
@@ -25,7 +25,7 @@ const createThreadMessage = ({
         throw new ThreadError(ThreadErrorType.NotFound);
     }
 
-    return thread;
+    return threadSnapshot(thread);
 };
 
 export default createThreadMessage;

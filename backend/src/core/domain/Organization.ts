@@ -1,28 +1,31 @@
 /* eslint-disable import/no-cycle */
-import OrganizationMembership from './OrganizationMembership';
-import Project from './Project';
+import OrganizationMembership, { organizationMembershipSnapshot } from './OrganizationMembership';
+import Project, { projectSnapshot } from './Project';
 
-export enum OrganizationType {
-    collectivity = 'COLLECTIVITY',
-    association = 'ASSOCIATION',
-    company = 'COMPANY',
-}
+export type OrganizationType = 'COLLECTIVITY' | 'ASSOCIATION' | 'COMPANY'
 interface Organization {
     id: string;
     name: string;
     type:OrganizationType;
-    description:string | undefined;
-    site:string | undefined;
-    email:string | undefined;
-    phone: string | undefined;
-    facebook:string | undefined;
-    twitter:string | undefined;
-    linkedin:string | undefined;
-    instagram:string | undefined;
+    description?:string;
+    site?:string;
+    email?:string;
+    phone?: string;
+    facebook?:string;
+    twitter?:string;
+    linkedin?:string;
+    instagram?:string;
     projects : Project[];
     parentOrganizations: Organization[];
     members: OrganizationMembership[];
     // TO ADD : lieu, image
 }
+
+export const organizationSnapshot = (organization: Organization): Organization => Object.freeze({
+    ...organization,
+    projects: organization.projects.map(projectSnapshot),
+    parentOrganizations: organization.parentOrganizations.map(organizationSnapshot),
+    members: organization.members.map(organizationMembershipSnapshot),
+});
 
 export default Organization;

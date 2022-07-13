@@ -1,4 +1,4 @@
-import ThreadDomain from '../../domain/Thread';
+import ThreadDomain, { threadSnapshot } from '../../domain/Thread';
 import COREThreadRepository from '../../ports/repositories/COREThreadRepository';
 
 interface Arg {
@@ -16,9 +16,9 @@ const createThread = ({
 }: Arg) => async ({
     threadRepository,
 }: Context): Promise<ThreadDomain> => {
-    const thread = threadRepository.createThread({ projectId, subject });
+    const thread = await threadRepository.createThread({ projectId, subject });
 
-    return thread;
+    return threadSnapshot(thread);
 };
 
 export default createThread;

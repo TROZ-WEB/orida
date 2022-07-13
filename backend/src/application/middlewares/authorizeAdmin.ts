@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
+import { isAdmin } from '../../core/domain/User';
 import AuthError, { AuthErrorType } from '../../core/errors/AuthError';
-import isAdmin from '../../core/useCases/auth/isAdmin';
 
 const authorizeAdmin = () => (req: Request, res: Response, next: NextFunction) => {
     const { user } = req;

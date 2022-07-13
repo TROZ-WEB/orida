@@ -2,11 +2,11 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
 import bcrypt from 'bcrypt';
-import Message from './Message';
-import OrganizationMembership from './OrganizationMembership';
-import ProjectContribution from './ProjectContribution';
+import Message, { messageSnapshot } from './Message';
+import OrganizationMembership, { organizationMembershipSnapshot } from './OrganizationMembership';
+import ProjectContribution, { projectContributionSnapshot } from './ProjectContribution';
 
- interface User {
+interface User {
     id: string;
     email: string;
     passwordHash: string | null;
@@ -61,5 +61,12 @@ export const isCollaboratorOfOrganization = (user: User, organizationId: string)
 
     return isMember.role.label === 'ADMIN' || isMember.role.label === 'COLLABORATOR' || isAdmin(user);
 };
+
+export const userSnapshot = (user: User): User => Object.freeze({
+    ...user,
+    organizationMemberships: user.organizationMemberships.map(organizationMembershipSnapshot),
+    projectContributions: user.projectContributions.map(projectContributionSnapshot),
+    messages: user.messages.map(messageSnapshot),
+});
 
 export default User;

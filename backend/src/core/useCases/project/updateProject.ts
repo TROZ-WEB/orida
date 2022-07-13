@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import CategoryDomain from '../../domain/Category';
-import ProjectDomain, { Position } from '../../domain/Project';
+import ProjectDomain, { Position, projectSnapshot } from '../../domain/Project';
 import ProjectError, { ProjectErrorType } from '../../errors/ProjectError';
 import COREProjectRepository from '../../ports/repositories/COREProjectRepository';
 
@@ -48,7 +48,7 @@ const updateProject = ({
             throw new ProjectError(ProjectErrorType.NotFound);
         }
 
-        return project;
+        return projectSnapshot(project);
     }
 );
 

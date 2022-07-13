@@ -1,4 +1,4 @@
-import ProjectDomain from '../../domain/Project';
+import ProjectDomain, { projectSnapshot } from '../../domain/Project';
 import ProjectError, { ProjectErrorType } from '../../errors/ProjectError';
 import COREProjectRepository from '../../ports/repositories/COREProjectRepository';
 
@@ -13,7 +13,7 @@ const getProjectById = (id: string) => async ({ projectRepository }: Context): P
         throw new ProjectError(ProjectErrorType.NotFound);
     }
 
-    return project;
+    return projectSnapshot(project);
 };
 
 export default getProjectById;

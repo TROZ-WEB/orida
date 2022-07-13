@@ -1,4 +1,4 @@
-import OrganizationDomain, { OrganizationType } from '../../domain/Organization';
+import OrganizationDomain, { organizationSnapshot, OrganizationType } from '../../domain/Organization';
 import OrganizationError, { OrganizationErrorType } from '../../errors/OrganizationError';
 import COREOrganizationRepository from '../../ports/repositories/COREOrganizationRepository';
 
@@ -54,7 +54,7 @@ const updateOrganization = ({
         throw new OrganizationError(OrganizationErrorType.NotFound);
     }
 
-    return organization;
+    return organizationSnapshot(organization);
 };
 
 export default updateOrganization;

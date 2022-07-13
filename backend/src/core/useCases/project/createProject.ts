@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import CategoryDomain from '../../domain/Category';
-import ProjectDomain, { Position } from '../../domain/Project';
+import ProjectDomain, { Position, projectSnapshot } from '../../domain/Project';
 import UserDomain from '../../domain/User';
 import ProjectError, { ProjectErrorType } from '../../errors/ProjectError';
 // import COREProjectContributionRepository from '../../ports/repositories/COREProjectContributionRepository';
@@ -39,7 +39,7 @@ const createProject = ({
     title,
 }: Arg) => (
     async ({ projectRepository }: Context): Promise<ProjectDomain> => {
-        const project = projectRepository.createProject({
+        const project = await projectRepository.createProject({
             auth,
             budget,
             categories,
@@ -59,7 +59,7 @@ const createProject = ({
             throw new ProjectError(ProjectErrorType.NotFound);
         }
 
-        return project;
+        return projectSnapshot(project);
     }
 );
 

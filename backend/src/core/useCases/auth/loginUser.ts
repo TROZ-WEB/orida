@@ -1,4 +1,4 @@
-import UserDomain, { checkPassword } from '../../domain/User';
+import UserDomain, { checkPassword, userSnapshot } from '../../domain/User';
 import AuthError, { AuthErrorType } from '../../errors/AuthError';
 import COREUserRepository from '../../ports/repositories/COREUserRepository';
 
@@ -22,7 +22,7 @@ const loginUser = ({ email, password }: Arg) => async ({ userRepository }: Conte
         throw new AuthError(AuthErrorType.IncorrectPassword);
     }
 
-    return user;
+    return userSnapshot(user);
 };
 
 export default loginUser;

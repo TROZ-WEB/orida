@@ -1,4 +1,4 @@
-import ProjectStatusDomain from '../../domain/ProjectStatus';
+import ProjectStatusDomain, { projectStatusSnapshot } from '../../domain/ProjectStatus';
 import COREProjectStatusRepository from '../../ports/repositories/COREProjectStatusRepository';
 
 interface Context {
@@ -9,7 +9,7 @@ const getAllProjectStatuses = () => (
     async ({ projectStatusRepository }: Context): Promise<ProjectStatusDomain[]> => {
         const projectStatutes = await projectStatusRepository.getAllProjectStatutes();
 
-        return projectStatutes;
+        return projectStatutes.map(projectStatusSnapshot);
     }
 );
 

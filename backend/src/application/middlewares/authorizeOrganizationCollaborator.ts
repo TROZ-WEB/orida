@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
+import { isAdmin, isCollaboratorOfOrganization } from '../../core/domain/User';
 import AuthError, { AuthErrorType } from '../../core/errors/AuthError';
-import isAdmin from '../../core/useCases/auth/isAdmin';
-import isCollaboratorOfOrganization from '../../core/useCases/auth/isCollaboratorOfOrganization';
 
 const authorizeOrganisationCollaborator = () => (req: Request, res: Response, next: NextFunction) => {
     const { user } = req;

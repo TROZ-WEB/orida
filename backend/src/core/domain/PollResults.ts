@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
-import Poll from './Poll';
-import PollAnswer from './PollAnswer';
+import Poll, { pollSnapshot } from './Poll';
+import PollAnswer, { pollAnswerSnapshot } from './PollAnswer';
 
 interface PollResults {
     poll: Poll;
@@ -8,5 +8,11 @@ interface PollResults {
     total: number;
     responses: PollAnswer[];
 }
+
+export const pollResultsSnapshot = (pollResults: PollResults): PollResults => Object.freeze({
+    ...pollResults,
+    poll: pollSnapshot(pollResults.poll),
+    responses: pollResults.responses.map(pollAnswerSnapshot),
+});
 
 export default PollResults;

@@ -1,4 +1,4 @@
-import OrganizationDomain, { OrganizationType } from '../../domain/Organization';
+import OrganizationDomain, { organizationSnapshot, OrganizationType } from '../../domain/Organization';
 import ProjectDomain from '../../domain/Project';
 import COREOrganizationRepository from '../../ports/repositories/COREOrganizationRepository';
 
@@ -35,7 +35,7 @@ const createOrganization = ({
     projects,
     parentOrganizations,
 }: Arg) => async ({ organizationRepository }: Context): Promise<OrganizationDomain> => {
-    const organization = organizationRepository.createOrganization({
+    const organization = await organizationRepository.createOrganization({
         name,
         type,
         description,
@@ -50,7 +50,7 @@ const createOrganization = ({
         parentOrganizations,
     });
 
-    return organization;
+    return organizationSnapshot(organization);
 };
 
 export default createOrganization;

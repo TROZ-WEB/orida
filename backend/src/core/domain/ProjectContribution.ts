@@ -1,7 +1,8 @@
+/* eslint-disable max-len */
 /* eslint-disable import/no-cycle */
 import Project from './Project';
-import Role from './Role';
-import User from './User';
+import Role, { roleSnapshot } from './Role';
+import User, { userSnapshot } from './User';
 
 interface ProjectContribution {
     id: string;
@@ -9,5 +10,11 @@ interface ProjectContribution {
     project: Project;
     role: Role;
 }
+
+export const projectContributionSnapshot = (projectContribution: ProjectContribution): ProjectContribution => Object.freeze({
+    ...projectContribution,
+    user: userSnapshot(projectContribution.user),
+    role: roleSnapshot(projectContribution.role),
+});
 
 export default ProjectContribution;

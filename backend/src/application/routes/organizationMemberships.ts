@@ -5,6 +5,7 @@ import createOrganizationMembership from '../../core/useCases/organizationMember
 import deleteOrganizationMembership from '../../core/useCases/organizationMembership/deleteOrganizationMembership';
 import getAllOrganizationMemberships from '../../core/useCases/organizationMembership/getAllOrganizationMemberships';
 import { mapOrganizationMembership } from '../../infrastructure/mappers';
+import createOrganizationMembershipCommand from '../commands/createOrganizationMembershipCommand';
 import authorizeAdmin from '../middlewares/authorizeAdmin';
 
 interface OrganizationMembershipRouterProps {
@@ -22,24 +23,13 @@ const organizationMembershipRouter = ({
         res.status(200).json(members.map(mapOrganizationMembership));
     });
 
-    interface createOrganizationMembershipProps {
-        organizationId: string;
-        roleId: string;
-        userId: string;
-    }
-
     router.post(
         '/',
         authorizeAdmin(),
         async (req: Request, res: Response) => {
-            const { userId, organizationId, roleId } = req.body as createOrganizationMembershipProps;
-            await createOrganizationMembership({
-                userId,
-                organizationId,
-                roleId,
-            })({
-                organizationMembershipRepository,
-            });
+            await createOrganizationMembership(
+                createOrganizationMembershipCommand(req),
+            )({ organizationMembershipRepository });
 
             res.status(200).json({ success: true });
         },

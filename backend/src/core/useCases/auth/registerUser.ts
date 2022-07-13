@@ -1,4 +1,4 @@
-import UserDomain from '../../domain/User';
+import UserDomain, { userSnapshot } from '../../domain/User';
 import AuthError, { AuthErrorType } from '../../errors/AuthError';
 import COREUserRepository from '../../ports/repositories/COREUserRepository';
 
@@ -25,14 +25,14 @@ const registerUser = ({
         throw new AuthError(AuthErrorType.RegisterEmailAlreadyInUse);
     }
 
-    const user = userRepository.createUser({
+    const user = await userRepository.createUser({
         email,
         firstname,
         lastname,
         password,
     });
 
-    return user;
+    return userSnapshot(user);
 };
 
 export default registerUser;

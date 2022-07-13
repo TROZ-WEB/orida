@@ -1,4 +1,4 @@
-import RoleDomain from '../../domain/Role';
+import RoleDomain, { roleSnapshot } from '../../domain/Role';
 import CORERoleRepository from '../../ports/repositories/CORERoleRepository';
 
 interface Context {
@@ -9,7 +9,7 @@ const getAllRoles = () => (
     async ({ roleRepository }: Context): Promise<RoleDomain[]> => {
         const roles = await roleRepository.getAllRoles();
 
-        return roles;
+        return roles.map(roleSnapshot);
     }
 );
 

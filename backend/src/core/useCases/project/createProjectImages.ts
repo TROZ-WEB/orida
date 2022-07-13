@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import ProjectDomain from '../../domain/Project';
+import ProjectDomain, { projectSnapshot } from '../../domain/Project';
 import COREProjectRepository from '../../ports/repositories/COREProjectRepository';
 
 export interface Arg {
@@ -18,7 +18,7 @@ const createProjectImages = ({
     async ({ projectRepository }: Context): Promise<ProjectDomain> => {
         const project = await projectRepository.createProjectImages({ id, images });
 
-        return project;
+        return projectSnapshot(project);
     }
 );
 
