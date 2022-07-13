@@ -1,4 +1,4 @@
-import OrganizationMembershipDomain from '../../domain/OrganizationMembership';
+import OrganizationMembershipDomain, { organizationMembershipSnapshot } from '../../domain/OrganizationMembership';
 import OrganizationMembershipError, { OrganizationMembershipErrorType } from '../../errors/organizationMembershipError';
 import COREOrganizationMembershipRepository from '../../ports/repositories/COREOrganizationMembershipRepository';
 
@@ -26,7 +26,7 @@ const deleteOrganizationMembership = ({
         throw new OrganizationMembershipError(OrganizationMembershipErrorType.NotFound);
     }
 
-    return organizationMembership;
+    return organizationMembershipSnapshot(organizationMembership);
 };
 
 export default deleteOrganizationMembership;

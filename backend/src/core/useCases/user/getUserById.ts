@@ -1,4 +1,4 @@
-import UserDomain from '../../domain/User';
+import UserDomain, { userSnapshot } from '../../domain/User';
 import UserError, { UserErrorType } from '../../errors/UserError';
 import COREUserRepository from '../../ports/repositories/COREUserRepository';
 
@@ -13,7 +13,7 @@ const getUserById = (id:string) => async ({ userRepository }: Context): Promise<
         throw new UserError(UserErrorType.NotFound);
     }
 
-    return user;
+    return userSnapshot(user);
 };
 
 export default getUserById;

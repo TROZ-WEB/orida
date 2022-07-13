@@ -11,7 +11,7 @@ export default class Organization extends BaseColumns {
     @Column({ type: 'character varying', unique: true })
         name!: string;
 
-    @Column({ type: 'enum', enum: OrganizationType, default: OrganizationType.collectivity })
+    @Column({ type: 'character varying' })
         type!: OrganizationType;
 
     @Column({ type: 'text', nullable: true })

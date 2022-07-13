@@ -1,4 +1,4 @@
-import ProjectContributionDomain from '../../domain/ProjectContribution';
+import ProjectContributionDomain, { projectContributionSnapshot } from '../../domain/ProjectContribution';
 import COREProjectContributionRepository from '../../ports/repositories/COREProjectContributionRepository';
 
 interface Arg {
@@ -18,13 +18,13 @@ const createProjectContribution = ({
 }: Arg) => async ({
     projectContributionRepository,
 }: Context): Promise<ProjectContributionDomain> => {
-    const projectContribution = projectContributionRepository.createProjectContribution({
+    const projectContribution = await projectContributionRepository.createProjectContribution({
         userId,
         projectId,
         roleId,
     });
 
-    return projectContribution;
+    return projectContributionSnapshot(projectContribution);
 };
 
 export default createProjectContribution;

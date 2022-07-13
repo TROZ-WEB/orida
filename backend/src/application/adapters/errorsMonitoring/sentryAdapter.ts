@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
+import ErrorsMonitoringPort from '../../../core/ports/ErrorMonitoringPort';
 import version from '../../../version';
-import ErrorsMonitoringPort from './ErrorsMonitoringPort';
 
 const init: ErrorsMonitoringPort['init'] = () => {
     Sentry.init({

@@ -1,7 +1,7 @@
-import OrganizationMembershipDomain from '../../domain/OrganizationMembership';
+import OrganizationMembershipDomain, { organizationMembershipSnapshot } from '../../domain/OrganizationMembership';
 import COREOrganizationMembershipRepository from '../../ports/repositories/COREOrganizationMembershipRepository';
 
-interface Arg {
+export interface Arg {
     userId: string;
     organizationId: string;
     roleId?: string;
@@ -18,13 +18,13 @@ const createOrganizationMembership = ({
 }: Arg) => async ({
     organizationMembershipRepository,
 }: Context): Promise<OrganizationMembershipDomain> => {
-    const organizationMembership = organizationMembershipRepository.createOrganizationMembership({
+    const organizationMembership = await organizationMembershipRepository.createOrganizationMembership({
         userId,
         organizationId,
         roleId,
     });
 
-    return organizationMembership;
+    return organizationMembershipSnapshot(organizationMembership);
 };
 
 export default createOrganizationMembership;

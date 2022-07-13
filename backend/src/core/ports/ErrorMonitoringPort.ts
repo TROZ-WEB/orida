@@ -1,9 +1,9 @@
 import { RequestHandler, ErrorRequestHandler } from 'express';
 
-interface ErrorsMonitoringAdapter {
+interface ErrorsMonitoringPort {
     init(): void;
     handleRequests(): RequestHandler;
     handleErrors(): ErrorRequestHandler;
 }
 
-export default ErrorsMonitoringAdapter;
+export default ErrorsMonitoringPort;

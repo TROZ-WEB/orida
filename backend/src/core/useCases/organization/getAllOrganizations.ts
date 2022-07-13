@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import OrganizationDomain from '../../domain/Organization';
+import OrganizationDomain, { organizationSnapshot } from '../../domain/Organization';
 import COREOrganizationRepository from '../../ports/repositories/COREOrganizationRepository';
 
 interface Context {
@@ -9,7 +9,7 @@ interface Context {
 const getAllOrganizations = () => async ({ organizationRepository }: Context): Promise<OrganizationDomain[]> => {
     const organizations = await organizationRepository.getAllOrganizations();
 
-    return organizations;
+    return organizations.map(organizationSnapshot);
 };
 
 export default getAllOrganizations;

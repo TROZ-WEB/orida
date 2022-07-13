@@ -1,4 +1,4 @@
-import ProjectContributionDomain from '../../domain/ProjectContribution';
+import ProjectContributionDomain, { projectContributionSnapshot } from '../../domain/ProjectContribution';
 import ProjectContributionError, { ProjectContributionErrorType } from '../../errors/projectContributionError';
 import COREProjectContributionRepository from '../../ports/repositories/COREProjectContributionRepository';
 
@@ -23,7 +23,7 @@ const deleteProjectContribution = ({
         throw new ProjectContributionError(ProjectContributionErrorType.NotFound);
     }
 
-    return projectContribution;
+    return projectContributionSnapshot(projectContribution);
 };
 
 export default deleteProjectContribution;

@@ -1,4 +1,4 @@
-import ProjectDomain from '../../domain/Project';
+import ProjectDomain, { projectSnapshot } from '../../domain/Project';
 import COREProjectRepository from '../../ports/repositories/COREProjectRepository';
 
 interface Context {
@@ -8,7 +8,7 @@ interface Context {
 const getAllProjects = () => async ({ projectRepository }: Context): Promise<ProjectDomain[]> => {
     const projects = await projectRepository.getAllProjects();
 
-    return projects;
+    return projects.map(projectSnapshot);
 };
 
 export default getAllProjects;

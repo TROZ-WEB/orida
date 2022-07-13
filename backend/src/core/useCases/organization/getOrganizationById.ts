@@ -1,4 +1,4 @@
-import OrganizationDomain from '../../domain/Organization';
+import OrganizationDomain, { organizationSnapshot } from '../../domain/Organization';
 import OrganizationError, { OrganizationErrorType } from '../../errors/OrganizationError';
 import COREOrganizationRepository from '../../ports/repositories/COREOrganizationRepository';
 
@@ -14,7 +14,7 @@ const getOrganizationById = (id: string) => (
             throw new OrganizationError(OrganizationErrorType.NotFound);
         }
 
-        return organization;
+        return organizationSnapshot(organization);
     }
 );
 

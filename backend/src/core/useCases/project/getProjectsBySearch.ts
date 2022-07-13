@@ -1,4 +1,4 @@
-import ProjectDomain, { Budget } from '../../domain/Project';
+import ProjectDomain, { Budget, projectSnapshot } from '../../domain/Project';
 import COREProjectRepository from '../../ports/repositories/COREProjectRepository';
 
 interface Context {
@@ -22,7 +22,7 @@ const getProjectsBySearch = ({ search, status, categories, budgets }: Arg) => (
             budgets,
         });
 
-        return projects;
+        return projects.map(projectSnapshot);
     }
 );
 
